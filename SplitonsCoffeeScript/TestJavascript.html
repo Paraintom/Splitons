@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="splitonsApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Test for javascript</title>
+    <script src="angular.js"></script>
+    <script src="SplitonsApp.js"></script>
+    <script src="Project.js"></script>
+    <script src="Transaction.js"></script>
+    <script src="Balance.js"></script>
+</head>
+<body>
+<div ng-controller="FakeDataController">
+    <!--project level-->
+    <div>
+        <h1>Project : {{projectName}}, total number :{{members.length}}</h1>
+        <ul>
+            <li ng-repeat="member in members">
+                <span>{{member}}</span>
+            </li>
+        </ul>
+    </div>
+    <!--transaction level-->
+    <div>
+        <h1>There is {{transactions.length}} recorded transactions</h1>
+        <ul>
+            <li ng-repeat="transaction in transactions">
+                <span>from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
+            </li>
+        </ul>
+    </div>
+
+    <!--current balance-->
+    <h1>Current balance :</h1>
+    <ul>
+        <li ng-repeat="balance in balances">
+            <span>{{balance.member}} balance is ({{balance.balance}})</span>
+        </li>
+    </ul>
+    <div>
+    <div>
+</div>
+
+
+</body>
+</html>
