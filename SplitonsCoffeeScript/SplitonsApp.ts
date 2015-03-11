@@ -1,7 +1,9 @@
+///<reference path="linq/linq.d.ts"/>
 ///<reference path="angular.d.ts"/>
 ///<reference path="Project.ts"/>
 ///<reference path="Transaction.ts"/>
 ///<reference path="Balance.ts"/>
+///<reference path="SettlementEntry.ts"/>
 
 angular.module('splitonsApp', []).controller('FakeDataController', ['$scope', function($scope) {
 
@@ -10,6 +12,8 @@ angular.module('splitonsApp', []).controller('FakeDataController', ['$scope', fu
     $scope.transactions = p.transactions;
     $scope.members = p.members;
     $scope.balances = calculateBalances();
+    $scope.settlements = calculateSettlement();
+
 
     function calculateBalances() {
         var result: { [id: string] : Balance; } = {};
@@ -26,6 +30,46 @@ angular.module('splitonsApp', []).controller('FakeDataController', ['$scope', fu
         });
         return result;
     }
+
+    function notFinished(currentBalance) {
+        return Enumerable.from(currentBalance).count(function (x) {
+                return x.value.amount != 0
+            }) > 1;
+    }
+
+    function calculateSettlement() {
+        var result : SettlementEntry[];
+        result = [];
+        var currentBalance = calculateBalances();
+        //Initialisation
+
+        while(notFinished(currentBalance)) {
+            var orderedResults = Enumerable.from(currentBalance)
+                .select(function (x) {
+                    return x.value
+                })
+                .where(function (x) {
+                    return x.amount != 0
+                })
+                .orderBy(function (x) {
+                    return x.amount
+                });
+            var biggestDebtor = orderedResults.first();
+            var biggestCreditor = orderedResults.last();
+
+            var to = biggestCreditor.member;
+            var from = biggestDebtor.member;
+            var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
+            var to = biggestCreditor.member;
+            var from = biggestDebtor.member;
+            var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
+            biggestCreditor.amount -= amount;
+            biggestDebtor.amount += amount;
+            result.push(new SettlementEntry(from, to, amount));
+        }
+        //result.forEach(o=>console.debug("from:"+o.from+" to:"+o.to+" amount:"+o.amount));
+        return result;
+    }
 }]);
 
 
@@ -39,8 +83,8 @@ function getFakeProject() {
     p.transactions.push(new Transaction("jean", ["emeline", "antoine"], "Beer", 20));
     p.transactions.push(new Transaction("emeline", ["jean", "antoine", "roger"], "Cab", 30));
     p.transactions.push(new Transaction("emeline", ["roger"], "chewing gum", 100));
-    /*p.transactions.push(new Transaction("emeline", ["antoine"], "dictionary", 12));
+    p.transactions.push(new Transaction("emeline", ["antoine"], "dictionary", 12));
     p.transactions.push(new Transaction("roger", ["emeline"], "a brain", 12));
-    p.transactions.push(new Transaction("roger", ["antoine"], "Train", 12));*/
+    p.transactions.push(new Transaction("roger", ["antoine"], "Train", 12));
     return p;
 }
