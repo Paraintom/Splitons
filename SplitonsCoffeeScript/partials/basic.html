@@ -1,0 +1,36 @@
+<div ng-controller="FakeDataController">
+    <!--project level-->
+    <div>
+        <h1>Project : {{projectName}}, total number :{{members.length}}</h1>
+        <ul>
+            <li ng-repeat="member in members">
+                <span>{{member}}</span>
+            </li>
+        </ul>
+    </div>
+    <!--transaction level-->
+    <div>
+        <h1>There is {{transactions.length}} recorded transactions</h1>
+        <ul>
+            <li ng-repeat="transaction in transactions">
+                <span>from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
+            </li>
+        </ul>
+    </div>
+
+    <!--current amount-->
+    <h1>Current balance :</h1>
+    <ul>
+        <li ng-repeat="balance in balances">
+            <span>{{balance.member}} balance is ({{balance.amount}})</span>
+        </li>
+    </ul>
+
+    <!--Settlements-->
+    <h1>How to settle all debts:</h1>
+    <ul>
+        <li ng-repeat="settlement in settlements">
+            <span>{{settlement.from}} should pay {{settlement.to}} {{settlement.amount}} </span>
+        </li>
+    </ul>
+</div>

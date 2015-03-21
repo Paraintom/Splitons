@@ -5,10 +5,11 @@
 ///<reference path="Balance.ts"/>
 ///<reference path="SettlementEntry.ts"/>
 
-angular.module('splitonsApp', []).controller('FakeDataController', ['$scope', function($scope) {
+var splitonsApp = angular.module('splitonsApp', ['ngRoute']);
+splitonsApp.controller('FakeDataController', ['$scope', '$routeParams', function($scope, $routeParams) {
 
+    $scope.projectName = $routeParams.projectName;
     var p = getFakeProject();
-    $scope.projectName = p.name;
     $scope.transactions = p.transactions;
     $scope.members = p.members;
     $scope.balances = calculateBalances();
@@ -73,6 +74,25 @@ angular.module('splitonsApp', []).controller('FakeDataController', ['$scope', fu
 }]);
 
 
+splitonsApp.config(['$routeProvider',
+    function($routeProvider) {
+        $routeProvider.
+            when('/listProjects', {
+                templateUrl: 'partials/listProjects.html',
+                controller: 'FakeDataController'
+            }).
+            when('/newProject', {
+                templateUrl: 'partials/newProject.html',
+                controller: 'FakeDataController'
+            }).
+            when('/project/:projectName', {
+                templateUrl: 'partials/basic.html',
+                controller: 'FakeDataController'
+            }).
+            otherwise({
+                redirectTo: '/listProjects'
+            });
+    }]);
 function getFakeProject() {
     var p = new Project("fakeProject");
     p.members.push("jean");
