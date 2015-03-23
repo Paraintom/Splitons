@@ -1,0 +1,13 @@
+<div>
+    <h1>Enter a transaction</h1>
+    Who paid ? <select  ng-model="selectedCreditor" ng-options="opt for opt in members"></select><br>
+    What for?  <input ng-model="transactionSummary"><br>
+    How much?  TODO CHECK FIELDS (if you put a string here, you are DEAD)<input type="text" ng-model="amount"><br>
+    For whom?
+    <ul>
+        <li ng-repeat="name in members">
+            <input type='checkbox' class='checkbox' name='selectedDebtor' value='{{id}}' id='groupItem{{id}}' checked> {{name}}
+        </li>
+    </ul>
+    <button ng-click="addTransaction()">AddTransaction</button>
+</div>

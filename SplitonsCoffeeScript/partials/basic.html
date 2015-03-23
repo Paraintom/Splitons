@@ -1,4 +1,4 @@
-<div ng-controller="FakeDataController">
+<div>
     <!--project level-->
     <div>
         <h1>Project : {{projectName}}, total number :{{members.length}}</h1>
@@ -16,6 +16,7 @@
                 <span>from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
             </li>
         </ul>
+        <a href="#/project/{{projectName}}/addTransaction">addTransaction</a>
     </div>
 
     <!--current amount-->

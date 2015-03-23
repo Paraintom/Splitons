@@ -1,8 +1,1 @@
-*.map
 .idea/
-SplitonsCoffeeScript/angular.js
-SplitonsCoffeeScript/Balance.js
-SplitonsCoffeeScript/Project.js
-SplitonsCoffeeScript/SettlementEntry.js
-SplitonsCoffeeScript/SplitonsApp.js
-SplitonsCoffeeScript/Transaction.js

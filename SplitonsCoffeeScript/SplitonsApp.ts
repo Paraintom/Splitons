@@ -41,6 +41,10 @@ splitonsApp.controller(
                 //Initialisation
 
                 while (notFinished(currentBalance)) {
+                    if(bug(currentBalance)){
+                        console.warn("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
+                        return result;
+                    }
                     var orderedResults = Enumerable.from(currentBalance)
                         .select(function (x) {
                             return x.value
@@ -57,9 +61,6 @@ splitonsApp.controller(
                     var to = biggestCreditor.member;
                     var from = biggestDebtor.member;
                     var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
-                    var to = biggestCreditor.member;
-                    var from = biggestDebtor.member;
-                    var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
                     biggestCreditor.amount -= amount;
                     biggestDebtor.amount += amount;
                     result.push(new SettlementEntry(from, to, amount));
@@ -73,15 +74,46 @@ splitonsApp.controller(
                         return x.value.amount != 0
                     }) > 1;
             }
+            function bug(currentBalance) {
+                var allPositive =  Enumerable.from(currentBalance).all(function (x) {
+                        return x.value.amount >= 0
+                    });
+                var allNegative =  Enumerable.from(currentBalance).all(function (x) {
+                    return x.value.amount <= 0
+                });
+                return allPositive || allNegative;
+            }
         }]);
 
+splitonsApp.controller(
+    'ListProjectsController', ['$scope', 'projectsFactory',
+        function ($scope, projectsFactory) {
+            $scope.projectNames =  Enumerable.from<Project>(projectsFactory.getAll()).select(function (x) {
+                return x.name;
+            }).toArray();
+        }]);
+
+splitonsApp.controller(
+    'AddTransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory',
+        function ($scope, $routeParams, $location, projectsFactory) {
+            var p = projectsFactory.get($routeParams.projectName);
+            $scope.projectName = p.name;
+            $scope.members = p.members;
+
+            $scope.selectedCreditor = $scope.members[0];
+
+            $scope.addTransaction = function() {
+                p.transactions.push(new Transaction($scope.selectedCreditor, ["emeline", "antoine"], $scope.transactionSummary, parseFloat($scope.amount)));
+                $location.path('/project/'+$scope.projectName).replace();
+            }
+        }]);
 
 splitonsApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/listProjects', {
                 templateUrl: 'partials/listProjects.html',
-                controller: 'FakeDataController'
+                controller: 'ListProjectsController'
             }).
             when('/newProject', {
                 templateUrl: 'partials/newProject.html',
@@ -90,6 +122,10 @@ splitonsApp.config(['$routeProvider',
             when('/project/:projectName', {
                 templateUrl: 'partials/basic.html',
                 controller: 'FakeDataController'
+            }).
+            when('/project/:projectName/addTransaction', {
+                templateUrl: 'partials/addTransaction.html',
+                controller: 'AddTransactionController'
             }).
             otherwise({
                 redirectTo: '/listProjects'

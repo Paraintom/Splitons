@@ -1,20 +1,26 @@
 /**
  * Created by Tom on 22/03/2015.
  */
+///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../Project.ts"/>
 ///<reference path="../Transaction.ts"/>
 var projectsFactory = angular.module('projectsFactory', ['ngResource']);
 projectsFactory.factory('projectsFactory', function () {
+    var allProjects = [];
+    allProjects.push(getFakeProject("test1"));
+    allProjects.push(getFakeProject("test2"));
+    allProjects.push(getFakeProject("test3"));
     return {
         get: function (name) {
-            return getFakeProject(name);
+            var result = Enumerable.from(allProjects).where(function (o) { return o.name == name; }).firstOrDefault();
+            if (result == null) {
+                result = getFakeProject(name);
+                allProjects.push(result);
+            }
+            return result;
         },
         getAll: function () {
-            var allProjects = [];
-            allProjects.push(getFakeProject("test1"));
-            allProjects.push(getFakeProject("test2"));
-            allProjects.push(getFakeProject("test3"));
             return allProjects;
         }
     };
