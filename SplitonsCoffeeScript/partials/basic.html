@@ -12,7 +12,7 @@
     <div>
         <h1>There is {{transactions.length}} recorded transactions</h1>
         <ul>
-            <li ng-repeat="transaction in transactions">
+            <li ng-repeat="transaction in transactions track by $index">
                 <span>from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
             </li>
         </ul>

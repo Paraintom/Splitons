@@ -104,6 +104,7 @@ splitonsApp.controller(
 
             $scope.addTransaction = function() {
                 p.transactions.push(new Transaction($scope.selectedCreditor, ["emeline", "antoine"], $scope.transactionSummary, parseFloat($scope.amount)));
+                projectsFactory.saveProject(p);
                 $location.path('/project/'+$scope.projectName).replace();
             }
         }]);
