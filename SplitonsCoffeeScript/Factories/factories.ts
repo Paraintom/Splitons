@@ -13,21 +13,41 @@ var projectsFactory = angular.module('projectsFactory', ['ngResource']);
 projectsFactory.factory('projectsFactory', function () {
 
     var allProjects = [];
-    allProjects.push(getFakeProject("test1"));
-    allProjects.push(getFakeProject("test2"));
-    allProjects.push(getFakeProject("test3"));
+    init();
+
+    function init(){
+        for (var i = 0; i < localStorage.length; i++) {
+            var projectId =localStorage.key(i);
+            var projectString = localStorage.getItem(projectId);
+            allProjects.push(JSON.parse(projectString));
+        }
+    }
 
     return {
-        get: function (name) {
-
+        saveProject: function (project) {
+            localStorage.setItem(project.id,JSON.stringify(project));
+        },
+        getProject: function (name) {
             var result = Enumerable.from(allProjects).where(o=>o.name == name).firstOrDefault();
             if (result == null) {
-                result = getFakeProject(name)
-                allProjects.push(result);
+                throw new Error("Can't find project : "+name);
             }
             return result;
         },
-        getAll: function () {
+        getNewProject: function (name) {
+            var result = Enumerable.from(allProjects).where(o=>o.name == name).firstOrDefault();
+            if (result == null) {
+                //result = new Project(name);
+                result = getFakeProject(name);
+                allProjects.push(result);
+                localStorage.setItem(result.id,JSON.stringify(result));
+            }
+            else{
+                throw new Error("Can't create this project, it already exist!");
+            }
+            return result;
+        },
+        getAllProject: function () {
             return allProjects;
         }
     }

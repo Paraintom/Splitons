@@ -10,7 +10,7 @@ var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory']);
 splitonsApp.controller(
     'FakeDataController', ['$scope', '$routeParams', 'projectsFactory',
         function ($scope, $routeParams, projectsFactory) {
-            var p = projectsFactory.get($routeParams.projectName);
+            var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
             $scope.transactions = p.transactions;
             $scope.members = p.members;
@@ -88,7 +88,7 @@ splitonsApp.controller(
 splitonsApp.controller(
     'ListProjectsController', ['$scope', 'projectsFactory',
         function ($scope, projectsFactory) {
-            $scope.projectNames =  Enumerable.from<Project>(projectsFactory.getAll()).select(function (x) {
+            $scope.projectNames =  Enumerable.from<Project>(projectsFactory.getAllProject()).select(function (x) {
                 return x.name;
             }).toArray();
         }]);
@@ -96,7 +96,7 @@ splitonsApp.controller(
 splitonsApp.controller(
     'AddTransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory',
         function ($scope, $routeParams, $location, projectsFactory) {
-            var p = projectsFactory.get($routeParams.projectName);
+            var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
             $scope.members = p.members;
 
@@ -105,6 +105,15 @@ splitonsApp.controller(
             $scope.addTransaction = function() {
                 p.transactions.push(new Transaction($scope.selectedCreditor, ["emeline", "antoine"], $scope.transactionSummary, parseFloat($scope.amount)));
                 $location.path('/project/'+$scope.projectName).replace();
+            }
+        }]);
+
+splitonsApp.controller(
+    'CreateProjectController', ['$scope', '$location', 'projectsFactory',
+        function ($scope, $location, projectsFactory) {
+            $scope.createProject = function() {
+                var newProject = projectsFactory.getNewProject($scope.newProjectName);
+                $location.path('/project/'+$scope.newProjectName).replace();
             }
         }]);
 
@@ -117,7 +126,7 @@ splitonsApp.config(['$routeProvider',
             }).
             when('/newProject', {
                 templateUrl: 'partials/newProject.html',
-                controller: 'FakeDataController'
+                controller: 'CreateProjectController'
             }).
             when('/project/:projectName', {
                 templateUrl: 'partials/basic.html',
