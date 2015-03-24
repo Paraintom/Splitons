@@ -4,7 +4,7 @@
 ///<reference path="Transaction.ts"/>
 ///<reference path="Balance.ts"/>
 ///<reference path="SettlementEntry.ts"/>
-var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory']);
+var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory', 'checklist-model']);
 splitonsApp.controller('FakeDataController', ['$scope', '$routeParams', 'projectsFactory', function ($scope, $routeParams, projectsFactory) {
     var p = projectsFactory.getProject($routeParams.projectName);
     $scope.projectName = p.name;
@@ -79,8 +79,9 @@ splitonsApp.controller('AddTransactionController', ['$scope', '$routeParams', '$
     $scope.projectName = p.name;
     $scope.members = p.members;
     $scope.selectedCreditor = $scope.members[0];
+    $scope.selectedDebtors = $scope.members.slice(0);
     $scope.addTransaction = function () {
-        p.transactions.push(new Transaction($scope.selectedCreditor, ["emeline", "antoine"], $scope.transactionSummary, parseFloat($scope.amount)));
+        p.transactions.push(new Transaction($scope.selectedCreditor, $scope.selectedDebtors, $scope.transactionSummary, parseFloat($scope.amount)));
         projectsFactory.saveProject(p);
         $location.path('/project/' + $scope.projectName).replace();
     };

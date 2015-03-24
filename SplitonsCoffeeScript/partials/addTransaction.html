@@ -6,7 +6,7 @@
     For whom?
     <ul>
         <li ng-repeat="name in members">
-            <input type='checkbox' class='checkbox' name='selectedDebtor' value='{{id}}' id='groupItem{{id}}' checked> {{name}}
+            <input type='checkbox' checklist-model="selectedDebtors" checklist-value="name"> {{name}}
         </li>
     </ul>
     <button ng-click="addTransaction()">AddTransaction</button>
