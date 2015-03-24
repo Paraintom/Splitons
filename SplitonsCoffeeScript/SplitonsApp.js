@@ -12,6 +12,12 @@ splitonsApp.controller('FakeDataController', ['$scope', '$routeParams', 'project
     $scope.members = p.members;
     $scope.balances = calculateBalances();
     $scope.settlements = calculateSettlement();
+    $scope.addMember = function () {
+        if (p.members.indexOf($scope.newMember) == -1) {
+            p.members.push($scope.newMember);
+            projectsFactory.saveProject(p);
+        }
+    };
     function calculateBalances() {
         var result = {};
         //Initialisation
@@ -32,8 +38,7 @@ splitonsApp.controller('FakeDataController', ['$scope', '$routeParams', 'project
         var currentBalance = calculateBalances();
         while (notFinished(currentBalance)) {
             if (bug(currentBalance)) {
-                console.warn("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
-                return result;
+                throw new Error("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
             }
             var orderedResults = Enumerable.from(currentBalance).select(function (x) {
                 return x.value;

@@ -30,8 +30,8 @@ projectsFactory.factory('projectsFactory', function () {
         getNewProject: function (name) {
             var result = Enumerable.from(allProjects).where(function (o) { return o.name == name; }).firstOrDefault();
             if (result == null) {
-                //result = new Project(name);
-                result = getFakeProject(name);
+                result = new Project(name);
+                //result = getFakeProject(name);
                 allProjects.push(result);
                 localStorage.setItem(result.id, JSON.stringify(result));
             }

@@ -17,6 +17,13 @@ splitonsApp.controller(
             $scope.balances = calculateBalances();
             $scope.settlements = calculateSettlement();
 
+            $scope.addMember = function(){
+                if(p.members.indexOf($scope.newMember) == -1)
+                {
+                    p.members.push($scope.newMember);
+                    projectsFactory.saveProject(p);
+                }
+            }
 
             function calculateBalances() {
                 var result:{ [id: string] : Balance; } = {};
@@ -42,8 +49,7 @@ splitonsApp.controller(
 
                 while (notFinished(currentBalance)) {
                     if(bug(currentBalance)){
-                        console.warn("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
-                        return result;
+                        throw new Error("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
                     }
                     var orderedResults = Enumerable.from(currentBalance)
                         .select(function (x) {
