@@ -25,6 +25,15 @@ splitonsApp.controller(
                 }
             }
 
+            $scope.deleteTransaction = function(id) {
+                for (var index in $scope.transactions) {
+                    if ($scope.transactions[index].id == id) {
+                        $scope.transactions.splice(index, 1);
+                        projectsFactory.saveProject(p);
+                    }
+                }
+            }
+
             function calculateBalances() {
                 var result:{ [id: string] : Balance; } = {};
                 //Initialisation

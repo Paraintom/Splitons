@@ -16,7 +16,8 @@
         <ul>
             <li ng-repeat="transaction in transactions track by $index">
                 <span><i>{{transaction.id}}</i> from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})
-        <a href="#/project/{{projectName}}/{{transaction.id}}/transaction">Modify</a>
+                     <a href="#/project/{{projectName}}/{{transaction.id}}/transaction">Modify</a>
+                    <a ng-click="deleteTransaction(transaction.id)">x</a>
                 </span>
             </li>
         </ul>
