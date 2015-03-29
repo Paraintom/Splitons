@@ -50,6 +50,7 @@ splitonsApp.controller(
                 while (notFinished(currentBalance)) {
                     if(bug(currentBalance)){
                         throw new Error("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
+                        //return [];
                     }
                     var orderedResults = Enumerable.from(currentBalance)
                         .select(function (x) {
@@ -117,7 +118,7 @@ splitonsApp.controller(
                 transac.from = $scope.selectedCreditor;
                 transac.to = $scope.selectedDebtors.slice(0);
                 transac.comment = $scope.comment;
-                transac.amount = $scope.amount;
+                transac.amount = parseFloat($scope.amount);
                 if($routeParams.transactionId == 0/*mean a new transaction*/) {
                     project.transactions.push(transac);
                 }

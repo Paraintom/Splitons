@@ -92,7 +92,7 @@ splitonsApp.controller('TransactionController', ['$scope', '$routeParams', '$loc
         transac.from = $scope.selectedCreditor;
         transac.to = $scope.selectedDebtors.slice(0);
         transac.comment = $scope.comment;
-        transac.amount = $scope.amount;
+        transac.amount = parseFloat($scope.amount);
         if ($routeParams.transactionId == 0) {
             project.transactions.push(transac);
         }

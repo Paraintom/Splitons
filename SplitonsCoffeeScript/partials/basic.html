@@ -15,7 +15,9 @@
         <h1>There is {{transactions.length}} recorded transactions</h1>
         <ul>
             <li ng-repeat="transaction in transactions track by $index">
-                <span>from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
+                <span><i>{{transaction.id}}</i> from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})
+        <a href="#/project/{{projectName}}/{{transaction.id}}/transaction">Modify</a>
+                </span>
             </li>
         </ul>
         <a href="#/project/{{projectName}}/0/transaction">add a new transaction</a>
