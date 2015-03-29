@@ -1,3 +1,4 @@
+///<reference path="Guid.ts"/>
 /**
  * Created by Tom on 09/03/2015.
  */
@@ -7,6 +8,7 @@ var Transaction = (function () {
         this.to = to;
         this.comment = comment;
         this.amount = amount;
+        this.id = Guid.newGuid();
     }
     return Transaction;
 })();

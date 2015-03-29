@@ -8,7 +8,7 @@
 var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory','checklist-model']);
 
 splitonsApp.controller(
-    'FakeDataController', ['$scope', '$routeParams', 'projectsFactory',
+    'ProjectController', ['$scope', '$routeParams', 'projectsFactory',
         function ($scope, $routeParams, projectsFactory) {
             var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
@@ -100,19 +100,37 @@ splitonsApp.controller(
         }]);
 
 splitonsApp.controller(
-    'AddTransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory',
+    'TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory',
         function ($scope, $routeParams, $location, projectsFactory) {
-            var p = projectsFactory.getProject($routeParams.projectName);
-            $scope.projectName = p.name;
-            $scope.members = p.members;
+            var project = projectsFactory.getProject($routeParams.projectName);
+            var transac = getTransaction(project,$routeParams.transactionId);
 
-            $scope.selectedCreditor = $scope.members[0];
-            $scope.selectedDebtors = $scope.members.slice(0);
+            $scope.projectName = project.name;
+            $scope.members = project.members;
+
+            $scope.selectedCreditor = transac.from;
+            $scope.selectedDebtors = transac.to.slice(0);
+            $scope.amount = transac.amount;
+            $scope.comment = transac.comment;
 
             $scope.addTransaction = function() {
-                p.transactions.push(new Transaction($scope.selectedCreditor, $scope.selectedDebtors, $scope.transactionSummary, parseFloat($scope.amount)));
-                projectsFactory.saveProject(p);
+                transac.from = $scope.selectedCreditor;
+                transac.to = $scope.selectedDebtors.slice(0);
+                transac.comment = $scope.comment;
+                transac.amount = $scope.amount;
+                if($routeParams.transactionId == 0/*mean a new transaction*/) {
+                    project.transactions.push(transac);
+                }
+                projectsFactory.saveProject(project);
                 $location.path('/project/'+$scope.projectName).replace();
+            }
+            function getTransaction(project, transactionId){
+                var orderedResults = Enumerable.from<Transaction>(project.transactions);
+                var existing = orderedResults.where(
+                    function (o) {return o.id == transactionId}
+                ).firstOrDefault();
+                var result = existing != null ? existing : new Transaction(project.members[0], project.members.slice(0), "", 0);
+                return result;
             }
         }]);
 
@@ -138,11 +156,11 @@ splitonsApp.config(['$routeProvider',
             }).
             when('/project/:projectName', {
                 templateUrl: 'partials/basic.html',
-                controller: 'FakeDataController'
+                controller: 'ProjectController'
             }).
-            when('/project/:projectName/addTransaction', {
-                templateUrl: 'partials/addTransaction.html',
-                controller: 'AddTransactionController'
+            when('/project/:projectName/:transactionId/transaction', {
+                templateUrl: 'partials/transaction.html',
+                controller: 'TransactionController'
             }).
             otherwise({
                 redirectTo: '/listProjects'
