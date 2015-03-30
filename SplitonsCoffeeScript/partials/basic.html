@@ -5,6 +5,7 @@
         <ul>
             <li ng-repeat="member in members">
                 <span>{{member}}</span>
+                <a ng-click="deleteMember(member)" ng-hide="existInTransactions(member)">x</a>
             </li>
         </ul>
         <input ng-model="newMember">
