@@ -1,4 +1,4 @@
-<div>
+<!--<div>
     <h1>Projects :</h1>
     <ul>
         <li ng-repeat="projectName in projectNames">
@@ -6,4 +6,39 @@
         </li>
     </ul>
     <a href="#/newProject">create a new project</a>
+</div>-->
+
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Create a new project</h1>
+                <hr class="hidden-xs">
+                <p></p>
+                <p class="hidden-xs">Sometime you need to manage expense.
+                    <br>You want it simple and easy.
+                    <br>Welcome on Splittons...</p>
+                <form role="form">
+                    <div class="form-group">
+                        <div>
+                            <input class="form-control" placeholder="project name" type="text" ng-model="newProjectName">
+                            <button type="submit" class="btn btn-default"  ng-click="createProject()">Create</button>
+                        </div>
+                    </div>
+                </form>
+                <p></p>
+            </div>
+            <div class="col-md-6">
+                <h1>Existing projects</h1>
+                <hr class="hidden-xs">
+                <ul class="text-left lead">
+                    <li ng-repeat="projectName in projectNames">  <a href="#/project/{{projectName}}/1">{{projectName}}</a>
+                    </li>
+                </ul>
+                <p></p>
+                <p></p>
+            </div>
+        </div>
+    </div>
 </div>

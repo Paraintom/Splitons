@@ -10,6 +10,7 @@ var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory','c
 splitonsApp.controller(
     'ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route',
         function ($scope, $routeParams, projectsFactory,$route) {
+            $scope.activeTab =$routeParams.activeTab;
             var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
             $scope.transactions = p.transactions;
@@ -43,10 +44,17 @@ splitonsApp.controller(
                 var inFrom = allTransactions.any(function (x) {
                     return x.from == name;
                 });
-                var inFrom = allTransactions.any(function (x) {
+                var inTo = allTransactions.any(function (x) {
                     return x.to.indexOf(name) >-1;
                 });
-                return inFrom;
+                return inFrom || inTo;
+            }
+            $scope.getBalance = function(name) {
+                var allBalances = Enumerable.from($scope.balances).select(function (x) {return x.value;});
+                var ba = Enumerable.from<Balance>(allBalances).firstOrDefault(function (x) {
+                    return x.member == name;
+                });
+                return ba.amount;
             }
 
             $scope.deleteTransaction = function(id) {
@@ -76,6 +84,7 @@ splitonsApp.controller(
             }
 
             function calculateSettlement() {
+
                 var result:SettlementEntry[];
                 result = [];
                 var currentBalance = calculateBalances();
@@ -127,11 +136,16 @@ splitonsApp.controller(
         }]);
 
 splitonsApp.controller(
-    'ListProjectsController', ['$scope', 'projectsFactory',
-        function ($scope, projectsFactory) {
+    'ListProjectsController', ['$scope', 'projectsFactory', '$location',
+        function ($scope, projectsFactory, $location) {
             $scope.projectNames =  Enumerable.from<Project>(projectsFactory.getAllProject()).select(function (x) {
                 return x.name;
             }).toArray();
+
+            $scope.createProject = function() {
+                var newProject = projectsFactory.getNewProject($scope.newProjectName);
+                $location.path('/project/'+$scope.newProjectName+"/1").replace();
+            }
         }]);
 
 splitonsApp.controller(
@@ -149,6 +163,9 @@ splitonsApp.controller(
             $scope.comment = transac.comment;
 
             $scope.addTransaction = function() {
+                if(isNaN($scope.amount)){
+                    return true;
+                }
                 transac.from = $scope.selectedCreditor;
                 transac.to = $scope.selectedDebtors.slice(0);
                 transac.comment = $scope.comment;
@@ -157,7 +174,7 @@ splitonsApp.controller(
                     project.transactions.push(transac);
                 }
                 projectsFactory.saveProject(project);
-                $location.path('/project/'+$scope.projectName).replace();
+                $location.path('/project/'+$scope.projectName+"/2").replace();
             }
             function getTransaction(project, transactionId){
                 var orderedResults = Enumerable.from<Transaction>(project.transactions);
@@ -181,7 +198,7 @@ splitonsApp.controller(
 splitonsApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
-            when('/listProjects', {
+            when('/', {
                 templateUrl: 'partials/listProjects.html',
                 controller: 'ListProjectsController'
             }).
@@ -189,7 +206,7 @@ splitonsApp.config(['$routeProvider',
                 templateUrl: 'partials/newProject.html',
                 controller: 'CreateProjectController'
             }).
-            when('/project/:projectName', {
+            when('/project/:projectName/:activeTab', {
                 templateUrl: 'partials/basic.html',
                 controller: 'ProjectController'
             }).
@@ -198,6 +215,6 @@ splitonsApp.config(['$routeProvider',
                 controller: 'TransactionController'
             }).
             otherwise({
-                redirectTo: '/listProjects'
+                redirectTo: '/'
             });
     }]);

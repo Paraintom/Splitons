@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="splitonsApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="external/jquery.min.js"></script>
+    <script type="text/javascript" src="external/bootstrap.min.js"></script>
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/basic.css" rel="stylesheet" type="text/css">
+
+    <script src="linq/linq.js"></script>
+    <script src="angular.js"></script>
+    <script src="angular-route.js"></script>
+    <script src="angular-resource.js"></script>
+    <script src="Factories/factories.js"></script>
+    <script src="App.js"></script>
+    <script src="Guid.js"></script>
+    <script src="Project.js"></script>
+    <script src="Transaction.js"></script>
+    <script src="Balance.js"></script>
+    <script src="SettlementEntry.js"></script>
+    <script src="checklist-model.js"></script>
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span>Splitons</span></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active">
+                    <a href="#/">Home</a>
+                </li>
+                <!--<li>
+                    <a href="#/">Contact</a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+<div ng-view></div>
+</body>
+</html>

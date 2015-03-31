@@ -1,3 +1,44 @@
+<div class="section">
+    <div class="container">
+        <div class="row text-left">
+            <div class="col-md-12">
+                <h1>Transaction</h1>
+                <form role="form">
+                    <div class="form-group">
+                        <label class="control-label">Who paid :</label>
+                        <select class="btn-group" ng-model="selectedCreditor" ng-options="opt for opt in members"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">For what?</label>
+                        <input class="form-control" placeholder="Train tickets" ng-model="comment"
+                               type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">How much?</label>
+                        <input ng-model="amount" class="form-control" placeholder="100.05" type="text"
+                                min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">For whom?</label>
+                        <ul>
+                            <li ng-repeat="name in members">
+                                <input type='checkbox' checklist-model="selectedDebtors" checklist-value="name"> {{name}}
+                            </li>
+                        </ul>
+                    </div>
+                    <button ng-click="IncorrectAmount = addTransaction()" class="btn btn-default">Confirm</button>
+
+                    <div class="alert alert-danger" role="alert" ng-init="IncorrectAmount=false" ng-show="IncorrectAmount">
+                        <span class="sr-only">Error:</span>
+                        Enter a valid amount!
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+
 <div>
     <h1>Enter a transaction</h1>
     Who paid ? <select  ng-model="selectedCreditor" ng-options="opt for opt in members"></select><br>
@@ -10,4 +51,4 @@
         </li>
     </ul>
     <button ng-click="addTransaction()">AddTransaction</button>
-</div>
+</div>-->

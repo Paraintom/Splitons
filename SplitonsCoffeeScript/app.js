@@ -6,6 +6,7 @@
 ///<reference path="SettlementEntry.ts"/>
 var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory', 'checklist-model']);
 splitonsApp.controller('ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route', function ($scope, $routeParams, projectsFactory, $route) {
+    $scope.activeTab = $routeParams.activeTab;
     var p = projectsFactory.getProject($routeParams.projectName);
     $scope.projectName = p.name;
     $scope.transactions = p.transactions;
@@ -35,10 +36,19 @@ splitonsApp.controller('ProjectController', ['$scope', '$routeParams', 'projects
         var inFrom = allTransactions.any(function (x) {
             return x.from == name;
         });
-        var inFrom = allTransactions.any(function (x) {
+        var inTo = allTransactions.any(function (x) {
             return x.to.indexOf(name) > -1;
         });
-        return inFrom;
+        return inFrom || inTo;
+    };
+    $scope.getBalance = function (name) {
+        var allBalances = Enumerable.from($scope.balances).select(function (x) {
+            return x.value;
+        });
+        var ba = Enumerable.from(allBalances).firstOrDefault(function (x) {
+            return x.member == name;
+        });
+        return ba.amount;
     };
     $scope.deleteTransaction = function (id) {
         for (var index in $scope.transactions) {
@@ -105,10 +115,14 @@ splitonsApp.controller('ProjectController', ['$scope', '$routeParams', 'projects
         return allPositive || allNegative;
     }
 }]);
-splitonsApp.controller('ListProjectsController', ['$scope', 'projectsFactory', function ($scope, projectsFactory) {
+splitonsApp.controller('ListProjectsController', ['$scope', 'projectsFactory', '$location', function ($scope, projectsFactory, $location) {
     $scope.projectNames = Enumerable.from(projectsFactory.getAllProject()).select(function (x) {
         return x.name;
     }).toArray();
+    $scope.createProject = function () {
+        var newProject = projectsFactory.getNewProject($scope.newProjectName);
+        $location.path('/project/' + $scope.newProjectName + "/1").replace();
+    };
 }]);
 splitonsApp.controller('TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory', function ($scope, $routeParams, $location, projectsFactory) {
     var project = projectsFactory.getProject($routeParams.projectName);
@@ -120,6 +134,9 @@ splitonsApp.controller('TransactionController', ['$scope', '$routeParams', '$loc
     $scope.amount = transac.amount;
     $scope.comment = transac.comment;
     $scope.addTransaction = function () {
+        if (isNaN($scope.amount)) {
+            return true;
+        }
         transac.from = $scope.selectedCreditor;
         transac.to = $scope.selectedDebtors.slice(0);
         transac.comment = $scope.comment;
@@ -128,7 +145,7 @@ splitonsApp.controller('TransactionController', ['$scope', '$routeParams', '$loc
             project.transactions.push(transac);
         }
         projectsFactory.saveProject(project);
-        $location.path('/project/' + $scope.projectName).replace();
+        $location.path('/project/' + $scope.projectName + "/2").replace();
     };
     function getTransaction(project, transactionId) {
         var orderedResults = Enumerable.from(project.transactions);
@@ -146,20 +163,20 @@ splitonsApp.controller('CreateProjectController', ['$scope', '$location', 'proje
     };
 }]);
 splitonsApp.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/listProjects', {
+    $routeProvider.when('/', {
         templateUrl: 'partials/listProjects.html',
         controller: 'ListProjectsController'
     }).when('/newProject', {
         templateUrl: 'partials/newProject.html',
         controller: 'CreateProjectController'
-    }).when('/project/:projectName', {
+    }).when('/project/:projectName/:activeTab', {
         templateUrl: 'partials/basic.html',
         controller: 'ProjectController'
     }).when('/project/:projectName/:transactionId/transaction', {
         templateUrl: 'partials/transaction.html',
         controller: 'TransactionController'
     }).otherwise({
-        redirectTo: '/listProjects'
+        redirectTo: '/'
     });
 }]);
 //# sourceMappingURL=App.js.map

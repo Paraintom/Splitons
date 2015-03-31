@@ -1,43 +1,71 @@
 <div>
-    <!--project level-->
-    <div>
-        <h1>Project : {{projectName}}, total number :{{members.length}}</h1>
-        <ul>
-            <li ng-repeat="member in members">
-                <span>{{member}}</span>
-                <a ng-click="deleteMember(member)" ng-hide="existInTransactions(member)">x</a>
-            </li>
-        </ul>
-        <input ng-model="newMember">
-        <button ng-click="addMember()">Add a new member</button>
-    </div>
-    <!--transaction level-->
-    <div>
-        <h1>There is {{transactions.length}} recorded transactions</h1>
-        <ul>
-            <li ng-repeat="transaction in transactions track by $index">
-                <span><i>{{transaction.id}}</i> from {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})
-                     <a href="#/project/{{projectName}}/{{transaction.id}}/transaction">Modify</a>
-                    <a ng-click="deleteTransaction(transaction.id)">x</a>
-                </span>
-            </li>
-        </ul>
-        <a href="#/project/{{projectName}}/0/transaction">add a new transaction</a>
-    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-group btn-group-justified btn-group-lg" >
+                        <a ng-class="activeTab == 1 ? 'btn btn-primary' : 'btn btn-default'" href="#/project/{{projectName}}/1">Members</a>
+                        <a ng-class="activeTab == 2 ? 'btn btn-primary' : 'btn btn-default'" href="#/project/{{projectName}}/2">Transactions</a>
+                        <a ng-class="activeTab == 3 ? 'btn btn-primary' : 'btn btn-default'" href="#/project/{{projectName}}/3">Settlement</a>
+                    </div>
+                </div>
+            </div>
 
-    <!--current amount-->
-    <h1>Current balance :</h1>
-    <ul>
-        <li ng-repeat="balance in balances">
-            <span>{{balance.member}} balance is ({{balance.amount}})</span>
-        </li>
-    </ul>
+            <!--project level-->
+            <div class="row" ng-show="activeTab == 1">
+                <h1>Project {{projectName}}<span ng-show="members.length > 1"> : {{members.length}} members</span></h1>
+                <div class="col-md-12">
+                    <ul class="lead list-unstyled text-left">
 
-    <!--Settlements-->
-    <h1>How to settle all debts:</h1>
-    <ul>
-        <li ng-repeat="settlement in settlements">
-            <span>{{settlement.from}} should pay {{settlement.to}} {{settlement.amount}} </span>
-        </li>
-    </ul>
+                        <li ng-repeat="balance in balances">
+                            <span>{{balance.member}}</span>
+                            <span ng-class="balance.amount>0 ? 'label label-success' : 'label label-danger'">
+                                {{balance.amount | number:2}}</span>
+                            <i ng-click="deleteMember(balance.member)" ng-hide="existInTransactions(balance.member)"
+                               class="fa fa-close fa-fw fa-lg text-danger"></i>
+
+                        </li>
+                    </ul>
+                    <input class="form-control" placeholder="John doe" type="text" ng-model="newMember"><br>
+                    <a class="btn btn-lg btn-primary" ng-click="addMember()">Add a new member</a>
+                </div>
+            </div>
+
+            <!--transaction level-->
+            <div class="row" ng-show="activeTab == 2">
+                            <div class="col-md-12">
+                                <h1 ng-show="transactions.length > 1">{{transactions.length}} Transactions</h1>
+                                <hr class="hidden-xs">
+                                <ul class="lead list-unstyled">
+                                    <li ng-repeat="transaction in transactions track by $index">
+                                        <span>From {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
+
+                                <span class="pull-right ">
+                                        <a href="#/project/{{projectName}}/{{transaction.id}}/transaction"><i class="fa fa-fw fa-lg fa-pencil"></i></a>
+                                        <a ng-click="deleteTransaction(transaction.id)"><i class="fa fa-close fa-fw fa-lg text-danger"></i></a>
+                                    </span>
+                                    </li>
+                                </ul>
+                                <a href="#/project/{{projectName}}/0/transaction" class="btn btn-lg btn-primary">Add a new transaction</a>
+                            </div>
+            </div>
+
+            <!--settlement level-->
+            <div class="row" ng-show="activeTab == 3">
+
+                <div class="col-md-12">
+                    <h1> How to settle the debts :</h1>
+                    <h1 class="text-warning" ng-show="transactions.length == 0"> You need to add transactions first</h1>
+                    <hr class="hidden-xs">
+                    <ul class="lead list-unstyled">
+
+                        <li ng-repeat="settlement in settlements">
+                            <span>{{settlement.from}} should pay {{settlement.to}} <b>{{settlement.amount|number:2}}</b> </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
