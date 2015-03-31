@@ -26,8 +26,10 @@
 
                         </li>
                     </ul>
-                    <input class="form-control" placeholder="John doe" type="text" ng-model="newMember"><br>
-                    <a class="btn btn-lg btn-primary" ng-click="addMember()">Add a new member</a>
+                    <form role="form" ng-submit="addMember()">
+                        <input class="form-control" placeholder="John doe" type="text" ng-model="newMember"><br>
+                        <button type="submit" class="btn btn-lg btn-default">Add a new member</button>
+                    </form>
                 </div>
             </div>
 

@@ -3,7 +3,7 @@
         <div class="row text-left">
             <div class="col-md-12">
                 <h1>Transaction</h1>
-                <form role="form">
+                <form role="form" ng-init="IncorrectAmount=false" ng-submit="IncorrectAmount = addTransaction()">
                     <div class="form-group">
                         <label class="control-label">Who paid :</label>
                         <select class="btn-group" ng-model="selectedCreditor" ng-options="opt for opt in members"></select>
@@ -26,9 +26,9 @@
                             </li>
                         </ul>
                     </div>
-                    <button ng-click="IncorrectAmount = addTransaction()" class="btn btn-default">Confirm</button>
+                    <button type="submit" class="btn btn-lg btn-default">Confirm</button>
 
-                    <div class="alert alert-danger" role="alert" ng-init="IncorrectAmount=false" ng-show="IncorrectAmount">
+                    <div class="alert alert-danger" role="alert" ng-show="IncorrectAmount">
                         <span class="sr-only">Error:</span>
                         Enter a valid amount!
                     </div>
