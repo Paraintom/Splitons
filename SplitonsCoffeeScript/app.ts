@@ -67,6 +67,13 @@ splitonsApp.controller(
                 $route.reload();
             }
 
+            $scope.settleDebts = function(debtor, creditor, amount) {
+                var t = new Transaction(debtor,[creditor], "settlement transaction", amount);
+                $scope.transactions.push(t);
+                projectsFactory.saveProject(p);
+                $route.reload();
+            }
+
             function calculateBalances() {
                 var result:{ [id: string] : Balance; } = {};
                 //Initialisation
@@ -77,7 +84,7 @@ splitonsApp.controller(
                     var numberOfDebiter = t.to.length;
 
                     t.to.forEach(debitor=> {
-                        result[debitor].amount -= (t.amount / numberOfDebiter);
+                        result[debitor].amount -= (Math.round((t.amount / numberOfDebiter)* 100) / 100);
                     });
                 });
                 return result;
