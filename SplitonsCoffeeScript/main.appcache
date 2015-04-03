@@ -1,15 +1,15 @@
 CACHE MANIFEST
-#v7
-CACHE:
+#v9
+partials/listProjects.html
+partials/transaction.html
+partials/basic.html
+partials/newProject.html
+index.html
 Guid.js.map
 angular-route.js
 Factories/factories.js
 Factories/factories.ts
 Factories/factories.js.map
-partials/listProjects.html
-partials/transaction.html
-partials/basic.html
-partials/newProject.html
 Balance.ts
 angular-resource.js
 App.ts
@@ -41,16 +41,9 @@ controllers/SettlementController.js
 controllers/SettlementController.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
-TestJavascript.html
 SettlementEntry.js.map
 angular.d.ts
 Transaction.js
 Guid.ts
 external/jquery.min.js
 external/bootstrap.min.js
-index.html
-NETWORK:
-*
-FALLBACK:
-fonts/fontawesome-webfont.ttf fonts/fontawesome-webfont.ttf
-fonts/fontawesome-webfont.woff fonts/fontawesome-webfont.woff
