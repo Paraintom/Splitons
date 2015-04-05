@@ -1,7 +1,7 @@
 ///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
-///<reference path="../Project.ts"/>
-///<reference path="../Transaction.ts"/>
+///<reference path="../dataObjects/Project.ts"/>
+///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller('TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory', function ($scope, $routeParams, $location, projectsFactory) {
@@ -21,6 +21,7 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
         transac.to = $scope.selectedDebtors.slice(0);
         transac.comment = $scope.comment;
         transac.amount = parseFloat($scope.amount);
+        transac.HasBeenUpdated();
         if ($routeParams.transactionId == 0) {
             project.transactions.push(transac);
         }
@@ -33,7 +34,13 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
         var existing = orderedResults.where(function (o) {
             return o.id == transactionId;
         }).firstOrDefault();
-        var result = existing != null ? existing : new Transaction(project.members[0], project.members.slice(0), "", 0);
+        var result = existing;
+        if (existing == null) {
+            result = new Transaction();
+            result.from = project.members[0];
+            result.to = project.members.slice(0);
+            result.comment = "";
+        }
         return result;
     }
 }]);

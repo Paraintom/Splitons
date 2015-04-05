@@ -1,7 +1,7 @@
 ///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
-///<reference path="../Project.ts"/>
-///<reference path="../Transaction.ts"/>
+///<reference path="../dataObjects/Project.ts"/>
+///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller('ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route', function ($scope, $routeParams, projectsFactory, $route) {
@@ -59,7 +59,11 @@ angular.module('splitonsApp').controller('ProjectController', ['$scope', '$route
         $route.reload();
     };
     $scope.settleDebts = function (debtor, creditor, amount) {
-        var t = new Transaction(debtor, [creditor], "settlement transaction", amount);
+        var t = new Transaction();
+        t.from = debtor;
+        t.to = [creditor];
+        t.comment = "settlement transaction";
+        t.amount = amount;
         $scope.transactions.push(t);
         projectsFactory.saveProject(p);
         $route.reload();
