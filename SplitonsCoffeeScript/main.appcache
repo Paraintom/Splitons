@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v9
+#v16
 partials/listProjects.html
 partials/transaction.html
 partials/basic.html
@@ -12,7 +12,6 @@ Factories/factories.ts
 Factories/factories.js.map
 Balance.ts
 angular-resource.js
-App.ts
 main.appcache
 SettlementEntry.ts
 Balance.js.map
@@ -21,9 +20,19 @@ SettlementEntry.js
 Project.ts
 css/font-awesome.min.css
 css/basic.css
-App.js
 Transaction.ts
-App.js.map
+app.js
+app.js.map
+app.ts
+controllers/ProjectController.js
+controllers/ProjectController.js.map
+controllers/ProjectController.ts
+controllers/ListProjectsController.js
+controllers/ListProjectsController.js.map
+controllers/ListProjectsController.ts
+controllers/TransactionController.js
+controllers/TransactionController.js.map
+controllers/TransactionController.ts
 angular.js
 Project.js.map
 Guid.js
@@ -33,12 +42,6 @@ linq/linq.d.ts
 Transaction.js.map
 checklist-model.js
 jquery.d.ts
-controllers/OverviewController.ts
-controllers/OverviewController.js
-controllers/OverviewController.js.map
-controllers/SettlementController.js.map
-controllers/SettlementController.js
-controllers/SettlementController.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 SettlementEntry.js.map
