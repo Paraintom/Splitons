@@ -11,6 +11,7 @@ class Transaction implements Serializable<Transaction>{
     to:string[];
     comment:string;
     amount:number;
+    currency:string;
 
     constructor() {
         this.id = Guid.newGuid();
@@ -31,6 +32,7 @@ class Transaction implements Serializable<Transaction>{
         this.to = input.to;
         this.comment = input.comment;
         this.amount = input.amount;
+        this.currency = input.currency ? input.currency : " ";
         return this;
     }
 }

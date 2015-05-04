@@ -4,8 +4,9 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
-angular.module('splitonsApp').controller('TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory', function ($scope, $routeParams, $location, projectsFactory) {
+angular.module('splitonsApp').controller('TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory', 'currenciesFactory', function ($scope, $routeParams, $location, projectsFactory, currenciesFactory) {
     var project = projectsFactory.getProject($routeParams.projectName);
+    $scope.currencies = currenciesFactory.getAll();
     var transac = getTransaction(project, $routeParams.transactionId);
     $scope.projectName = project.name;
     $scope.members = project.members;
@@ -13,6 +14,7 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
     $scope.selectedDebtors = transac.to.slice(0);
     $scope.amount = transac.amount;
     $scope.comment = transac.comment;
+    $scope.selectedCurrency = transac.currency;
     $scope.addTransaction = function () {
         if (isNaN($scope.amount)) {
             return true;
@@ -20,6 +22,7 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
         transac.from = $scope.selectedCreditor;
         transac.to = $scope.selectedDebtors.slice(0);
         transac.comment = $scope.comment;
+        transac.currency = $scope.selectedCurrency;
         transac.amount = parseFloat($scope.amount);
         transac.HasBeenUpdated();
         if ($routeParams.transactionId == 0) {
@@ -35,10 +38,18 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
             return o.id == transactionId;
         }).firstOrDefault();
         var result = existing;
+        function getDefaultCurrency() {
+            var result = $scope.currencies[0];
+            if (orderedResults.count() != 0) {
+                result = orderedResults.last().currency;
+            }
+            return result;
+        }
         if (existing == null) {
             result = new Transaction();
             result.from = project.members[0];
             result.to = project.members.slice(0);
+            result.currency = getDefaultCurrency();
             result.comment = "";
         }
         return result;

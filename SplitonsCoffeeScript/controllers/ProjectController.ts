@@ -12,8 +12,14 @@ angular.module('splitonsApp').controller(
             $scope.projectName = p.name;
             $scope.transactions = p.transactions;
             $scope.members = p.members;
-            $scope.balances = calculateBalances();
-            $scope.settlements = calculateSettlement();
+            $scope.allCurrencies = calculateAllCurrencies();
+
+            $scope.setSelectedCurrency = function(currency) {
+                $scope.selectedCurrency = currency;
+                $scope.balances = calculateBalances(currency);
+                $scope.settlements = calculateSettlement(currency);
+            }
+            $scope.setSelectedCurrency($scope.allCurrencies[0]);
 
             $scope.addMember = function(){
                 if(p.members.indexOf($scope.newMember) == -1)
@@ -75,12 +81,29 @@ angular.module('splitonsApp').controller(
                 $route.reload();
             }
 
-            function calculateBalances() {
+            function calculateAllCurrencies() {
+                var result = [];
+                p.transactions.forEach(t=> {
+                        var currentCurrency = t.currency;
+                        if (result.indexOf(currentCurrency) == -1) {
+                            result.push(currentCurrency);
+                        }
+                    }
+                );
+                if(result.length == 0){
+                    result.push("");
+                }
+                return result;
+            }
+
+            function calculateBalances(forCurrency) {
                 var result:{ [id: string] : Balance; } = {};
                 //Initialisation
                 p.members.forEach(m=>result[m] = new Balance(m, 0));
                 //Computation
                 p.transactions.forEach(t=> {
+                    if(t.currency != forCurrency)
+                        return;
                     result[t.from].amount += t.amount;
                     var numberOfDebiter = t.to.length;
 
@@ -91,11 +114,11 @@ angular.module('splitonsApp').controller(
                 return result;
             }
 
-            function calculateSettlement() {
+            function calculateSettlement(currency) {
 
                 var result:SettlementEntry[];
                 result = [];
-                var currentBalance = calculateBalances();
+                var currentBalance = calculateBalances(currency);
                 //Initialisation
 
                 while (notFinished(currentBalance)) {
@@ -121,7 +144,7 @@ angular.module('splitonsApp').controller(
                     var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
                     biggestCreditor.amount -= amount;
                     biggestDebtor.amount += amount;
-                    result.push(new SettlementEntry(from, to, amount));
+                    result.push(new SettlementEntry(from, to, amount, currency));
                 }
                 //result.forEach(o=>console.debug("from:"+o.from+" to:"+o.to+" amount:"+o.amount));
                 return result;

@@ -20,6 +20,7 @@ var Transaction = (function () {
         this.to = input.to;
         this.comment = input.comment;
         this.amount = input.amount;
+        this.currency = input.currency ? input.currency : " ";
         return this;
     };
     return Transaction;

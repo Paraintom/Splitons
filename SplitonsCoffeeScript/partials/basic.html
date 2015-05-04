@@ -40,24 +40,44 @@
                                     ng-show="members.length > 1"> : {{members.length}} members</span></h1>
                         </div>
                         <div class="panel-body">
-                            <ul class="lead list-unstyled text-left">
+                            <div class="row">
+                                <div ng-show="allCurrencies.length > 1" class="col-xs-2">
+                                    <div class="btn-group-vertical" role="group">
+                                        <span ng-repeat="currency in allCurrencies">
+                                            <button type="button"
+                                                    ng-class="selectedCurrency == currency ? 'btn btn-primary' : 'btn btn-default'"
+                                                    ng-click="setSelectedCurrency(currency)">{{currency}}
+                                            </button><br>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-10">
+                                    <ul class="lead list-unstyled text-left">
 
-                                <li ng-repeat="balance in balances">
-                                    <span>{{balance.member}}</span>
-                            <span ng-class="balance.amount>0 ? 'label label-success' : 'label label-danger'">
-                                {{balance.amount | number:2}}</span>
-                                    <i ng-click="deleteMember(balance.member)"
-                                       ng-hide="existInTransactions(balance.member)"
-                                       class="fa fa-close fa-fw fa-lg text-danger"></i>
+                                        <li ng-repeat="balance in balances">
+                                            <span>{{balance.member}}</span>
+                                    <span ng-class="balance.amount>0 ? 'label label-success' : 'label label-danger'">
+                                        {{balance.amount | number:2}} {{selectedCurrency}}
+                                    </span>
+                                            <i ng-click="deleteMember(balance.member)"
+                                               ng-hide="existInTransactions(balance.member)"
+                                               class="fa fa-close fa-fw fa-lg text-danger"></i>
 
-                                </li>
-                            </ul>
-                            <form role="form" ng-submit="addMember()">
-                                <input class="form-control" placeholder="John doe" type="text" ng-model="newMember"><br>
-                                <button type="submit" class="btn btn-lg btn-default">
-                                    <i class="fa fa-user-plus fa-fw fa-lg"/>
-                                    Add a new member</button>
-                            </form>
+                                        </li>
+                                    </ul>
+                                    <form role="form" ng-submit="addMember()">
+                                        <input class="form-control" placeholder="John doe" type="text"
+                                               ng-model="newMember"><br>
+                                        <button type="submit" class="btn btn-lg btn-default">
+                                            <i class="fa fa-user-plus fa-fw fa-lg"/>
+                                            <span class="hidden-xs">
+                                                Add a new member
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -68,7 +88,6 @@
             <!--transaction level-->
             <div class="row" ng-show="activeTab == 2">
                 <div class="col-md-12">
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h1 ng-show="transactions.length > 1">{{transactions.length}} Transactions</h1>
@@ -76,7 +95,9 @@
                         <div class="panel-body">
                             <ul class="lead list-unstyled">
                                 <li ng-repeat="transaction in transactions track by $index">
-                                    <span>From {{transaction.from}}, to {{(transaction.to).join(',')}} : {{transaction.amount}} ({{transaction.comment}})</span>
+                                    <span><!--{{transaction.lastUpdated| date:"MM/dd/yyyy 'at' h:mma"}} :-->
+                                        {{transaction.comment}} : {{transaction.amount}} {{transaction.currency}}. From {{transaction.from}}, to {{(transaction.to).join(',')}}
+                                    </span>
 
                                 <span class="pull-right ">
                                         <a href="#/project/{{projectName}}/{{transaction.id}}/transaction"><i
@@ -104,22 +125,35 @@
                         <div class="panel-body">
                             <h1 class="text-warning" ng-show="transactions.length == 0"> You need to add transactions
                                 first</h1>
-                            <ul class="lead list-unstyled">
 
-                                <li ng-repeat="settlement in settlements">
-                                    <span>{{settlement.from}} should pay {{settlement.to}} <b>{{settlement.amount|number:2}}</b> </span>
+                            <div class="row">
+                                <div ng-show="allCurrencies.length > 1" class="col-xs-2">
+                                    <div class="btn-group-vertical" role="group">
+                                        <span ng-repeat="currency in allCurrencies">
+                                            <button type="button"
+                                                    ng-class="selectedCurrency == currency ? 'btn btn-primary' : 'btn btn-default'"
+                                                    ng-click="setSelectedCurrency(currency)">{{currency}}
+                                            </button><br>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-10">
+                                    <ul class="lead list-unstyled">
+
+                                        <li ng-repeat="settlement in settlements">
+                                            <span>{{settlement.from}} should pay {{settlement.to}} <b>{{settlement.amount|number:2}}</b> {{settlement.currency}}</span>
 
                                 <span class="pull-right ">
                                     <a ng-click="settleDebts(settlement.from,settlement.to,settlement.amount)"><i
                                             class="fa fa-check fa-fw fa-lg text-success"></i></a>
                                     </span>
-                                </li>
-                            </ul>
-
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

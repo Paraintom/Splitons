@@ -1,6 +1,6 @@
 ///<reference path="linq/linq.d.ts"/>
 ///<reference path="angular.d.ts"/>
-var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory', 'checklist-model']);
+var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory', 'currenciesFactory', 'checklist-model']);
 splitonsApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/', {
         templateUrl: 'partials/listProjects.html',

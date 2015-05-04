@@ -13,15 +13,20 @@ projectsFactory.factory('projectsFactory', function () {
         for (var i = 0; i < localStorage.length; i++) {
             var projectId = localStorage.key(i);
             try {
-                var projectString = localStorage.getItem(projectId);
-                var json = JSON.parse(projectString);
-                var data = new Project().deserialize(json);
-                allProjects.push(data);
+                if (isProjectId(projectId)) {
+                    var projectString = localStorage.getItem(projectId);
+                    var json = JSON.parse(projectString);
+                    var data = new Project().deserialize(json);
+                    allProjects.push(data);
+                }
             }
             catch (error) {
-                this.$log.error("LocalStorageService::readObject: can't convert string from local storage to object using JSON.parse(). Error: " + error);
+                console.error("LocalStorageService::readObject: can't convert string from local storage to object using JSON.parse(). Error: " + error);
             }
         }
+    }
+    function isProjectId(key) {
+        return key.match("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
     }
     return {
         saveProject: function (project) {
