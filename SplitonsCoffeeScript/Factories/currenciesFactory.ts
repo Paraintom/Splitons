@@ -34,6 +34,10 @@ currenciesFactory.factory('currenciesFactory', function () {
     return {
         getAll: function () {
             return allCurrencies;
+        },
+        add: function (currency) {
+            allCurrencies.push(currency);
+            localStorage.setItem(localStorageKey, allCurrencies.join(separator));
         }
         /* In the future, we should propose the possibility for the user to add his own currencies */
     }

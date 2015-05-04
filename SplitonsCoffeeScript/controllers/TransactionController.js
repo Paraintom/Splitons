@@ -15,6 +15,12 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
     $scope.amount = transac.amount;
     $scope.comment = transac.comment;
     $scope.selectedCurrency = transac.currency;
+    $scope.addCurrency = function (currency) {
+        if ($scope.currencies.indexOf(currency) == -1) {
+            currenciesFactory.add(currency);
+        }
+        $scope.selectedCurrency = currency;
+    };
     $scope.addTransaction = function () {
         if (isNaN($scope.amount)) {
             return true;

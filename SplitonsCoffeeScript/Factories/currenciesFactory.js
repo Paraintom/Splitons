@@ -28,6 +28,10 @@ currenciesFactory.factory('currenciesFactory', function () {
     return {
         getAll: function () {
             return allCurrencies;
+        },
+        add: function (currency) {
+            allCurrencies.push(currency);
+            localStorage.setItem(localStorageKey, allCurrencies.join(separator));
         }
     };
 });
