@@ -3,10 +3,12 @@
         <div class="row text-left">
             <div class="col-md-12">
                 <h1>Transaction</h1>
+
                 <form role="form" ng-init="IncorrectAmount=false" ng-submit="IncorrectAmount = addTransaction()">
                     <div class="form-group">
                         <label class="control-label">Who paid :</label>
-                        <select class="btn-group" ng-model="selectedCreditor" ng-options="opt for opt in members"></select>
+                        <select class="btn-group" ng-model="selectedCreditor"
+                                ng-options="opt for opt in members"></select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">For what?</label>
@@ -16,22 +18,26 @@
                     <div class="form-group">
                         <label class="control-label">How much?</label>
                         <input ng-model="amount" class="form-control" placeholder="100.05" type="text"
-                                min="0" step="0.01" required>
+                               min="0" step="0.01" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">For whom?</label>
                         <ul>
                             <li ng-repeat="name in members">
-                                <input type='checkbox' checklist-model="selectedDebtors" checklist-value="name"> {{name}}
+                                <input type='checkbox' checklist-model="selectedDebtors" checklist-value="name">
+                                {{name}}
                             </li>
                         </ul>
                     </div>
 
-                    <div class="btn-group" role="group" >
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add new currency</button>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add new
+                            currency
+                        </button>
 
                         <div class="btn-group" role="group">
-                            <select class="form-control" ng-model="selectedCurrency" ng-options="opt for opt in currencies" />
+                            <select class="form-control" ng-model="selectedCurrency"
+                                    ng-options="opt for opt in currencies"/>
                         </div>
                     </div>
                     <br>
@@ -43,10 +49,13 @@
                         Enter a valid amount!
                     </div>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                </form>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form role="form" ng-submit="addCurrency()">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -57,15 +66,16 @@
                                     <input type="text" name="userName" ng-model="newCurrency" required>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" ng-click="addCurrency(newCurrency)"  data-dismiss="modal">Save changes</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                    </button>
+                                    <input  type="submit" class="btn btn-primary" value="Save changes"/>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
-
+                </div>
             </div>
         </div>
     </div>
+</div>
 </div>

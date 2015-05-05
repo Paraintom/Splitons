@@ -15,7 +15,8 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
     $scope.amount = transac.amount;
     $scope.comment = transac.comment;
     $scope.selectedCurrency = transac.currency;
-    $scope.addCurrency = function (currency) {
+    $scope.addCurrency = function () {
+        var currency = $scope.newCurrency;
         if ($scope.currencies.indexOf(currency) == -1) {
             currenciesFactory.add(currency);
         }
