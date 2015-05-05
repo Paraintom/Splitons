@@ -38,7 +38,13 @@ currenciesFactory.factory('currenciesFactory', function () {
         add: function (currency) {
             allCurrencies.push(currency);
             localStorage.setItem(localStorageKey, allCurrencies.join(separator));
+        },
+        delete: function (currency) {
+            var index = allCurrencies.indexOf(currency);
+            if(index != -1) {
+                allCurrencies.splice(index, 1);
+                localStorage.setItem(localStorageKey, allCurrencies.join(separator));
+            }
         }
-        /* In the future, we should propose the possibility for the user to add his own currencies */
     }
 });
