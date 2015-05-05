@@ -21,7 +21,7 @@ currenciesFactory.factory('currenciesFactory', function () {
         try {
             var currenciesListString = localStorage.getItem(localStorageKey);
             if(currenciesListString === null){
-                allCurrencies = ["€", "£", "$", " "];
+                allCurrencies = ["€", "£", "$"];
             }
             else{
                 allCurrencies = currenciesListString.split(separator);
