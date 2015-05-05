@@ -91,6 +91,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h1 ng-show="transactions.length > 1">{{transactions.length}} Transactions</h1>
+
+                            <a href="#/project/{{projectName}}/0/transaction" class="btn btn-lg btn-primary">Add a new
+                                transaction
+                            </a>
                         </div>
                         <div class="panel-body">
                             <ul class="lead list-unstyled">
@@ -107,8 +111,6 @@
                                     </span>
                                 </li>
                             </ul>
-                            <a href="#/project/{{projectName}}/0/transaction" class="btn btn-lg btn-primary">Add a new
-                                transaction</a>
                         </div>
                     </div>
                 </div>
