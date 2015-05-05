@@ -40,24 +40,30 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
         return false;
     };
     function getTransaction(project, transactionId) {
+        //We try to get the existing transaction
         var orderedResults = Enumerable.from(project.transactions);
         var existing = orderedResults.where(function (o) {
             return o.id == transactionId;
         }).firstOrDefault();
         var result = existing;
-        function getDefaultCurrency() {
-            var result = $scope.currencies[0];
-            if (orderedResults.count() != 0) {
-                result = orderedResults.last().currency;
-            }
-            return result;
-        }
+        //Else we create a new one
         if (existing == null) {
+            function getDefaultCurrency() {
+                var result = $scope.currencies[0];
+                if (orderedResults.count() != 0) {
+                    result = orderedResults.last().currency;
+                }
+                return result;
+            }
             result = new Transaction();
             result.from = project.members[0];
             result.to = project.members.slice(0);
             result.currency = getDefaultCurrency();
             result.comment = "";
+        }
+        //This prevent a bug if the currency has been removed
+        if ($scope.currencies.indexOf(result.currency) == -1) {
+            $scope.currencies.push(result.currency);
         }
         return result;
     }
