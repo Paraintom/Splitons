@@ -26,6 +26,20 @@
     <script src="Balance.js"></script>
     <script src="SettlementEntry.js"></script>
     <script src="checklist-model.js"></script>
+
+    <script>
+        function setVersion()
+        {
+                var lines = data.split("\n");
+                var version = lines[1].substring(1);
+                document.getElementById("version").innerHTML = version;
+                return version;
+            });
+        }
+        $( document ).ready(function() {
+            setVersion();
+        });
+    </script>
 </head>
 
 <body>
@@ -38,16 +52,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/"><span>Splitons</span></a>
+            <a class="navbar-brand" href="#/"><span>Splitons</span> <span id="version"></span></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active">
                     <a href="#/">Home</a>
                 </li>
-                <!--<li>
-                    <a href="#/">Contact</a>
-                </li>-->
             </ul>
         </div>
     </div>
