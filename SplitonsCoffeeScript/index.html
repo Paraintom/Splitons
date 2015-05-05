@@ -30,6 +30,7 @@
     <script>
         function setVersion()
         {
+            $.get("main.appcache", function(data) {
                 var lines = data.split("\n");
                 var version = lines[1].substring(1);
                 document.getElementById("version").innerHTML = version;
