@@ -72,12 +72,13 @@ angular.module('splitonsApp').controller(
                 $route.reload();
             }
 
-            $scope.settleDebts = function(debtor, creditor, amount) {
+            $scope.settleDebts = function(debtor, creditor, amount, currency) {
                 var t = new Transaction();
                 t.from = debtor;
                 t.to = [creditor];
                 t.comment = "settlement transaction";
                 t.amount = amount;
+                t.currency = currency;
                 $scope.transactions.push(t);
                 projectsFactory.saveProject(p);
                 $route.reload();
