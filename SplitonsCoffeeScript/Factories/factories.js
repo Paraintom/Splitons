@@ -32,6 +32,9 @@ projectsFactory.factory('projectsFactory', function () {
         saveProject: function (project) {
             localStorage.setItem(project.id, JSON.stringify(project));
         },
+        deleteProject: function (id) {
+            localStorage.removeItem(id);
+        },
         getProject: function (name) {
             var result = Enumerable.from(allProjects).where(function (o) { return o.name == name; }).firstOrDefault();
             if (result == null) {

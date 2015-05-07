@@ -18,6 +18,8 @@ angular.module('splitonsApp').controller(
             $scope.selectedDebtors = transac.to.slice(0);
             $scope.amount = transac.amount;
             $scope.comment = transac.comment;
+
+            //START Currencies
             $scope.selectedCurrency = transac.currency;
 
             $scope.addCurrency = function() {
@@ -36,6 +38,7 @@ angular.module('splitonsApp').controller(
                 $scope.currencies.splice(index, 1);
                 currenciesFactory.delete(currency);
             }
+            //END Currencies
             $scope.addTransaction = function() {
                 if(isNaN($scope.amount)){
                     return true;

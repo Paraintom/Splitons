@@ -1,14 +1,3 @@
-<!--<div>
-    <h1>Projects :</h1>
-    <ul>
-        <li ng-repeat="projectName in projectNames">
-            <a href="#/project/{{projectName}}">{{projectName}}</a>
-        </li>
-    </ul>
-    <a href="#/newProject">create a new project</a>
-</div>-->
-
-
 <div class="section">
     <div class="container">
         <div class="row">
@@ -33,7 +22,9 @@
                 <h1>Existing projects</h1>
                 <hr class="hidden-xs">
                 <ul class="text-left lead">
-                    <li ng-repeat="projectName in projectNames">  <a href="#/project/{{projectName}}/1">{{projectName}}</a>
+                    <li ng-repeat="project in projects">
+                        <a href="#/project/{{project.name}}/1">{{project.name}}</a>
+                        <i ng-click="deleteProject(project.id)" class="fa fa-close fa-fw fa-lg text-danger"></i>
                     </li>
                 </ul>
                 <p></p>

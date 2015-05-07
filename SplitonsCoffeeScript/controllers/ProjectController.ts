@@ -6,7 +6,7 @@
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller(
     'ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route',
-        function ($scope, $routeParams, projectsFactory,$route) {
+        function ($scope, $routeParams, projectsFactory, $route) {
             $scope.activeTab =$routeParams.activeTab;
             var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
