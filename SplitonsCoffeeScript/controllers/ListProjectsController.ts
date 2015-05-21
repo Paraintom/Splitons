@@ -18,10 +18,10 @@ angular.module('splitonsApp').controller(
                 }
             };
 
-            $scope.deleteProject = function (projectId) {
+            $scope.deleteProject = function (projectName, projectId) {
                 bootbox.confirm({
                     size: 'small',
-                    message: "Your message here…",
+                    message: "Are you sure you want to delete the project "+projectName+"?",
                     callback: function(result){
                         if(result){
                             for (var index in $scope.projects) {
