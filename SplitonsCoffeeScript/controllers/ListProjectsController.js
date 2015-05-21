@@ -1,4 +1,5 @@
 ///<reference path="../linq/linq.d.ts"/>
+///<reference path="../external/bootbox.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
@@ -13,12 +14,21 @@ angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'p
         }
     };
     $scope.deleteProject = function (projectId) {
-        for (var index in $scope.projects) {
-            if ($scope.projects[index].id == projectId) {
-                $scope.projects.splice(index, 1);
-                projectsFactory.deleteProject(projectId);
+        bootbox.confirm({
+            size: 'small',
+            message: "Your message here…",
+            callback: function (result) {
+                if (result) {
+                    for (var index in $scope.projects) {
+                        if ($scope.projects[index].id == projectId) {
+                            $scope.projects.splice(index, 1);
+                            projectsFactory.deleteProject(projectId);
+                            $route.reload();
+                        }
+                    }
+                }
             }
-        }
+        });
     };
 }]);
 //# sourceMappingURL=ListProjectsController.js.map
