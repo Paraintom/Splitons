@@ -20,6 +20,7 @@ angular.module('splitonsApp').controller(
                 $scope.selectedCurrency = currency;
                 $scope.balances = calculateBalances(currency);
                 $scope.settlements = calculateSettlement(currency);
+                $scope.averagePerPerson = calculateAveragePerPerson();
             }
             $scope.setSelectedCurrency($scope.allCurrencies[0]);
 
@@ -84,6 +85,23 @@ angular.module('splitonsApp').controller(
                 $route.reload();
             }
 
+            function calculateAveragePerPerson() {
+                var result = 0;
+                Enumerable.from<Transaction>($scope.transactions)
+                    .where(function (y) {
+                        return y.currency == $scope.selectedCurrency;
+                    })
+                    .forEach(t=> {
+                        result += t.amount;
+                    }
+                );
+                var numberMembers = $scope.members.length;
+                if(numberMembers != 0){
+                    result = (result / numberMembers);
+                }
+                return result;
+            }
+
             function calculateAllCurrencies() {
                 var result = [];
                 p.transactions.forEach(t=> {
@@ -93,7 +111,7 @@ angular.module('splitonsApp').controller(
                         }
                     }
                 );
-                if(result.length == 0){
+                if (result.length == 0) {
                     result.push("");
                 }
                 return result;
