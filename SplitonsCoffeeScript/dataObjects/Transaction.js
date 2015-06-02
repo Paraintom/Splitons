@@ -5,17 +5,29 @@
  */
 var Transaction = (function () {
     function Transaction() {
+        this.lastUpdated = 1;
         this.id = Guid.newGuid();
     }
     Transaction.prototype.GetLastUpdated = function () {
-        return this.lastUpdated;
+        return new Date(this.lastUpdated);
     };
     Transaction.prototype.HasBeenUpdated = function () {
-        this.lastUpdated = new Date();
+        this.lastUpdated = new Date().getTime();
     };
     Transaction.prototype.deserialize = function (input) {
         this.id = input.id;
-        this.lastUpdated = input.lastUpdated;
+        //backward compatible mode ...
+        if (input.lastUpdated instanceof Date) {
+            this.lastUpdated = input.lastUpdated.getTime();
+        }
+        else {
+            if (input.lastUpdated === undefined) {
+                this.lastUpdated = 1;
+            }
+            else {
+                this.lastUpdated = new Date(input.lastUpdated).getTime();
+            }
+        }
         this.from = input.from;
         this.to = input.to;
         this.comment = input.comment;

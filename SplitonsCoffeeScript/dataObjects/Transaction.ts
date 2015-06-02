@@ -6,7 +6,7 @@
  */
 class Transaction implements Serializable<Transaction>{
     id:string;
-    lastUpdated:Date;
+    lastUpdated:number;
     from:string;
     to:string[];
     comment:string;
@@ -14,20 +14,32 @@ class Transaction implements Serializable<Transaction>{
     currency:string;
 
     constructor() {
+        this.lastUpdated = 1;
         this.id = Guid.newGuid();
     }
 
     GetLastUpdated() {
-        return this.lastUpdated;
+        return new Date(this.lastUpdated);
     }
 
     HasBeenUpdated() {
-        this.lastUpdated = new Date();
+        this.lastUpdated = new Date().getTime();
     }
 
     deserialize(input) {
         this.id = input.id;
-        this.lastUpdated = input.lastUpdated;
+        //backward compatible mode ...
+        if(input.lastUpdated instanceof Date) {
+            this.lastUpdated = input.lastUpdated.getTime();
+        }
+        else{
+            if(input.lastUpdated  === undefined) {
+                this.lastUpdated = 1;
+            }
+            else {
+                this.lastUpdated = new Date(input.lastUpdated).getTime();
+            }
+        }
         this.from = input.from;
         this.to = input.to;
         this.comment = input.comment;
