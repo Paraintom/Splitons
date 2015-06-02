@@ -22,7 +22,7 @@ currenciesFactory.factory('currenciesFactory', function () {
             }
         }
         catch (error) {
-            this.$log.error("LocalStorageService::currenciesFactory::init: can't retrieve the list of currencies. Error: " + error);
+            this.console.error("LocalStorageService::currenciesFactory::init: can't retrieve the list of currencies. Error: " + error);
         }
     }
     return {
