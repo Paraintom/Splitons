@@ -7,6 +7,11 @@ var Guid = (function () {
             return v.toString(16);
         });
     };
+    Guid.isGuid = function (toTest) {
+        var regexp = new RegExp('(^[^-]{8}-[^-]{4}-4[^-]{3}-[^-]{4}-[^-]{12}$)');
+        var result = regexp.test(toTest);
+        return result;
+    };
     return Guid;
 })();
 //# sourceMappingURL=Guid.js.map
