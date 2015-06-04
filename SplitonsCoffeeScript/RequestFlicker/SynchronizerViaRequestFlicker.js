@@ -34,7 +34,13 @@ var SynchronizerViaRequestFlicker = (function () {
         requestFlicker.onConnected().subscribe(function () { return console.log("Connected"); });
         requestFlicker.onDisconnected().subscribe(function () { return console.log("Disconnected"); });
         requestFlicker.onError().subscribe(function (a) { return _this.handleError(a); });
-        var request = { "projectId": project.id, "lastUpdated": project.lastUpdated, "toUpdate": this.getToUpdate(project) };
+        var toUpdate = this.getToUpdate(project);
+        console.log('request last update' + project.lastUpdated + 'total sent :' + toUpdate.length);
+        var request = {
+            "projectId": project.id,
+            "lastUpdated": project.lastUpdated,
+            "toUpdate": toUpdate
+        };
         requestFlicker.request("SplitonSync", request);
     };
     //########## Service handling ###########
@@ -45,16 +51,26 @@ var SynchronizerViaRequestFlicker = (function () {
         if (json.projectId != p.id) {
             alert("We received an answer with incorrect projectId " + answer.projectId);
         }
+        var updatedNumber = 0;
         var membersInvolved = [];
         for (var indexTransactionToUpdate in json.toUpdate) {
             var newTransaction = new Transaction().deserialize(json.toUpdate[indexTransactionToUpdate]);
             var transactionIndex = p.transactions.map(function (e) {
                 return e.id;
             }).indexOf(newTransaction.id);
+            var oldTransaction = p.transactions[transactionIndex];
+            //We ignore the last(s) transactions
+            if (newTransaction.lastUpdated == oldTransaction.lastUpdated)
+                continue;
             if (transactionIndex != -1) {
                 p.transactions.splice(transactionIndex, 1);
+                console.log('transac update, was ' + oldTransaction.lastUpdated + 'new ' + newTransaction.lastUpdated + ' for ' + oldTransaction.comment);
+            }
+            else {
+                console.log('new transac ' + newTransaction.comment);
             }
             p.transactions.push(newTransaction);
+            updatedNumber++;
             //alert('New transaction '+JSON.stringify(newTransaction));
             //We need to synchronize the members from to and from members
             if (p.members.indexOf(newTransaction.from) == -1) {
@@ -68,7 +84,8 @@ var SynchronizerViaRequestFlicker = (function () {
             }
         }
         p.lastUpdated = json.lastUpdated;
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(true, "Done"));
+        var syncInfo = (updatedNumber == 0) ? "(No new update)" : "(" + updatedNumber + " new update(s))";
+        this.onSynchronizationResultEvent.raise(new SyncResultEvent(true, "Synchronisation successful " + syncInfo));
     };
     SynchronizerViaRequestFlicker.prototype.handleError = function (errorEvent) {
         var errorString = errorEvent.message;
@@ -79,10 +96,17 @@ var SynchronizerViaRequestFlicker = (function () {
         this.onSynchronizationResultEvent.raise(new SyncResultEvent(false, errorString));
     };
     SynchronizerViaRequestFlicker.prototype.getToUpdate = function (p) {
-        return Enumerable.from(p.transactions).where(function (y) {
-            var result = y.lastUpdated >= p.lastUpdated;
+        var newResults = Enumerable.from(p.transactions).where(function (y) {
+            var result = y.lastUpdated > p.lastUpdated;
             return result;
         }).toArray();
+        if (newResults.length == 0) {
+            newResults = Enumerable.from(p.transactions).where(function (y) {
+                var result = y.lastUpdated == p.lastUpdated;
+                return result;
+            }).toArray().splice(1);
+        }
+        return newResults;
     };
     return SynchronizerViaRequestFlicker;
 })();

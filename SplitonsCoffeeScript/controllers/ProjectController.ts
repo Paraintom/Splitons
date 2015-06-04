@@ -10,6 +10,7 @@ angular.module('splitonsApp').controller(
             $scope.activeTab =$routeParams.activeTab;
             var p = projectsFactory.getProject($routeParams.projectName);
             $scope.projectName = p.name;
+            $scope.projectId = p.id;
             $scope.transactions = p.transactions;
             $scope.members = p.members;
             $scope.allCurrencies = calculateAllCurrencies();

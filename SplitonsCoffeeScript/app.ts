@@ -1,7 +1,9 @@
 ///<reference path="linq/linq.d.ts"/>
 ///<reference path="angular.d.ts"/>
 
-var splitonsApp = angular.module('splitonsApp', ['ngRoute', 'projectsFactory','currenciesFactory','checklist-model']);
+var splitonsApp = angular.module('splitonsApp', ['ngRoute',
+    'projectsFactory','currenciesFactory','synchFactory',
+    'checklist-model', 'cgNotify']);
 
 splitonsApp.config(['$routeProvider',
     function ($routeProvider) {
@@ -13,6 +15,10 @@ splitonsApp.config(['$routeProvider',
             when('/project/:projectName/:activeTab', {
                 templateUrl: 'partials/basic.html',
                 controller: 'ProjectController'
+            }).
+            when('/synchronize/:projectId', {
+                templateUrl: 'partials/synchronize.html',
+                controller: 'SynchronizeController'
             }).
             when('/project/:projectName/:transactionId/transaction', {
                 templateUrl: 'partials/transaction.html',

@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v21
+#v29
 partials/listProjects.html
 partials/transaction.html
 partials/basic.html
@@ -13,6 +13,9 @@ Factories/factories.js.map
 Factories/currenciesFactory.js
 Factories/currenciesFactory.ts
 Factories/currenciesFactory.js.map
+Factories/synchFactory.js
+Factories/synchFactory.ts
+Factories/synchFactory.js.map
 Balance.ts
 angular-resource.js
 SettlementEntry.ts
@@ -26,6 +29,7 @@ dataObjects/Transaction.js.map
 dataObjects/Transaction.js
 css/font-awesome.min.css
 css/basic.css
+css/angular-notify.css
 app.js
 app.js.map
 app.ts
@@ -38,6 +42,9 @@ controllers/ListProjectsController.ts
 controllers/TransactionController.js
 controllers/TransactionController.js.map
 controllers/TransactionController.ts
+controllers/SynchronizeController.js
+controllers/SynchronizeController.js.map
+controllers/SynchronizeController.ts
 angular.js
 Guid.js
 Balance.js
@@ -49,6 +56,25 @@ fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 SettlementEntry.js.map
 angular.d.ts
+angular-notify.d.ts
+angular-notify.js
 Guid.ts
 external/jquery.min.js
 external/bootstrap.min.js
+external/bootbox.min.js
+external/bootbox.d.ts
+RequestFlicker/RequestFlicker.ts
+RequestFlicker/RequestFlicker.js
+RequestFlicker/RequestFlicker.js.map
+RequestFlicker/LiteEvent.ts
+RequestFlicker/LiteEvent.js
+RequestFlicker/LiteEvent.js.map
+RequestFlicker/ServiceLookup.ts
+RequestFlicker/ServiceLookup.js
+RequestFlicker/ServiceLookup.js.map
+RequestFlicker/ISynchronizer.ts
+RequestFlicker/ISynchronizer.js
+RequestFlicker/ISynchronizer.js.map
+RequestFlicker/SynchronizerViaRequestFlicker.ts
+RequestFlicker/SynchronizerViaRequestFlicker.js
+RequestFlicker/SynchronizerViaRequestFlicker.js.map

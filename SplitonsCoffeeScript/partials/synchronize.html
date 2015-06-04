@@ -1,0 +1,82 @@
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <div class="btn-group btn-group-lg" role="group">
+                        <a class="btn btn-default"
+                           href="#/project/{{projectName}}/1">
+                            <i class="fa fa-users fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Members
+                                </span>
+                        </a>
+                        <a class="btn btn-default"
+                           href="#/project/{{projectName}}/2">
+                            <i class="fa fa-list fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Transactions
+                             </span>
+                        </a>
+                        <a class="btn btn-default"
+                           href="#/project/{{projectName}}/3">
+                            <i class="fa fa-exchange fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Settlement
+                                </span>
+                        </a>
+                        <span class="btn btn-primary">
+                            <i ng-class="synchronizing ? 'fa fa-refresh fa-spin fa-fw fa-lg' : 'fa fa-refresh fa-fw fa-lg'"/>
+                                <span class="hidden-xs">
+                                Synchronisation
+                                </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h1>Synchronizing project {{projectName}}</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <p class="hidden-xs">If you need to share this project, it is the right place!</p>
+
+                        <p ng-if="lastUpdated != 0">Last update received : {{lastUpdated | date:"dd/MM/yyyy 'at' h:mma"}}</p>
+                        <p>
+
+                        To share the project just send the current url to your friends :<br>
+                            <b>
+                                <span id="currentUrl"></span>
+                            </b>
+                            <script>
+                                document.getElementById("currentUrl").innerHTML = window.location.href;
+                            </script>
+                        </p>
+
+                        <p ng-if="lastUpdated === 0">This project is not synchronised!</p>
+
+                        <p ng-if="errorString.length > 1">Error : {{errorString}}</p>
+
+                        <form role="form" ng-submit="synchronize()">
+                            <button type="submit" class="btn btn-lg btn-default">
+                                <i ng-class="synchronizing ? 'fa fa-refresh fa-spin fa-fw fa-lg' : 'fa fa-refresh fa-fw fa-lg'"/>
+                                            <span class="hidden-xs">
+                                                Synchronize project
+                                            </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

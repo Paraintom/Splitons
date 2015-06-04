@@ -6,6 +6,7 @@
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
+///<reference path="../Guid.ts"/>
 
 
 var projectsFactory = angular.module('projectsFactory', ['ngResource']);
@@ -45,16 +46,29 @@ projectsFactory.factory('projectsFactory', function () {
             localStorage.removeItem(id);
         },
         getProject: function (name) {
-            var result = Enumerable.from(allProjects).where(o=>o.name == name).firstOrDefault();
-            if (result == null) {
-                throw new Error("Can't find project : "+name);
+            if(Guid.isGuid(name)){
+                var result = Enumerable.from(allProjects).where(o=>o.id == name).firstOrDefault();
+                if (result == null) {
+                    // This is used for synchronisation
+                    result = this.getNewProject(name);
+                }
+                return result;
             }
-            return result;
+            else {
+                var result = Enumerable.from(allProjects).where(o=>o.name == name).firstOrDefault();
+                if (result == null) {
+                    throw new Error("Can't find project : " + name);
+                }
+                return result;
+            }
         },
         getNewProject: function (name) {
             var result = Enumerable.from(allProjects).where(o=>o.name == name).firstOrDefault();
             if (result == null) {
                 result = new Project();
+                if(Guid.isGuid(name)) {
+                    result.id = name;
+                }
                 result.name = name;
                 //result = getFakeProject(name);
                 allProjects.push(result);
