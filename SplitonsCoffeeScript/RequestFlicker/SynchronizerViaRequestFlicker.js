@@ -104,7 +104,7 @@ var SynchronizerViaRequestFlicker = (function () {
             newResults = Enumerable.from(p.transactions).where(function (y) {
                 var result = y.lastUpdated == p.lastUpdated;
                 return result;
-            }).toArray().splice(1);
+            }).toArray().splice(0);
         }
         return newResults;
     };
