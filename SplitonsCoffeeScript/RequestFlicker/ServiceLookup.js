@@ -8,7 +8,6 @@ var ServiceLookup = (function () {
         if (this.isNullOrEmpty(lookupUrl)) {
             this.lookupUrl = "ws://localhost:8181/";
         }
-        jQuery.support.cors = true;
     }
     ServiceLookup.prototype.onError = function () {
         return this.onErrorEvent;
@@ -21,6 +20,7 @@ var ServiceLookup = (function () {
         if (this.lookupUrl.substring(0, 7) === "http://") {
             console.log('requesting...');
             var url = this.lookupUrl + "?get=" + serviceName;
+            jQuery.support.cors = true;
             $.get(url, function (s) {
                 console.log('request success' + s);
                 _this.onResultEvent.raise(s.trim());

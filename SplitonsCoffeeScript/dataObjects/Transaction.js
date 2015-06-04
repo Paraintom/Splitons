@@ -6,6 +6,7 @@
 var Transaction = (function () {
     function Transaction() {
         this.lastUpdated = 1;
+        this.deleted = false;
         this.id = Guid.newGuid();
     }
     Transaction.prototype.GetLastUpdated = function () {
@@ -28,6 +29,7 @@ var Transaction = (function () {
                 this.lastUpdated = new Date(input.lastUpdated).getTime();
             }
         }
+        this.deleted = input.deleted == true;
         this.from = input.from;
         this.to = input.to;
         this.comment = input.comment;

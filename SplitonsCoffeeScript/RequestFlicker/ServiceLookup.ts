@@ -12,13 +12,13 @@ class ServiceLookup {
         if (this.isNullOrEmpty(lookupUrl)) {
             this.lookupUrl = "ws://localhost:8181/";
         }
-        jQuery.support.cors = true;
     }
 
     getService(serviceName) {
         if (this.lookupUrl.substring(0,7) === "http://") {
             console.log('requesting...');
             var url = this.lookupUrl + "?get=" + serviceName;
+            jQuery.support.cors = true;
             $.get(url, (s) => {
                 console.log('request success' + s);
                 this.onResultEvent.raise(s.trim());

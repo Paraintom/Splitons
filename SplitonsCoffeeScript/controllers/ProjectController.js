@@ -4,12 +4,13 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
-angular.module('splitonsApp').controller('ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route', function ($scope, $routeParams, projectsFactory, $route) {
+angular.module('splitonsApp').controller('ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route', '$filter', function ($scope, $routeParams, projectsFactory, $route, $filter) {
     $scope.activeTab = $routeParams.activeTab;
     var p = projectsFactory.getProject($routeParams.projectName);
     $scope.projectName = p.name;
     $scope.projectId = p.id;
     $scope.transactions = p.transactions;
+    $scope.notDeletedTransactions = $filter('filter')(p.transactions, { deleted: false });
     $scope.members = p.members;
     $scope.allCurrencies = calculateAllCurrencies();
     $('#newMemberTextBox').focus();
@@ -59,8 +60,10 @@ angular.module('splitonsApp').controller('ProjectController', ['$scope', '$route
     };
     $scope.deleteTransaction = function (id) {
         for (var index in $scope.transactions) {
-            if ($scope.transactions[index].id == id) {
-                $scope.transactions.splice(index, 1);
+            var currentTransaction = $scope.transactions[index];
+            if (currentTransaction.id == id) {
+                //$scope.transactions.splice(index, 1);
+                currentTransaction.deleted = true;
                 projectsFactory.saveProject(p);
             }
         }

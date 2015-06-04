@@ -6,6 +6,7 @@
  */
 class Transaction implements Serializable<Transaction>{
     id:string;
+    deleted:boolean;
     lastUpdated:number;
     from:string;
     to:string[];
@@ -15,6 +16,7 @@ class Transaction implements Serializable<Transaction>{
 
     constructor() {
         this.lastUpdated = 1;
+        this.deleted = false;
         this.id = Guid.newGuid();
     }
 
@@ -40,6 +42,7 @@ class Transaction implements Serializable<Transaction>{
                 this.lastUpdated = new Date(input.lastUpdated).getTime();
             }
         }
+        this.deleted = input.deleted == true;
         this.from = input.from;
         this.to = input.to;
         this.comment = input.comment;

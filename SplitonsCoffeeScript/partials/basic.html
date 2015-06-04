@@ -97,7 +97,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h1 ng-show="transactions.length > 1">{{transactions.length}} Transactions</h1>
+                            <h1 ng-show="notDeletedTransactions.length > 0">{{notDeletedTransactions.length}} Transactions</h1>
 
                             <a href="#/project/{{projectName}}/0/transaction" class="btn btn-lg btn-primary">Add a new
                                 transaction
@@ -105,7 +105,7 @@
                         </div>
                         <div class="panel-body">
                             <ul class="lead list-unstyled">
-                                <li ng-repeat="transaction in transactions track by $index">
+                                <li ng-repeat="transaction in notDeletedTransactions track by $index">
                                     <span><!--{{transaction.lastUpdated| date:"MM/dd/yyyy 'at' h:mma"}} :-->
                                         {{transaction.comment}} : {{transaction.amount}} {{transaction.currency}}. From {{transaction.from}}, to {{(transaction.to).join(',')}}
                                     </span>
