@@ -58,11 +58,11 @@ var SynchronizerViaRequestFlicker = (function () {
             var transactionIndex = p.transactions.map(function (e) {
                 return e.id;
             }).indexOf(newTransaction.id);
-            var oldTransaction = p.transactions[transactionIndex];
-            //We ignore the last(s) transactions
-            if (newTransaction.lastUpdated == oldTransaction.lastUpdated)
-                continue;
             if (transactionIndex != -1) {
+                var oldTransaction = p.transactions[transactionIndex];
+                //We ignore the last(s) transactions
+                if (newTransaction.lastUpdated == oldTransaction.lastUpdated)
+                    continue;
                 p.transactions.splice(transactionIndex, 1);
                 console.log('transac update, was ' + oldTransaction.lastUpdated + 'new ' + newTransaction.lastUpdated + ' for ' + oldTransaction.comment);
             }

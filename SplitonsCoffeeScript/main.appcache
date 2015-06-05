@@ -1,9 +1,10 @@
 CACHE MANIFEST
 #v29
+CACHE:
 partials/listProjects.html
 partials/transaction.html
 partials/basic.html
-partials/newProject.html
+partials/synchronize.html
 index.html
 Guid.js.map
 angular-route.js
@@ -78,3 +79,5 @@ RequestFlicker/ISynchronizer.js.map
 RequestFlicker/SynchronizerViaRequestFlicker.ts
 RequestFlicker/SynchronizerViaRequestFlicker.js
 RequestFlicker/SynchronizerViaRequestFlicker.js.map
+NETWORK:
+*
