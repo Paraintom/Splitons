@@ -53,13 +53,7 @@
                         <p ng-if="lastUpdated != 0">Last update received : {{lastUpdated | date:"dd/MM/yyyy 'at' h:mma"}}</p>
                         <p>
 
-                        To share the project just send the current url to your friends :<br>
-                            <b>
-                                <span id="currentUrl"></span>
-                            </b>
-                            <script>
-                                document.getElementById("currentUrl").innerHTML = window.location.href;
-                            </script>
+                        To share the project just send the current url to your friends.<br>
                         </p>
 
                         <p ng-if="lastUpdated === 0">This project is not synchronised!</p>
