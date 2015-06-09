@@ -71,6 +71,7 @@ angular.module('splitonsApp').controller(
                     if (currentTransaction.id == id) {
                         //$scope.transactions.splice(index, 1);
                         currentTransaction.deleted = true;
+                        currentTransaction.HasBeenUpdated();
                         projectsFactory.saveProject(p);
                     }
                 }
