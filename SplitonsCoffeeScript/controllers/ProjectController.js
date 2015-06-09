@@ -4,6 +4,7 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
+///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller('ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route', '$filter', function ($scope, $routeParams, projectsFactory, $route, $filter) {
     $scope.activeTab = $routeParams.activeTab;
     var p = projectsFactory.getProject($routeParams.projectName);
@@ -62,13 +63,21 @@ angular.module('splitonsApp').controller('ProjectController', ['$scope', '$route
         for (var index in $scope.transactions) {
             var currentTransaction = $scope.transactions[index];
             if (currentTransaction.id == id) {
-                //$scope.transactions.splice(index, 1);
-                currentTransaction.deleted = true;
-                currentTransaction.HasBeenUpdated();
-                projectsFactory.saveProject(p);
+                bootbox.confirm({
+                    size: 'small',
+                    message: "Are you sure you want to delete the transaction " + currentTransaction.comment + "?",
+                    callback: function (result) {
+                        if (result) {
+                            //$scope.transactions.splice(index, 1);
+                            currentTransaction.deleted = true;
+                            currentTransaction.HasBeenUpdated();
+                            projectsFactory.saveProject(p);
+                            $route.reload();
+                        }
+                    }
+                });
             }
         }
-        $route.reload();
     };
     $scope.settleDebts = function (debtor, creditor, amount, currency) {
         var t = new Transaction();
