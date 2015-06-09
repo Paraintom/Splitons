@@ -13,17 +13,25 @@ var SynchronizerViaRequestFlicker = (function () {
     };
     SynchronizerViaRequestFlicker.prototype.synchronize = function (project) {
         var _this = this;
-        //after put : http://www.olivettom.com/hb/index.php
-        var serviceLookup = new ServiceLookup("http://www.olivettom.com/hb/index.php");
-        serviceLookup.onError().subscribe(function (a) { return _this.onLookupError(a); });
-        serviceLookup.onResult().subscribe(function (ipAndPort) { return _this.onLookupSuccess(ipAndPort, project); });
-        serviceLookup.getService("RequestFlicker");
+        if (navigator.onLine) {
+            //after put : http://www.olivettom.com/hb/index.php
+            var serviceLookup = new ServiceLookup("http://www.olivettom.com/hb/index.php");
+            serviceLookup.onError().subscribe(function (a) { return _this.onLookupError(a); });
+            serviceLookup.onResult().subscribe(function (ipAndPort) { return _this.onLookupSuccess(ipAndPort, project); });
+            serviceLookup.getService("RequestFlicker");
+        }
+        else {
+            this.onLookupError("Impossible to Synchronize in offline mode");
+        }
     };
     //########## Lookup handling###########
+    SynchronizerViaRequestFlicker.prototype.raiseResult = function (success, message) {
+        this.onSynchronizationResultEvent.raise(new SyncResultEvent(success, message));
+        console.log(message);
+    };
     SynchronizerViaRequestFlicker.prototype.onLookupError = function (error) {
-        var errorMessage = "Error from ServiceLookup:" + error;
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(false, errorMessage));
-        console.log(errorMessage);
+        var errorMessage = "Error from ServiceLookup : " + error;
+        this.raiseResult(false, errorMessage);
     };
     SynchronizerViaRequestFlicker.prototype.onLookupSuccess = function (ipAndPort, project) {
         var _this = this;
@@ -85,7 +93,7 @@ var SynchronizerViaRequestFlicker = (function () {
         }
         p.lastUpdated = json.lastUpdated;
         var syncInfo = (updatedNumber == 0) ? "(No new update)" : "(" + updatedNumber + " new update(s))";
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(true, "Synchronisation successful " + syncInfo));
+        this.raiseResult(true, "Synchronisation successful " + syncInfo);
     };
     SynchronizerViaRequestFlicker.prototype.handleError = function (errorEvent) {
         var errorString = errorEvent.message;
@@ -93,7 +101,7 @@ var SynchronizerViaRequestFlicker = (function () {
             errorString = "This case happens when the websocket server reject our connection so far.";
         }
         //console.log("Synchronizer error : " + errorString);
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(false, errorString));
+        this.raiseResult(false, errorString);
     };
     SynchronizerViaRequestFlicker.prototype.getToUpdate = function (p) {
         var newResults = Enumerable.from(p.transactions).where(function (y) {

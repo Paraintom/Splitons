@@ -13,18 +13,27 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
     }
 
     synchronize(project:Project) {
-        //after put : http://www.olivettom.com/hb/index.php
-        var serviceLookup = new ServiceLookup("http://www.olivettom.com/hb/index.php");
-        serviceLookup.onError().subscribe((a) => this.onLookupError(a));
-        serviceLookup.onResult().subscribe((ipAndPort) => this.onLookupSuccess(ipAndPort, project));
-        serviceLookup.getService("RequestFlicker");
+        if(navigator.onLine) {
+            //after put : http://www.olivettom.com/hb/index.php
+            var serviceLookup = new ServiceLookup("http://www.olivettom.com/hb/index.php");
+            serviceLookup.onError().subscribe((a) => this.onLookupError(a));
+            serviceLookup.onResult().subscribe((ipAndPort) => this.onLookupSuccess(ipAndPort, project));
+            serviceLookup.getService("RequestFlicker");
+        }
+        else{
+            this.onLookupError("Impossible to Synchronize in offline mode");
+        }
     }
 
     //########## Lookup handling###########
+
+    private raiseResult(success : boolean, message : string) {
+        this.onSynchronizationResultEvent.raise(new SyncResultEvent(success, message));
+        console.log(message);
+    }
     private onLookupError(error) {
-        var errorMessage = "Error from ServiceLookup:" + error;
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(false, errorMessage));
-        console.log(errorMessage);
+        var errorMessage = "Error from ServiceLookup : " + error;
+        this.raiseResult(false,errorMessage);
     }
 
     private onLookupSuccess(ipAndPort, project:Project) {
@@ -93,7 +102,7 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
         }
         p.lastUpdated = json.lastUpdated;
         var syncInfo = (updatedNumber == 0) ? "(No new update)" : "("+updatedNumber+" new update(s))";
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(true, "Synchronisation successful "+syncInfo));
+        this.raiseResult(true,"Synchronisation successful "+syncInfo);
     }
 
     private handleError(errorEvent:ErrorEvent) {
@@ -102,7 +111,7 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
             errorString = "This case happens when the websocket server reject our connection so far.";
         }
         //console.log("Synchronizer error : " + errorString);
-        this.onSynchronizationResultEvent.raise(new SyncResultEvent(false, errorString));
+        this.raiseResult(false,errorString);
     }
 
     private getToUpdate(p:Project) {
