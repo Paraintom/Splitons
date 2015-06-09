@@ -7,9 +7,10 @@
 ///<reference path="../RequestFlicker/LiteEvent.ts"/>
 ///<reference path="../RequestFlicker/ServiceLookup.ts"/>
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
+///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller(
-    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$route',
-        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $route) {
+    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$location', '$window',
+        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $location, $window) {
             var p = projectsFactory.getProject($routeParams.projectId);
             $scope.projectName = p.name;
             $scope.lastUpdated = p.lastUpdated;
@@ -18,6 +19,7 @@ angular.module('splitonsApp').controller(
             var synchronizer = synchFactory.get();
             synchronizer.onSynchronized().subscribe(handleResult);
 
+            //Now it is automatic on controller load.
             $scope.synchronize = function () {
                 $scope.errorString = "";
                 $scope.synchronizing = true;
@@ -47,5 +49,23 @@ angular.module('splitonsApp').controller(
                 }
                 (!$scope.$$phase)
                     $scope.$apply()
+            }
+
+            $scope.shareProject = function () {
+                bootbox.prompt({
+                    title: "Enter here the mail of your friend",
+                    value: "yourFriendMail@domain.com",
+                    size: 'small',
+                    callback: function (result) {
+                        if (result) {
+                            var link = "mailto:" + result
+                                + "?subject=New%20email" + encodeURIComponent("Splitons : Project " + $scope.projectName)
+                                + "&body=" + encodeURIComponent("Find here a link to the project : " + $location.absUrl());
+
+                            console.log(link);
+                            $window.open(link, '_blank');
+                        }
+                    }
+                });
             }
         }]);
