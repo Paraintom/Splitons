@@ -49,7 +49,7 @@ angular.module('splitonsApp').controller(
             }
 
             $scope.existInTransactions = function(name) {
-                var allTransactions = Enumerable.from<Transaction>($scope.transactions);
+                var allTransactions = Enumerable.from<Transaction>($scope.notDeletedTransactions);
                 var inFrom = allTransactions.any(function (x) {
                     return x.from == name;
                 });
@@ -101,7 +101,7 @@ angular.module('splitonsApp').controller(
 
             function calculateAveragePerPerson() {
                 var result = 0;
-                Enumerable.from<Transaction>($scope.transactions)
+                Enumerable.from<Transaction>($scope.notDeletedTransactions)
                     .where(function (y) {
                         return y.currency == $scope.selectedCurrency;
                     })
@@ -118,7 +118,7 @@ angular.module('splitonsApp').controller(
 
             function calculateAllCurrencies() {
                 var result = [];
-                p.transactions.forEach(t=> {
+                $scope.notDeletedTransactions.forEach(t=> {
                         var currentCurrency = t.currency;
                         if (result.indexOf(currentCurrency) == -1) {
                             result.push(currentCurrency);
@@ -136,7 +136,7 @@ angular.module('splitonsApp').controller(
                 //Initialisation
                 p.members.forEach(m=>result[m] = new Balance(m, 0));
                 //Computation
-                p.transactions.forEach(t=> {
+                $scope.notDeletedTransactions.forEach(t=> {
                     if(t.currency != forCurrency)
                         return;
                     result[t.from].amount += t.amount;
