@@ -17,6 +17,7 @@ angular.module('splitonsApp').controller(
 
             var synchronizer = synchFactory.get();
             synchronizer.onSynchronized().subscribe(handleResult);
+
             $scope.synchronize = function () {
                 $scope.errorString = "";
                 $scope.synchronizing = true;
@@ -27,6 +28,9 @@ angular.module('splitonsApp').controller(
                 },5000)
                 synchronizer.synchronize(p);
             }
+
+            //We synchronize on load
+            $scope.synchronize();
 
             $scope.$on('$destroy', function iVeBeenDismissed() {
                 synchronizer.onSynchronized().unsubscribe(handleResult);

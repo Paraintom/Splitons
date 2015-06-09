@@ -24,6 +24,8 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
         }, 5000);
         synchronizer.synchronize(p);
     };
+    //We synchronize on load
+    $scope.synchronize();
     $scope.$on('$destroy', function iVeBeenDismissed() {
         synchronizer.onSynchronized().unsubscribe(handleResult);
     });
