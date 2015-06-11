@@ -1,0 +1,53 @@
+<h3 ng-init="editProjectNameMode=false" style="text-align:center">
+                    <span ng-hide="editProjectNameMode">{{projectName}}
+                        <button type="button" class="btn"
+                                ng-click="$parent.newProjectName=projectName;editProjectNameMode=true">
+                            <i class="fa fa-pencil"/>
+                        </button>
+                    </span>
+                    <span ng-show="editProjectNameMode">
+                            <form role="form" ng-submit="renameProject();editProjectNameMode=false">
+                                <input type="text" ng-model="$parent.newProjectName" class="col-xs-8" required>&nbsp;
+                                <button type="submit" class="btn btn-primary" type="submit">
+                                    <i class="fa fa-check"/>
+                                </button>
+                                <button type="button" class="btn" ng-click="editProjectNameMode=false">
+                                    <i class="fa fa-close"/>
+                                </button>
+                            </form>
+                    </span>
+</h3>
+<div class="col-xs-12">
+    <div class="text-center">
+        <div class="btn-group btn-group-lg" role="group">
+            <a ng-class="activeTab == 1 ? 'btn btn-primary' : 'btn btn-default'"
+               href="#/project/{{projectId}}/1">
+                <i class="fa fa-users fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Members
+                                </span>
+            </a>
+            <a ng-class="activeTab == 2 ? 'btn btn-primary' : 'btn btn-default'"
+               href="#/project/{{projectId}}/2">
+                <i class="fa fa-list fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Transactions
+                             </span>
+            </a>
+            <a ng-class="activeTab == 3 ? 'btn btn-primary' : 'btn btn-default'"
+               href="#/project/{{projectId}}/3">
+                <i class="fa fa-exchange fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Settlement
+                                </span>
+            </a>
+            <a ng-class="activeTab === undefined ? 'btn btn-primary' : 'btn btn-default'"
+               href="#/synchronize/{{projectId}}">
+                <i class="fa fa-refresh fa-fw fa-lg"/>
+                                <span class="hidden-xs">
+                                Synchronisation
+                                </span>
+            </a>
+        </div>
+    </div>
+</div>

@@ -12645,3 +12645,7 @@ td.visible-print {
         display: none !important;
     }
 }
+
+h3.ng-scope {
+    margin-top: 0px;
+}

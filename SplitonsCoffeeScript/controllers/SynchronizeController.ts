@@ -9,9 +9,12 @@
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller(
-    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$location', '$window',
-        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $location, $window) {
+    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$location', '$window','$controller',
+        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $location, $window,$controller) {
             var p = projectsFactory.getProject($routeParams.projectId);
+            //We inherit from the parent (Refactoring)
+            $controller('ProjectNameController', {$scope: $scope, $project : p});
+            $scope.projectId = p.id;
             $scope.projectName = p.name;
             $scope.lastUpdated = p.lastUpdated;
             $scope.synchronizing = false;
@@ -51,7 +54,7 @@ angular.module('splitonsApp').controller(
                     $scope.$apply()
             }
 
-            $scope.shareProject = function () {
+            $scope.sendViaEmail = function () {
                 bootbox.prompt({
                     title: "Enter here the mail of your friend",
                     value: "yourFriendMail@domain.com",

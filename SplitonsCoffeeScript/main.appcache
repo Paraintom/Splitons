@@ -5,6 +5,7 @@ partials/listProjects.html
 partials/transaction.html
 partials/basic.html
 partials/synchronize.html
+partials/sections.html
 index.html
 Guid.js.map
 angular-route.js
@@ -46,6 +47,9 @@ controllers/TransactionController.ts
 controllers/SynchronizeController.js
 controllers/SynchronizeController.js.map
 controllers/SynchronizeController.ts
+controllers/ProjectNameController.js
+controllers/ProjectNameController.js.map
+controllers/ProjectNameController.ts
 angular.js
 Guid.js
 Balance.js

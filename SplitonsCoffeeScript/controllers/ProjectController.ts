@@ -5,12 +5,14 @@
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
+
 angular.module('splitonsApp').controller(
-    'ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter',
-        function ($scope, $routeParams, projectsFactory, $route, $filter) {
+    'ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
+        function ($scope, $routeParams, projectsFactory, $route, $filter, $controller) {
             $scope.activeTab =$routeParams.activeTab;
-            var p = projectsFactory.getProject($routeParams.projectName);
-            $scope.projectName = p.name;
+            var p = projectsFactory.getProject($routeParams.projectId);
+            //We inherit from the parent (Refactoring)
+            $controller('ProjectNameController', {$scope: $scope, $project : p});
             $scope.projectId = p.id;
             $scope.transactions  = p.transactions;
             $scope.notDeletedTransactions = $filter('filter')( p.transactions, { deleted: false });
@@ -66,18 +68,20 @@ angular.module('splitonsApp').controller(
                 return ba.amount;
             }
 
+            var toDelete;
             $scope.deleteTransaction = function(id) {
                 for (var index in $scope.transactions) {
                     var currentTransaction = $scope.transactions[index];
                     if (currentTransaction.id == id) {
+                        toDelete = currentTransaction;
                         bootbox.confirm({
                             size: 'small',
-                            message: "Are you sure you want to delete the transaction "+currentTransaction.comment+"?",
+                            message: "Are you sure you want to delete the transaction "+toDelete.comment+"?",
                             callback: function(result){
                                 if(result){
                                     //$scope.transactions.splice(index, 1);
-                                    currentTransaction.deleted = true;
-                                    currentTransaction.HasBeenUpdated();
+                                    toDelete.deleted = true;
+                                    toDelete.HasBeenUpdated();
                                     projectsFactory.saveProject(p);
                                     $route.reload();
                                 }
@@ -94,6 +98,7 @@ angular.module('splitonsApp').controller(
                 t.comment = "settlement transaction";
                 t.amount = amount;
                 t.currency = currency;
+                t.HasBeenUpdated();
                 $scope.transactions.push(t);
                 projectsFactory.saveProject(p);
                 $route.reload();

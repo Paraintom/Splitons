@@ -1,42 +1,7 @@
 <div>
     <div class="section">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <div class="btn-group btn-group-lg" role="group">
-                            <a ng-class="activeTab == 1 ? 'btn btn-primary' : 'btn btn-default'"
-                               href="#/project/{{projectName}}/1">
-                                <i class="fa fa-users fa-fw fa-lg"/>
-                                <span class="hidden-xs">
-                                Members
-                                </span>
-                            </a>
-                            <a ng-class="activeTab == 2 ? 'btn btn-primary' : 'btn btn-default'"
-                               href="#/project/{{projectName}}/2">
-                                <i class="fa fa-list fa-fw fa-lg"/>
-                                <span class="hidden-xs">
-                                Transactions
-                             </span>
-                            </a>
-                            <a ng-class="activeTab == 3 ? 'btn btn-primary' : 'btn btn-default'"
-                               href="#/project/{{projectName}}/3">
-                                <i class="fa fa-exchange fa-fw fa-lg"/>
-                                <span class="hidden-xs">
-                                Settlement
-                                </span>
-                            </a>
-                            <a class="btn btn-default"  ng-show="transactions.length > 0"
-                                   href="#/synchronize/{{projectId}}">
-                            <i class="fa fa-refresh fa-fw fa-lg"/>
-                                <span class="hidden-xs">
-                                Synchronisation
-                                </span>
-                        </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="row" ng-include="'partials/sections.html'"/>
 
             <!--project level-->
             <div class="row" ng-show="activeTab == 1">
