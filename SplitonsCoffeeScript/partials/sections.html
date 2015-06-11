@@ -38,14 +38,14 @@
                href="#/project/{{projectId}}/3">
                 <i class="fa fa-exchange fa-fw fa-lg"/>
                                 <span class="hidden-xs">
-                                Settlement
+                                    Settlement
                                 </span>
             </a>
             <a ng-class="activeTab === undefined ? 'btn btn-primary' : 'btn btn-default'"
                href="#/synchronize/{{projectId}}">
-                <i class="fa fa-refresh fa-fw fa-lg"/>
+                <i ng-class="synchronizing ? 'fa fa-refresh fa-spin fa-fw fa-lg' : 'fa fa-refresh fa-fw fa-lg'"/>
                                 <span class="hidden-xs">
-                                Synchronisation
+                                    Synchronize project
                                 </span>
             </a>
         </div>
