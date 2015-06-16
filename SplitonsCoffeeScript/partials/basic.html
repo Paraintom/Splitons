@@ -71,20 +71,36 @@
                             </a>
                         </div>
                         <div class="panel-body">
-                            <ul class="lead list-unstyled">
-                                <li ng-repeat="transaction in notDeletedTransactions track by $index">
-                                    <span><!--{{transaction.lastUpdated| date:"MM/dd/yyyy 'at' h:mma"}} :-->
-                                        {{transaction.comment}} : {{transaction.amount}} {{transaction.currency}}. From {{transaction.from}}, to {{(transaction.to).join(',')}}
-                                    </span>
-
-                                <span class="pull-right ">
-                                        <a href="#/project/{{projectName}}/{{transaction.id}}/transaction"><i
-                                                class="fa fa-fw fa-lg fa-pencil"></i></a>
-                                        <a ng-click="deleteTransaction(transaction.id)"><i
-                                                class="fa fa-close fa-fw fa-lg text-danger"></i></a>
-                                    </span>
-                                </li>
-                            </ul>
+                            <h3 ng-show="notDeletedTransactions.length == 0">No transaction recorded</h3>
+                            <table class="table table-striped" ng-show="notDeletedTransactions.length > 0">
+                                <thead>
+                                <tr>
+                                    <th>Comment</th>
+                                    <th>Amount</th>
+                                    <th class="hidden-xs">From</th>
+                                    <th class="hidden-xs hidden-sm">To</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="transaction in notDeletedTransactions track by $index">
+                                    <!--{{transaction.lastUpdated| date:"MM/dd/yyyy 'at' h:mma"}} :-->
+                                        <td>{{transaction.comment}}</td>
+                                        <td>{{transaction.amount}} {{transaction.currency}}</td>
+                                        <td class="hidden-xs">{{transaction.from}}</td>
+                                        <td class="hidden-xs hidden-sm">{{(transaction.to).join(',')}}</td>
+                                        <td>
+                                            <a href="#/project/{{projectName}}/{{transaction.id}}/transaction"><i
+                                                    class="fa fa-fw fa-lg fa-pencil"></i></a>
+                                        </td>
+                                        <td>
+                                            <a ng-click="deleteTransaction(transaction.id)"><i
+                                                    class="fa fa-close fa-fw fa-lg text-danger"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
