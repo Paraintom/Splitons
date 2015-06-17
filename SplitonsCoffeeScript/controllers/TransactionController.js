@@ -5,7 +5,7 @@
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller('TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory', 'currenciesFactory', function ($scope, $routeParams, $location, projectsFactory, currenciesFactory) {
-    var project = projectsFactory.getProject($routeParams.projectName);
+    var project = projectsFactory.getProject($routeParams.projectId);
     $scope.currencies = currenciesFactory.getAll();
     var transac = getTransaction(project, $routeParams.transactionId);
     $scope.projectName = project.name;

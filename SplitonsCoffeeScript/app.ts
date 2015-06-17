@@ -20,7 +20,7 @@ splitonsApp.config(['$routeProvider',
                 templateUrl: 'partials/synchronize.html',
                 controller: 'SynchronizeController'
             }).
-            when('/project/:projectName/:transactionId/transaction', {
+            when('/project/:projectId/:transactionId/transaction', {
                 templateUrl: 'partials/transaction.html',
                 controller: 'TransactionController'
             }).

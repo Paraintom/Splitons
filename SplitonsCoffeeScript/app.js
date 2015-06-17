@@ -11,7 +11,7 @@ splitonsApp.config(['$routeProvider', function ($routeProvider) {
     }).when('/synchronize/:projectId', {
         templateUrl: 'partials/synchronize.html',
         controller: 'SynchronizeController'
-    }).when('/project/:projectName/:transactionId/transaction', {
+    }).when('/project/:projectId/:transactionId/transaction', {
         templateUrl: 'partials/transaction.html',
         controller: 'TransactionController'
     }).otherwise({
