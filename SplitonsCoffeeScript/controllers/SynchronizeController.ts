@@ -11,7 +11,7 @@
 angular.module('splitonsApp').controller(
     'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$location', '$window','$controller',
         function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $location, $window,$controller) {
-            var p = projectsFactory.getProject($routeParams.projectId);
+            var p = projectsFactory.getProject($routeParams.projectId,$routeParams.projectName);
             //We inherit from the parent (Refactoring)
             $controller('ProjectNameController', {$scope: $scope, $project : p});
             $scope.projectId = p.id;

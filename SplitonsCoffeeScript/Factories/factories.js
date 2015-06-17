@@ -36,29 +36,31 @@ projectsFactory.factory('projectsFactory', function () {
         deleteProject: function (id) {
             localStorage.removeItem(id);
         },
-        getProject: function (name) {
-            if (Guid.isGuid(name)) {
-                var result = Enumerable.from(allProjects).where(function (o) { return o.id == name; }).firstOrDefault();
+        getProject: function (id, projectName) {
+            if (projectName === void 0) { projectName = id; }
+            if (Guid.isGuid(id)) {
+                var result = Enumerable.from(allProjects).where(function (o) { return o.id == id; }).firstOrDefault();
                 if (result == null) {
                     // This is used for synchronisation
-                    result = this.getNewProject(name);
+                    result = this.getNewProject(projectName, id);
                 }
                 return result;
             }
             else {
-                var result = Enumerable.from(allProjects).where(function (o) { return o.name == name; }).firstOrDefault();
+                var result = Enumerable.from(allProjects).where(function (o) { return o.name == id; }).firstOrDefault();
                 if (result == null) {
-                    throw new Error("Can't find project : " + name);
+                    throw new Error("Can't find project : " + id);
                 }
                 return result;
             }
         },
-        getNewProject: function (name) {
-            var result = Enumerable.from(allProjects).where(function (o) { return o.name == name; }).firstOrDefault();
+        getNewProject: function (name, id) {
+            if (id === void 0) { id = name; }
+            var result = Enumerable.from(allProjects).where(function (o) { return o.id == id; }).firstOrDefault();
             if (result == null) {
                 result = new Project();
-                if (Guid.isGuid(name)) {
-                    result.id = name;
+                if (Guid.isGuid(id)) {
+                    result.id = id;
                 }
                 result.name = name;
                 //result = getFakeProject(name);

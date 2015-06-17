@@ -16,7 +16,7 @@ splitonsApp.config(['$routeProvider',
                 templateUrl: 'partials/basic.html',
                 controller: 'ProjectController'
             }).
-            when('/synchronize/:projectId', {
+            when('/synchronize/:projectId/:projectName?', {
                 templateUrl: 'partials/synchronize.html',
                 controller: 'SynchronizeController'
             }).
