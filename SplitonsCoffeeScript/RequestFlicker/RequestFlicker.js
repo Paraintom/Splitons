@@ -100,6 +100,7 @@ var RequestFlickerClient = (function () {
             else {
                 this.onAnswerEvent.raise(jsonString);
             }
+            this.websocket.close();
         }
         catch (error) {
             evt.message = error;

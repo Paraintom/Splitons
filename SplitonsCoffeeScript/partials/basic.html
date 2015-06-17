@@ -66,7 +66,7 @@
                         <div class="panel-heading">
                             <h1 ng-show="notDeletedTransactions.length > 0">{{notDeletedTransactions.length}} Transactions</h1>
 
-                            <a href="#/project/{{projectName}}/0/transaction" class="btn btn-lg btn-primary">Add a new
+                            <a href="#/project/{{projectId}}/0/transaction" class="btn btn-lg btn-primary">Add a new
                                 transaction
                             </a>
                         </div>
@@ -91,7 +91,7 @@
                                         <td class="hidden-xs">{{transaction.from}}</td>
                                         <td class="hidden-xs hidden-sm">{{(transaction.to).join(',')}}</td>
                                         <td>
-                                            <a href="#/project/{{projectName}}/{{transaction.id}}/transaction"><i
+                                            <a href="#/project/{{projectId}}/{{transaction.id}}/transaction"><i
                                                     class="fa fa-fw fa-lg fa-pencil"></i></a>
                                         </td>
                                         <td>

@@ -116,6 +116,7 @@ class RequestFlickerClient {
             else {
                 this.onAnswerEvent.raise(jsonString);
             }
+            this.websocket.close();
         }
         catch (error) {
             evt.message = error;
