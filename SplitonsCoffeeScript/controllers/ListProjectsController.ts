@@ -6,8 +6,8 @@
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller(
-    'ListProjectsController', ['$scope', 'projectsFactory', '$location', '$route',
-        function ($scope, projectsFactory, $location, $route) {
+    'ListProjectsController', ['$scope', 'projectsFactory', '$location', '$route', '$window',
+        function ($scope, projectsFactory, $location, $route, $window) {
 
             $scope.projects = projectsFactory.getAllProject();
 
@@ -34,5 +34,14 @@ angular.module('splitonsApp').controller(
                         }
                     }
                 });
+            }
+
+            $scope.sendFeedback = function () {
+                var link = "mailto:" + "thomas.barles+SplitonsFeedback@gmail.com"
+                    + "?subject=New%20email" + encodeURIComponent("Splitons feedback")
+                    /*+ "&body=" + encodeURIComponent("Find here a link to the project : " + $location.absUrl())*/;
+
+                console.log(link);
+                $window.open(link, '_blank');
             }
         }]);
