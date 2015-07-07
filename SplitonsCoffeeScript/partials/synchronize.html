@@ -11,7 +11,7 @@
 
                     <div class="panel-body">
                         <p class="hidden-xs">If you need to share this project, it is the right place!</p>
-
+                        <h3>Status</h3>
                         <p ng-if="lastUpdated != 0">Last update received : {{lastUpdated | date:"dd/MM/yyyy 'at' h:mma"}}</p>
                         <p>
 
@@ -21,22 +21,22 @@
                         <p ng-if="lastUpdated === 0">This project is not synchronised!</p>
 
                         <p ng-if="errorString.length > 1">Error : {{errorString}}</p>
-
-                        <!-- Now automatic on controller load
-                        <form role="form" ng-submit="synchronize()">
-                            <button type="submit" class="btn btn-lg btn-default">
-                                <i ng-class="synchronizing ? 'fa fa-refresh fa-spin fa-fw fa-lg' : 'fa fa-refresh fa-fw fa-lg'"/>
-                                            <span class="hidden-xs">
-                                                Synchronize project
-                                            </span>
-                            </button>
-                        </form>-->
-
+                        <h3>Share your project</h3>
+                        <h4>Via mail</h4>
                         <form role="form" ng-submit="sendViaEmail()">
                             <button type="submit" class="btn btn-lg btn-default">
                                 <i class='fa fa-send fa-fw fa-lg'/>
                                 <span class="hidden-xs">
                                     Send via mail
+                                </span>
+                            </button>
+                        </form>
+                        <h4>Via internal meet</h4>
+                        <form role="form" ng-submit="sendViaFastFlicker()">
+                            <button type="submit" class="btn btn-lg btn-default">
+                                <i class='fa fa-angle-double-up fa-fw fa-lg'/>
+                                <span class="hidden-xs">
+                                    Synchronise via internal meet
                                 </span>
                             </button>
                         </form>

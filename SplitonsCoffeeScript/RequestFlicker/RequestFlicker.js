@@ -1,4 +1,4 @@
-/// <reference path="LiteEvent.ts" />
+/// <reference path="../LiteEvent.ts" />
 // Interface : 
 // 1 - Create the chat object ---> 
 //  url = "ws://"+ip+":"+port+"/";

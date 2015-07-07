@@ -6,8 +6,8 @@
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller(
-    'ListProjectsController', ['$scope', 'projectsFactory', '$location', '$route', '$window',
-        function ($scope, projectsFactory, $location, $route, $window) {
+    'ListProjectsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window',
+        function ($scope, projectsFactory, synchFactory, $location, $route, $window) {
 
             $scope.projects = projectsFactory.getAllProject();
 
@@ -43,5 +43,19 @@ angular.module('splitonsApp').controller(
 
                 console.log(link);
                 $window.open(link, '_blank');
+            }
+
+            $scope.receiveProject = function () {
+                console.info('Receiving project with passphrase : '+$scope.passphrase);
+                var sharer = synchFactory.getSharer();
+                sharer.onProjectReceived().subscribe(
+                    (a)=>{
+                        console.debug('received '+a.projectName);
+                        $scope.$apply(function () {
+                            $location.path('synchronize/' + a.projectId + '/' + a.projectName).replace();
+                        });
+                    }
+                );
+                sharer.receive($scope.passphrase);
             }
         }]);

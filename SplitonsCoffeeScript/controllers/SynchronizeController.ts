@@ -4,13 +4,15 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
-///<reference path="../RequestFlicker/LiteEvent.ts"/>
+///<reference path="../LiteEvent.ts"/>
 ///<reference path="../RequestFlicker/ServiceLookup.ts"/>
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller(
-    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout', '$location', '$window','$controller',
-        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout, $location, $window,$controller) {
+    'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout',
+        '$location', '$window','$controller',
+        function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout,
+                  $location, $window,$controller) {
             var p = projectsFactory.getProject($routeParams.projectId,$routeParams.projectName);
             //We inherit from the parent (Refactoring)
             $controller('ProjectNameController', {$scope: $scope, $project : p});
@@ -69,6 +71,19 @@ angular.module('splitonsApp').controller(
                             $window.open(link, '_blank');
                         }
                     }
+                });
+            }
+
+            $scope.sendViaFastFlicker = function () {
+                var passphrase :string;
+                passphrase = this.projectId.substring(0,4);
+                var sharer = synchFactory.getSharer();
+                sharer.onError().subscribe((err) => handleResult({success:false,message:'Sharing error : '+err}));
+                sharer.share(this.projectId, this.projectName, passphrase);
+                bootbox.alert({
+                    title: "Sending project ...",
+                    message : "Share wih your friend the following passphrase : "+ passphrase,
+                    size: 'small'
                 });
             }
         }]);

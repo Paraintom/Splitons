@@ -1,0 +1,1 @@
+{"version":3,"file":"IShareMechanism.js","sourceRoot":"","sources":["IShareMechanism.ts"],"names":["ShareResultEvent","ShareResultEvent.constructor"],"mappings":"AAEA,AAFA,wCAAwC;AACxC,kDAAkD;AAMlD,IAAM,gBAAgB;IAClBA,SADEA,gBAAgBA,CACCA,SAAgBA,EAASA,WAAkBA;QAA3CC,cAASA,GAATA,SAASA,CAAOA;QAASA,gBAAWA,GAAXA,WAAWA,CAAOA;IAAEA,CAACA;IACrED,uBAACA;AAADA,CAACA,AAFD,IAEC"}

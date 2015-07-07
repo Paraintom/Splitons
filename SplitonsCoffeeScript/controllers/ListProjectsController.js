@@ -5,7 +5,7 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
-angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'projectsFactory', '$location', '$route', '$window', function ($scope, projectsFactory, $location, $route, $window) {
+angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window', function ($scope, projectsFactory, synchFactory, $location, $route, $window) {
     $scope.projects = projectsFactory.getAllProject();
     $scope.createProject = function () {
         if ($scope.newProjectName) {
@@ -34,6 +34,17 @@ angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'p
         var link = "mailto:" + "thomas.barles+SplitonsFeedback@gmail.com" + "?subject=New%20email" + encodeURIComponent("Splitons feedback");
         console.log(link);
         $window.open(link, '_blank');
+    };
+    $scope.receiveProject = function () {
+        console.info('Receiving project with passphrase : ' + $scope.passphrase);
+        var sharer = synchFactory.getSharer();
+        sharer.onProjectReceived().subscribe(function (a) {
+            console.debug('received ' + a.projectName);
+            $scope.$apply(function () {
+                $location.path('synchronize/' + a.projectId + '/' + a.projectName).replace();
+            });
+        });
+        sharer.receive($scope.passphrase);
     };
 }]);
 //# sourceMappingURL=ListProjectsController.js.map

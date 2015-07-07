@@ -1,7 +1,7 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <h1>Create a new project</h1>
                 <hr class="hidden-xs">
                 <p></p>
@@ -16,18 +16,8 @@
                         </div>
                     </div>
                 </form>
-
-                <form role="form" ng-submit="sendFeedback()">
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <i class='fa fa-comments fa-fw fa-lg'/>
-                                <span class="hidden-xs">
-                                    Send feedback
-                                </span>
-                    </button>
-                </form>
-                <p></p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <h1>Existing projects</h1>
                 <hr class="hidden-xs">
                 <ul class="text-left lead">
@@ -37,6 +27,41 @@
                     </li>
                 </ul>
                 <p></p>
+                <p></p>
+            </div>
+            <div class="col-md-4">
+                <h1>Receive a project</h1>
+                <hr class="hidden-xs">
+                <p></p>
+                <p class="hidden-xs">You can easily share project with your friends. To send a project go on the Synchronize tab of an open project.</p>
+                <form role="form" ng-submit="receiveProject()">
+                    <div class="form-group">
+                            <input class="form-control" placeholder="Type here the shared passphrase" type="text" ng-model="passphrase">
+                            <button type="submit" class="btn btn-lg btn-default">
+                                <i class='fa fa-angle-double-down fa-fw fa-lg'/>
+                                        <span class="hidden-xs">
+                                            Receive project
+                                        </span>
+                            </button>
+                        </div>
+                </form>
+                <p></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h1>Send a Feedback</h1>
+                <hr class="hidden-xs">
+                <p></p>
+                <form role="form" ng-submit="sendFeedback()">
+                    <button type="submit" class="btn btn-lg btn-default">
+                        <i class='fa fa-comments fa-fw fa-lg'/>
+                                <span class="hidden-xs">
+                                    Send feedback
+                                </span>
+                    </button>
+                </form>
                 <p></p>
             </div>
         </div>

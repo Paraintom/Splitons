@@ -1,4 +1,4 @@
-/// <reference path="LiteEvent.ts" />
+/// <reference path="../LiteEvent.ts" />
 /// <reference path="../jquery.d.ts" />
 var ServiceLookup = (function () {
     function ServiceLookup(lookupUrl) {

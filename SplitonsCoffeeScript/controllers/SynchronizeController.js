@@ -4,7 +4,7 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
-///<reference path="../RequestFlicker/LiteEvent.ts"/>
+///<reference path="../LiteEvent.ts"/>
 ///<reference path="../RequestFlicker/ServiceLookup.ts"/>
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
@@ -58,6 +58,18 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
                     $window.open(link, '_blank');
                 }
             }
+        });
+    };
+    $scope.sendViaFastFlicker = function () {
+        var passphrase;
+        passphrase = this.projectId.substring(0, 4);
+        var sharer = synchFactory.getSharer();
+        sharer.onError().subscribe(function (err) { return handleResult({ success: false, message: 'Sharing error : ' + err }); });
+        sharer.share(this.projectId, this.projectName, passphrase);
+        bootbox.alert({
+            title: "Sending project ...",
+            message: "Share wih your friend the following passphrase : " + passphrase,
+            size: 'small'
         });
     };
 }]);

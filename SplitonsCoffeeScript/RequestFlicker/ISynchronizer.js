@@ -1,4 +1,4 @@
-/// <reference path="LiteEvent.ts" />
+/// <reference path="../LiteEvent.ts" />
 /// <reference path="../dataObjects/Project.ts" />
 var SyncResultEvent = (function () {
     function SyncResultEvent(success, message) {

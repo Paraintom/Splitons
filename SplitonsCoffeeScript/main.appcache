@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v29
+#v45
 CACHE:
 partials/listProjects.html
 partials/transaction.html
@@ -64,16 +64,25 @@ angular.d.ts
 angular-notify.d.ts
 angular-notify.js
 Guid.ts
+LiteEvent.ts
+LiteEvent.js
+LiteEvent.js.map
 external/jquery.min.js
 external/bootstrap.min.js
 external/bootbox.min.js
 external/bootbox.d.ts
+FastFlicker/ShareViaFastFlicker.ts
+FastFlicker/ShareViaFastFlicker.js
+FastFlicker/ShareViaFastFlicker.js.map
+FastFlicker/FastFlickerClient.ts
+FastFlicker/FastFlickerClient.js
+FastFlicker/FastFlickerClient.js.map
+FastFlicker/IShareMechanism.ts
+FastFlicker/IShareMechanism.js
+FastFlicker/IShareMechanism.js.map
 RequestFlicker/RequestFlicker.ts
 RequestFlicker/RequestFlicker.js
 RequestFlicker/RequestFlicker.js.map
-RequestFlicker/LiteEvent.ts
-RequestFlicker/LiteEvent.js
-RequestFlicker/LiteEvent.js.map
 RequestFlicker/ServiceLookup.ts
 RequestFlicker/ServiceLookup.js
 RequestFlicker/ServiceLookup.js.map
