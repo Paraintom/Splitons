@@ -87,4 +87,8 @@ angular.module('splitonsApp').controller(
                 }
                 return result;
             }
+
+            $scope.back = function() {
+                window.history.back();
+            };
         }]);

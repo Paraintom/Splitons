@@ -77,5 +77,8 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
         }
         return result;
     }
+    $scope.back = function () {
+        window.history.back();
+    };
 }]);
 //# sourceMappingURL=TransactionController.js.map
