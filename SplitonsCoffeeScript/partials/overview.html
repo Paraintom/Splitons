@@ -1,0 +1,61 @@
+<div>
+    <div class="section">
+        <div class="container">
+            <div class="row" ng-include="'partials/sections.html'"></div>
+
+            <!--Overview section-->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1>
+                                <span ng-show="members.length > 1">{{members.length}} members <br> Average spent per person : {{averagePerPerson|number:0}} {{selectedCurrency}}</span>
+                            </h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <!--to refactorize!-->
+                                <div ng-show="allCurrencies.length > 1" class="col-xs-3 col-md-2">
+                                    <ul class="nav nav-pills nav-stacked">
+                                        <li ng-repeat="currency in allCurrencies"
+                                            ng-class="selectedCurrency == currency ? 'active' : ''"
+                                            ng-click="setSelectedCurrency(currency)">
+                                            <a href ng-click="setSelectedCurrency(currency)">{{currency}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-xs-10">
+                                    <ul class="lead list-unstyled text-left">
+
+                                        <li ng-repeat="balance in balances">
+                                            <span>{{balance.member}}</span>
+                                    <span ng-class="balance.amount>0 ? 'label label-success' : 'label label-danger'">
+                                        {{balance.amount | number:2}} {{selectedCurrency}}
+                                    </span>
+                                            <i ng-click="deleteMember(balance.member)"
+                                               ng-hide="existInTransactions(balance.member)"
+                                               class="fa fa-close fa-fw fa-lg text-danger"></i>
+
+                                        </li>
+                                    </ul>
+                                    <form role="form" ng-submit="addMember()">
+                                        <input id="newMemberTextBox" class="form-control" placeholder="John doe"
+                                               type="text"
+                                               ng-model="newMember"><br>
+                                        <button type="submit" class="btn btn-lg btn-default">
+                                            <i class="fa fa-user-plus fa-fw fa-lg"></i>
+                                            <span class="hidden-xs">
+                                                Add a new member
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ partials/transaction.html
 partials/basic.html
 partials/synchronize.html
 partials/sections.html
+partials/overview.html
 index.html
 Guid.js.map
 angular-route.js
@@ -35,6 +36,9 @@ css/angular-notify.css
 app.js
 app.js.map
 app.ts
+controllers/OverviewController.js
+controllers/OverviewController.js.map
+controllers/OverviewController.ts
 controllers/ProjectController.js
 controllers/ProjectController.js.map
 controllers/ProjectController.ts
