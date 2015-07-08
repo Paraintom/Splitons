@@ -9,7 +9,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h1>
-                                <span ng-show="members.length > 1">{{members.length}} members <br> Average spent per person : {{averagePerPerson|number:0}} {{selectedCurrency}}</span>
+                                <span ng-show="members.length > 1">{{members.length}} members <br>
+                                <!-- Todo : put in a modal windows.
+                                Average spent per person : {{averagePerPerson|number:0}} {{selectedCurrency}}-->
+                                </span>
                             </h1>
                         </div>
                         <div class="panel-body">
@@ -49,6 +52,13 @@
                                                 Add a new member
                                             </span>
                                         </button>
+
+                                        <a href="#/project/{{projectId}}/0/transaction" class="btn btn-lg btn-primary">
+                                            <i class="fa fa-exchange fa-fw fa-lg"></i>
+                                            <span class="hidden-xs">
+                                                Add a new transaction
+                                            </span>
+                                        </a>
                                     </form>
                                 </div>
                             </div>

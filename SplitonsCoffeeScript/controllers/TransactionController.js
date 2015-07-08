@@ -46,7 +46,7 @@ angular.module('splitonsApp').controller('TransactionController', ['$scope', '$r
             project.transactions.push(transac);
         }
         projectsFactory.saveProject(project);
-        $location.path('/project/' + $scope.projectName + "/1").replace();
+        $scope.back();
         return false;
     };
     function getTransaction(project, transactionId) {

@@ -53,7 +53,7 @@ angular.module('splitonsApp').controller(
                     project.transactions.push(transac);
                 }
                 projectsFactory.saveProject(project);
-                $location.path('/project/'+$scope.projectName+"/1").replace();
+                $scope.back();
                 return false;
             };
 
