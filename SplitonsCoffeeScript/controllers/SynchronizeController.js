@@ -12,8 +12,6 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
     var p = projectsFactory.getProject($routeParams.projectId, $routeParams.projectName);
     //We inherit from the parent (Refactoring)
     $controller('ProjectNameController', { $scope: $scope, $project: p });
-    $scope.projectId = p.id;
-    $scope.projectName = p.name;
     $scope.lastUpdated = p.lastUpdated;
     $scope.synchronizing = false;
     var synchronizer = synchFactory.get();
@@ -58,18 +56,6 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
                     $window.open(link, '_blank');
                 }
             }
-        });
-    };
-    $scope.sendViaFastFlicker = function () {
-        var passphrase;
-        passphrase = this.projectId.substring(0, 4);
-        var sharer = synchFactory.getSharer();
-        sharer.onError().subscribe(function (err) { return handleResult({ success: false, message: 'Sharing error : ' + err }); });
-        sharer.share(this.projectId, this.projectName, passphrase);
-        bootbox.alert({
-            title: "Sending project ...",
-            message: "Share wih your friend the following passphrase : " + passphrase,
-            size: 'small'
         });
     };
 }]);

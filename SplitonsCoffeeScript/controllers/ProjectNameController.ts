@@ -3,6 +3,7 @@
 angular.module('splitonsApp').controller(
     'ProjectNameController', ['$scope', '$project', 'projectsFactory', function($scope, $project, projectsFactory) {
         $scope.projectName = $project.name;
+        $scope.projectId = $project.id;
         $scope.newProjectName = "";
 
         $scope.renameProject = function() {

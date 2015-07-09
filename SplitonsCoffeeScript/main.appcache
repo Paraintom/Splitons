@@ -1,10 +1,9 @@
 CACHE MANIFEST
-#v45
+#v57
 CACHE:
 partials/listProjects.html
 partials/transaction.html
 partials/basic.html
-partials/synchronize.html
 partials/sections.html
 partials/overview.html
 index.html
