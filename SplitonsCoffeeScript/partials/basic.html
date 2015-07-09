@@ -50,48 +50,7 @@
                 </div>
             </div>
 
-            <!--settlement level-->
-            <div class="row" ng-show="activeTab == 3">
 
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h1> How to settle the debts :</h1>
-                        </div>
-                        <div class="panel-body">
-                            <h1 class="text-warning" ng-show="transactions.length == 0"> You need to add transactions
-                                first</h1>
-
-                            <div class="row">
-                                <!--to refactorize!-->
-                                <div ng-show="allCurrencies.length > 1"  class="col-xs-3 col-md-2">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        <li ng-repeat="currency in allCurrencies"
-                                            ng-class="selectedCurrency == currency ? 'active' : ''"
-                                            ng-click="setSelectedCurrency(currency)">
-                                            <a href ng-click="setSelectedCurrency(currency)">{{currency}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="col-xs-10">
-                                    <ul class="lead list-unstyled">
-
-                                        <li ng-repeat="settlement in settlements">
-                                            <span>{{settlement.from}} should pay {{settlement.to}} <b>{{settlement.amount|number:2}}</b> {{settlement.currency}}</span>
-
-                                <span class="pull-right ">
-                                    <a ng-click="settleDebts(settlement.from,settlement.to,settlement.amount,settlement.currency)"><i
-                                            class="fa fa-check fa-fw fa-lg text-success"></i></a>
-                                    </span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

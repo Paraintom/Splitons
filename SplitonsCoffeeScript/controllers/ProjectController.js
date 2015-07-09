@@ -19,7 +19,6 @@ angular.module('splitonsApp').controller('ProjectController', ['$scope', '$route
     $scope.setSelectedCurrency = function (currency) {
         $scope.selectedCurrency = currency;
         $scope.balances = calculateBalances(currency);
-        $scope.settlements = calculateSettlement(currency);
         $scope.averagePerPerson = calculateAveragePerPerson();
     };
     $scope.setSelectedCurrency($scope.allCurrencies[0]);
@@ -135,47 +134,6 @@ angular.module('splitonsApp').controller('ProjectController', ['$scope', '$route
             });
         });
         return result;
-    }
-    function calculateSettlement(currency) {
-        var result;
-        result = [];
-        var currentBalance = calculateBalances(currency);
-        while (notFinished(currentBalance)) {
-            if (bug(currentBalance)) {
-                throw new Error("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
-            }
-            var orderedResults = Enumerable.from(currentBalance).select(function (x) {
-                return x.value;
-            }).where(function (x) {
-                return x.amount != 0;
-            }).orderBy(function (x) {
-                return x.amount;
-            });
-            var biggestDebtor = orderedResults.first();
-            var biggestCreditor = orderedResults.last();
-            var to = biggestCreditor.member;
-            var from = biggestDebtor.member;
-            var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
-            biggestCreditor.amount -= amount;
-            biggestDebtor.amount += amount;
-            result.push(new SettlementEntry(from, to, amount, currency));
-        }
-        //result.forEach(o=>console.debug("from:"+o.from+" to:"+o.to+" amount:"+o.amount));
-        return result;
-    }
-    function notFinished(currentBalance) {
-        return Enumerable.from(currentBalance).count(function (x) {
-            return x.value.amount != 0;
-        }) > 1;
-    }
-    function bug(currentBalance) {
-        var allPositive = Enumerable.from(currentBalance).all(function (x) {
-            return x.value.amount >= 0;
-        });
-        var allNegative = Enumerable.from(currentBalance).all(function (x) {
-            return x.value.amount <= 0;
-        });
-        return allPositive || allNegative;
     }
 }]);
 //# sourceMappingURL=ProjectController.js.map
