@@ -1,25 +1,24 @@
 <div class="section">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h1>Create a new project</h1>
+            <div class="col-md-12">
+                <h1>Welcome in Splitons!</h1>
                 <hr class="hidden-xs">
                 <p></p>
                 <p class="hidden-xs">Sometimes you need to manage expenses.
                     <br>You want it simple and easy.
                     <br>Welcome on Splitons...</p>
-                <form role="form" ng-submit="createProject()">
-                    <div class="form-group">
-                        <div>
-                            <input class="form-control" placeholder="project name" type="text" ng-model="newProjectName">
-                            <button type="submit" class="btn btn-default">Create</button>
-                        </div>
-                    </div>
+                <form role="form" ng-submit="sendFeedback()">
+                    <button type="submit" class="btn btn-lg btn-default">
+                        <i class='fa fa-comments fa-fw fa-lg'/>
+                                <span class="hidden-xs">
+                                    Send feedback
+                                </span>
+                    </button>
                 </form>
-            </div>
-            <div class="col-md-4">
-                <h1>Existing projects</h1>
                 <hr class="hidden-xs">
+
+                <h3>Projects List</h3>
                 <ul class="text-left lead">
                     <li ng-repeat="project in projects">
                         <a href="#/project/{{project.id}}/overview">{{project.name}}</a>
@@ -29,43 +28,37 @@
                         </div>
                     </li>
                 </ul>
-                <p></p>
-                <p></p>
-            </div>
-            <div class="col-md-4">
-                <h1>Receive a project</h1>
-                <hr class="hidden-xs">
-                <p></p>
-                <p class="hidden-xs">You can easily share project with your friends. To send a project go on the Synchronize tab of an open project.</p>
+                <form role="form" ng-submit="createProject()">
+                    <div class="input-group">
+                        <input class="form-control" placeholder="new project name" type="text"
+                               ng-model="newProjectName">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class='fa fa-plus fa-fw fa-lg'/>
+                                    <span class="hidden-xs">Create a new Project!</span></button>
+                            </span>
+                    </div>
+                </form>
+
+                <h3>Receive a project</h3>
+
                 <form role="form" ng-submit="receiveProject()">
                     <div class="form-group">
-                            <input class="form-control" placeholder="Type here the shared passphrase" type="text" ng-model="passphrase">
-                            <button type="submit" class="btn btn-lg btn-default">
-                                <i class='fa fa-angle-double-down fa-fw fa-lg'/>
-                                        <span class="hidden-xs">
-                                            Receive project
-                                        </span>
-                            </button>
-                        </div>
-                </form>
-                <p></p>
-            </div>
-        </div>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Type here the shared passphrase" type="text"
+                                   ng-model="passphrase">
 
-        <div class="row">
-            <div class="col-md-4">
-                <h1>Send a Feedback</h1>
-                <hr class="hidden-xs">
-                <p></p>
-                <form role="form" ng-submit="sendFeedback()">
-                    <button type="submit" class="btn btn-lg btn-default">
-                        <i class='fa fa-comments fa-fw fa-lg'/>
-                                <span class="hidden-xs">
-                                    Send feedback
-                                </span>
-                    </button>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <i class='fa fa-angle-double-down fa-fw fa-lg'/>
+                                            <span class="hidden-xs">
+                                                Receive project
+                                            </span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
                 </form>
-                <p></p>
             </div>
         </div>
     </div>

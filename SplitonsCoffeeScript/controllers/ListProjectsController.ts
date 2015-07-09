@@ -15,7 +15,7 @@ angular.module('splitonsApp').controller(
             $scope.createProject = function () {
                 if ($scope.newProjectName) {
                     var newProject = projectsFactory.getNewProject($scope.newProjectName);
-                    $location.path('/project/' + newProject.id + "/1").replace();
+                    $location.path('/project/' + newProject.id + "/overview").replace();
                 }
             };
 
