@@ -5,6 +5,7 @@
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
+///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window', function ($scope, projectsFactory, synchFactory, $location, $route, $window) {
     $scope.projects = projectsFactory.getAllProject();
     $scope.createProject = function () {
@@ -28,6 +29,18 @@ angular.module('splitonsApp').controller('ListProjectsController', ['$scope', 'p
                     }
                 }
             }
+        });
+    };
+    $scope.sendViaFastFlicker = function (projectName, projectId) {
+        var passphrase;
+        passphrase = projectId.substring(0, 4);
+        var sharer = synchFactory.getSharer();
+        sharer.onError().subscribe(function (err) { return console.log("Sharer error : " + err); });
+        sharer.share(projectId, projectName, passphrase);
+        bootbox.alert({
+            title: "Sending project ...",
+            message: "Share wih your friend the following passphrase : " + passphrase,
+            size: 'small'
         });
     };
     $scope.sendFeedback = function () {

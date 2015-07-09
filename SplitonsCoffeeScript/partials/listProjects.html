@@ -24,6 +24,9 @@
                     <li ng-repeat="project in projects">
                         <a href="#/project/{{project.id}}/overview">{{project.name}}</a>
                         <i ng-click="deleteProject(project.name,project.id)" class="fa fa-close fa-fw fa-lg text-danger"></i>
+                        <div class="btn btn-sm btn-default" >
+                            <i ng-click="sendViaFastFlicker(project.name, project.id)" class="fa fa-angle-double-up fa-fw fa-lg"></i>
+                        </div>
                     </li>
                 </ul>
                 <p></p>
