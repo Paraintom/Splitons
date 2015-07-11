@@ -24,14 +24,19 @@ angular.module('splitonsApp').controller(
 
             //Now it is automatic on controller load.
             $scope.synchronize = function () {
-                $scope.errorString = "";
-                $scope.synchronizing = true;
-                $timeout(function(){
-                    if($scope.synchronizing){
-                        handleResult({success:false,message:'Synchronisation timeout.'});
-                    }
-                },5000)
-                synchronizer.synchronize($project);
+                if(synchronizer.shouldTryToSynchronize($project)) {
+                    $scope.errorString = "";
+                    $scope.synchronizing = true;
+                    $timeout(function () {
+                        if ($scope.synchronizing) {
+                            handleResult({success: false, message: 'Synchronisation timeout.'});
+                        }
+                    }, 5000)
+                    synchronizer.synchronize($project);
+                }
+                else{
+                    console.debug('we should not Synchronize...');
+                }
             }
 
             //We synchronize on load

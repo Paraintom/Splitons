@@ -2,6 +2,7 @@
 /// <reference path="../dataObjects/Project.ts" />
 interface ISynchronizer {
     synchronize(project:Project);
+    shouldTryToSynchronize(project:Project);
     onSynchronized(): ILiteEvent<SyncResultEvent>
 }
 

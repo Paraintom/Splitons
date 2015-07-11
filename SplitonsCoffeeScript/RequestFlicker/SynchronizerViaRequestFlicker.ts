@@ -7,9 +7,24 @@
 class SynchronizerViaRequestFlicker implements ISynchronizer {
 
     private onSynchronizationResultEvent = new LiteEvent<SyncResultEvent>();
+    private lastSynchronized :{ [id: string] : number; } = {};
 
     onSynchronized():ILiteEvent<SyncResultEvent> {
         return this.onSynchronizationResultEvent;
+    }
+
+    shouldTryToSynchronize(project:Project) {
+        var result = true;
+        if(!navigator.onLine){
+            result = false;
+        }
+        else {
+            if (this.lastSynchronized[project.id]) {
+                var now = new Date();
+                result = (now.getTime() - this.lastSynchronized[project.id]) > 30 * 1000;
+            }
+        }
+        return result;
     }
 
     synchronize(project:Project) {
@@ -102,6 +117,7 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
         }
         p.lastUpdated = json.lastUpdated;
         var syncInfo = (updatedNumber == 0) ? "(No new update)" : "("+updatedNumber+" new update(s))";
+        this.lastSynchronized[p.id] = new Date().getTime();
         this.raiseResult(true,"Synchronisation successful "+syncInfo);
     }
 

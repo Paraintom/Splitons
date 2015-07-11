@@ -7,9 +7,23 @@
 var SynchronizerViaRequestFlicker = (function () {
     function SynchronizerViaRequestFlicker() {
         this.onSynchronizationResultEvent = new LiteEvent();
+        this.lastSynchronized = {};
     }
     SynchronizerViaRequestFlicker.prototype.onSynchronized = function () {
         return this.onSynchronizationResultEvent;
+    };
+    SynchronizerViaRequestFlicker.prototype.shouldTryToSynchronize = function (project) {
+        var result = true;
+        if (!navigator.onLine) {
+            result = false;
+        }
+        else {
+            if (this.lastSynchronized[project.id]) {
+                var now = new Date();
+                result = (now.getTime() - this.lastSynchronized[project.id]) > 30 * 1000;
+            }
+        }
+        return result;
     };
     SynchronizerViaRequestFlicker.prototype.synchronize = function (project) {
         var _this = this;
@@ -93,6 +107,7 @@ var SynchronizerViaRequestFlicker = (function () {
         }
         p.lastUpdated = json.lastUpdated;
         var syncInfo = (updatedNumber == 0) ? "(No new update)" : "(" + updatedNumber + " new update(s))";
+        this.lastSynchronized[p.id] = new Date().getTime();
         this.raiseResult(true, "Synchronisation successful " + syncInfo);
     };
     SynchronizerViaRequestFlicker.prototype.handleError = function (errorEvent) {
