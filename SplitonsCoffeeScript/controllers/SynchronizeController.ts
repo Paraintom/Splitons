@@ -10,14 +10,13 @@
 ///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller(
     'SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify','$timeout',
-        '$location', '$window','$controller',
+        '$location', '$window','$controller','$project',
         function ($scope, $routeParams, projectsFactory, synchFactory,notify, $timeout,
-                  $location, $window,$controller) {
-            var p = projectsFactory.getProject($routeParams.projectId,$routeParams.projectName);
+                  $location, $window,$controller,$project) {
             //We inherit from the parent (Refactoring)
-            $controller('ProjectNameController', {$scope: $scope, $project : p});
+            $controller('ProjectNameController', {$scope: $scope, $project : $project});
 
-            $scope.lastUpdated = p.lastUpdated;
+            $scope.lastUpdated = $project.lastUpdated;
             $scope.synchronizing = false;
 
             var synchronizer = synchFactory.get();
@@ -32,7 +31,7 @@ angular.module('splitonsApp').controller(
                         handleResult({success:false,message:'Synchronisation timeout.'});
                     }
                 },5000)
-                synchronizer.synchronize(p);
+                synchronizer.synchronize($project);
             }
 
             //We synchronize on load
@@ -47,9 +46,9 @@ angular.module('splitonsApp').controller(
                 var classe = result.success ? 'alert-success' : 'alert-danger';
                 notify({ message:result.message, duration:5000, classes:classe});
                 $scope.synchronizing = false;
-                $scope.lastUpdated = p.lastUpdated;
+                $scope.lastUpdated = $project.lastUpdated;
                 if(result.success){
-                    projectsFactory.saveProject(p);
+                    projectsFactory.saveProject($project);
                 }
                 (!$scope.$$phase)
                     $scope.$apply()

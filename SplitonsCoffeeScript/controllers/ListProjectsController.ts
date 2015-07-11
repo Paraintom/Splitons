@@ -66,7 +66,7 @@ angular.module('splitonsApp').controller(
                     (a)=>{
                         console.debug('received '+a.projectName);
                         $scope.$apply(function () {
-                            $location.path('synchronize/' + a.projectId + '/' + a.projectName).replace();
+                            $location.path('project/' + a.projectId + '/overview/' + a.projectName).replace();
                         });
                     }
                 );

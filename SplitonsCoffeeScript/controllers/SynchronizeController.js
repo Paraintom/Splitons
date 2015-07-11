@@ -8,11 +8,10 @@
 ///<reference path="../RequestFlicker/ServiceLookup.ts"/>
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
-angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify', '$timeout', '$location', '$window', '$controller', function ($scope, $routeParams, projectsFactory, synchFactory, notify, $timeout, $location, $window, $controller) {
-    var p = projectsFactory.getProject($routeParams.projectId, $routeParams.projectName);
+angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$routeParams', 'projectsFactory', 'synchFactory', 'notify', '$timeout', '$location', '$window', '$controller', '$project', function ($scope, $routeParams, projectsFactory, synchFactory, notify, $timeout, $location, $window, $controller, $project) {
     //We inherit from the parent (Refactoring)
-    $controller('ProjectNameController', { $scope: $scope, $project: p });
-    $scope.lastUpdated = p.lastUpdated;
+    $controller('ProjectNameController', { $scope: $scope, $project: $project });
+    $scope.lastUpdated = $project.lastUpdated;
     $scope.synchronizing = false;
     var synchronizer = synchFactory.get();
     synchronizer.onSynchronized().subscribe(handleResult);
@@ -25,7 +24,7 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
                 handleResult({ success: false, message: 'Synchronisation timeout.' });
             }
         }, 5000);
-        synchronizer.synchronize(p);
+        synchronizer.synchronize($project);
     };
     //We synchronize on load
     $scope.synchronize();
@@ -37,9 +36,9 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
         var classe = result.success ? 'alert-success' : 'alert-danger';
         notify({ message: result.message, duration: 5000, classes: classe });
         $scope.synchronizing = false;
-        $scope.lastUpdated = p.lastUpdated;
+        $scope.lastUpdated = $project.lastUpdated;
         if (result.success) {
-            projectsFactory.saveProject(p);
+            projectsFactory.saveProject($project);
         }
         (!$scope.$$phase);
         $scope.$apply();

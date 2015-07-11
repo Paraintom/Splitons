@@ -12,17 +12,13 @@ splitonsApp.config(['$routeProvider',
                 templateUrl: 'partials/listProjects.html',
                 controller: 'ListProjectsController'
             }).
-            when('/project/:projectId/overview', {
+            when('/project/:projectId/overview/:projectName?', {
                 templateUrl: 'partials/overview.html',
                 controller: 'OverviewController'
             }).
             when('/project/:projectId/:activeTab', {
                 templateUrl: 'partials/basic.html',
                 controller: 'ProjectController'
-            }).
-            when('/synchronize/:projectId/:projectName?', {
-                templateUrl: 'partials/synchronize.html',
-                controller: 'SynchronizeController'
             }).
             when('/project/:projectId/:transactionId/transaction', {
                 templateUrl: 'partials/transaction.html',

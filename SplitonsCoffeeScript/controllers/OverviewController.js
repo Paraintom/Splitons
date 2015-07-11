@@ -6,20 +6,29 @@
 ///<reference path="../SettlementEntry.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
 angular.module('splitonsApp').controller('OverviewController', ['$scope', '$routeParams', 'projectsFactory', '$route', '$filter', '$controller', function ($scope, $routeParams, projectsFactory, $route, $filter, $controller) {
-    var p = projectsFactory.getProject($routeParams.projectId);
+    var p = projectsFactory.getProject($routeParams.projectId, $routeParams.projectName);
     //We inherit from the parent (Refactoring)
     $controller('SynchronizeController', { $scope: $scope, $project: p });
-    $scope.activeTab = 1;
     $scope.members = p.members;
-    $scope.notDeletedTransactions = $filter('filter')(p.transactions, { deleted: false });
-    $scope.allCurrencies = calculateAllCurrencies();
+    $scope.notDeletedTransactions = [];
+    function setNotDeletedTransaction() {
+        var allTransactions = Enumerable.from($scope.transactions);
+        var result = allTransactions.where(function (x) {
+            return !x.deleted;
+        });
+        $scope.notDeletedTransactions = result;
+    }
     $('#newMemberTextBox').focus();
+    $scope.transactions = p.transactions;
+    $scope.$watchCollection('transactions.length', function (newVal, oldVal) {
+        setNotDeletedTransaction();
+        $scope.allCurrencies = calculateAllCurrencies();
+        $scope.setSelectedCurrency($scope.allCurrencies[0]);
+    }, true);
     $scope.setSelectedCurrency = function (currency) {
         $scope.selectedCurrency = currency;
         $scope.balances = calculateBalances(currency);
-        $scope.averagePerPerson = calculateAveragePerPerson();
     };
-    $scope.setSelectedCurrency($scope.allCurrencies[0]);
     $scope.addMember = function () {
         if (p.members.indexOf($scope.newMember) == -1) {
             p.members.push($scope.newMember);
@@ -57,19 +66,6 @@ angular.module('splitonsApp').controller('OverviewController', ['$scope', '$rout
         });
         return ba.amount;
     };
-    function calculateAveragePerPerson() {
-        var result = 0;
-        Enumerable.from($scope.notDeletedTransactions).where(function (y) {
-            return y.currency == $scope.selectedCurrency;
-        }).forEach(function (t) {
-            result += t.amount;
-        });
-        var numberMembers = $scope.members.length;
-        if (numberMembers != 0) {
-            result = (result / numberMembers);
-        }
-        return result;
-    }
     function calculateAllCurrencies() {
         var result = [];
         $scope.notDeletedTransactions.forEach(function (t) {
