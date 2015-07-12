@@ -12,7 +12,8 @@ angular.module('splitonsApp').controller(
             var p = projectsFactory.getProject($routeParams.projectId,$routeParams.projectName);
             //We inherit from the parent (Refactoring)
             $controller('SynchronizeController', {$scope: $scope, $project : p});
-
+            $scope.activeTab =1;
+            
             $scope.members = p.members;
             $scope.notDeletedTransactions = [];
 
