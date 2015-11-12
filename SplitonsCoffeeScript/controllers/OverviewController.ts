@@ -13,7 +13,7 @@ angular.module('splitonsApp').controller(
             //We inherit from the parent (Refactoring)
             $controller('SynchronizeController', {$scope: $scope, $project : p});
             $scope.activeTab =1;
-            
+
             $scope.members = p.members;
             $scope.notDeletedTransactions = [];
 
@@ -24,8 +24,6 @@ angular.module('splitonsApp').controller(
                 });
                 $scope.notDeletedTransactions =result;
             }
-
-            $('#newMemberTextBox').focus();
 
             $scope.transactions =  p.transactions;
             $scope.$watchCollection('transactions.length', function (newVal, oldVal) {
@@ -101,11 +99,14 @@ angular.module('splitonsApp').controller(
                 $scope.notDeletedTransactions.forEach(t=> {
                     if(t.currency != forCurrency)
                         return;
+                    //console.debug('considering '+t.comment + ' : '+t.amount);
                     result[t.from].amount += t.amount;
+                    //console.debug('adding to '+t.from + ' : '+t.amount);
                     var numberOfDebiter = t.to.length;
 
                     t.to.forEach(debitor=> {
-                        result[debitor].amount -= (Math.round((t.amount / numberOfDebiter)* 100) / 100);
+                        //console.debug('removing to '+debitor + ' : '+t.amount);
+                        result[debitor].amount -= (Math.round((t.amount / numberOfDebiter) * 100) / 100);
                     });
                 });
                 return result;

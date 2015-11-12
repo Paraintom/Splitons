@@ -19,7 +19,6 @@ angular.module('splitonsApp').controller('OverviewController', ['$scope', '$rout
         });
         $scope.notDeletedTransactions = result;
     }
-    $('#newMemberTextBox').focus();
     $scope.transactions = p.transactions;
     $scope.$watchCollection('transactions.length', function (newVal, oldVal) {
         setNotDeletedTransaction();
@@ -88,9 +87,12 @@ angular.module('splitonsApp').controller('OverviewController', ['$scope', '$rout
         $scope.notDeletedTransactions.forEach(function (t) {
             if (t.currency != forCurrency)
                 return;
+            //console.debug('considering '+t.comment + ' : '+t.amount);
             result[t.from].amount += t.amount;
+            //console.debug('adding to '+t.from + ' : '+t.amount);
             var numberOfDebiter = t.to.length;
             t.to.forEach(function (debitor) {
+                //console.debug('removing to '+debitor + ' : '+t.amount);
                 result[debitor].amount -= (Math.round((t.amount / numberOfDebiter) * 100) / 100);
             });
         });

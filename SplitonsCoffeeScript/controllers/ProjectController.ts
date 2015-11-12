@@ -19,8 +19,6 @@ angular.module('splitonsApp').controller(
             $scope.members = p.members;
             $scope.allCurrencies = calculateAllCurrencies();
 
-            $('#newMemberTextBox').focus();
-
             $scope.setSelectedCurrency = function(currency) {
                 $scope.selectedCurrency = currency;
                 $scope.balances = calculateBalances(currency);
