@@ -48,7 +48,9 @@
             $.get("main.appcache", function(data) {
                 var lines = data.split("\n");
                 var version = lines[1].substring(1);
-                document.getElementById("version").innerHTML = version;
+                if(document.getElementById("version")) {
+                    document.getElementById("version").innerHTML = version;
+                }
                 return version;
             });
         }
@@ -59,13 +61,6 @@
 </head>
 
 <body>
-<div class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#/"><span>Splitons</span> <span id="version"></span></a>
-        </div>
-    </div>
-</div>
 <div ng-view></div>
 </body>
 </html>
