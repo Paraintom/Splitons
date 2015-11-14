@@ -11,7 +11,7 @@ var FastFlickerClient = (function () {
     }
     FastFlickerClient.prototype.open = function () {
         var _this = this;
-        try {
+        try  {
             this.websocket = new WebSocket(this.url);
             this.websocket.onopen = function (evt) {
                 _this.onOpen(evt);
@@ -25,62 +25,67 @@ var FastFlickerClient = (function () {
             this.websocket.onerror = function (evt) {
                 _this.onErrorReceived(evt);
             };
-        }
-        catch (error) {
+        } catch (error) {
             this.onErrorEvent.raise(error.toString());
         }
     };
+
     FastFlickerClient.prototype.onOpen = function (evt) {
         console.debug('connection open for channel ' + this.subject);
         this.websocket.send(this.subject);
         this.onReadyEvent.raise();
     };
+
     FastFlickerClient.prototype.onClose = function (evt) {
         console.debug('onClose for ' + this.subject);
     };
+
     FastFlickerClient.prototype.onMessageReceived = function (evt) {
-        try {
+        try  {
             var message = evt.data;
             if (message == this.subject) {
                 //this is the first echo, we ignore it.
                 return;
             }
             this.onMessageEvent.raise(message);
-        }
-        catch (error) {
+        } catch (error) {
             this.onErrorEvent.raise(evt);
         }
     };
+
     FastFlickerClient.prototype.onErrorReceived = function (evt) {
         if (evt.hasOwnProperty('target') && evt.target.hasOwnProperty('readyState') && evt.target.readyState == 3) {
             evt.message = "The connection is closed or couldn't be opened.";
         }
         this.onErrorEvent.raise(evt.message);
     };
+
     FastFlickerClient.prototype.close = function () {
-        try {
+        try  {
             this.websocket.close();
-        }
-        catch (error) {
+        } catch (error) {
             this.onErrorEvent.raise(error);
         }
     };
+
     FastFlickerClient.prototype.send = function (message) {
-        try {
+        try  {
             if (this.websocket != null) {
                 this.websocket.send(message);
             }
-        }
-        catch (error) {
+        } catch (error) {
             this.onErrorEvent.raise(error);
         }
     };
+
     FastFlickerClient.prototype.onReady = function () {
         return this.onReadyEvent;
     };
+
     FastFlickerClient.prototype.onMessage = function () {
         return this.onMessageEvent;
     };
+
     FastFlickerClient.prototype.onError = function () {
         return this.onErrorEvent;
     };
