@@ -1,4 +1,4 @@
-///<reference path="../linq/linq.d.ts"/>
+﻿///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
@@ -38,11 +38,19 @@ angular.module('splitonsApp').controller('OverviewController', [
         };
 
         $scope.addMember = function () {
-            if (p.members.indexOf($scope.newMember) == -1) {
-                p.members.push($scope.newMember);
-                projectsFactory.saveProject(p);
-            }
-            $route.reload();
+            bootbox.prompt({
+                title: 'Add a Member',
+                placeholder: 'Enter member name...',
+                callback: function (result) {
+                    if (result !== null && $.trim(result) !== '') {
+                        if (p.members.indexOf(result) == -1) {
+                            p.members.push(result);
+                            projectsFactory.saveProject(p);
+                        }
+                        $route.reload();
+                    }
+                }
+            });
         };
 
         $scope.deleteMember = function (name) {

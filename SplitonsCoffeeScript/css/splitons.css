@@ -11,6 +11,7 @@ body {
     margin-top: 10px;
     background-color: #fff;
     color: #67447a;
+    padding: 0 10px;
 }
 
     .heading p {
@@ -20,6 +21,18 @@ body {
         margin-top: 2px;
         margin-bottom: 0;
     }
+
+.heading-buttons {
+    margin: 10px 0;
+}
+
+.nav-pills li a {
+    cursor: pointer;
+}
+
+.nowrap {
+    white-space:nowrap;
+}
 
 @media (max-width:767px) {
     .heading {
@@ -54,10 +67,15 @@ body {
     color:#666;
 }
 
+.label-lg {
+    font-size:100%
+}
+
 h1 {
     font-family: 'Sonsie One';
 }
 
+table.members td:first-child, 
 table.projects td:first-child {
     font-size: 1.4em;
     text-align: left;

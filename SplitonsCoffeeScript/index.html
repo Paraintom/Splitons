@@ -3,6 +3,7 @@
 <html ng-app="splitonsApp" manifest="main.appcache">
 
 <head>
+    <title>Splitons!</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="text/javascript" src="external/jquery.min.js"></script>
@@ -45,25 +46,20 @@
     <script src="angular-notify.js"></script>
 
     <script>
-        function setVersion()
-        {
+        function setVersion() {
             $.get("main.appcache", function (data) {
                 var lines = data.split("\n");
                 var version = lines[1].substring(1);
-                if(document.getElementById("version")) {
-                    document.getElementById("version").innerHTML = version;
-                }
-                return version;
+                $('#version').text(version);
             });
         }
-        $( document ).ready(function() {
+        $(function () {
             setVersion();
         });
     </script>
 </head>
 
 <body>
-<div ng-view>
-</div>
+    <div ng-view></div>
 </body>
 </html>

@@ -1,70 +1,57 @@
-<div>
-    <div class="section">
-        <div class="container">
-            <div class="row" ng-include="'partials/sections.html'"></div>
+<div class="section">
+    <div class="container">
+        <div class="row" ng-include="'partials/sections.html'">
+        </div>
 
-            <!--Overview section-->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h1>
-                                <span ng-show="members.length > 1">{{members.length}} members <br>
-                                <!-- Todo : put in a modal windows.
-                                Average spent per person : {{averagePerPerson|number:0}} {{selectedCurrency}}-->
-                                </span>
-                            </h1>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <!--to refactorize!-->
-                                <div ng-show="allCurrencies.length > 1" class="col-xs-3 col-md-2">
-                                    <ul class="nav nav-pills nav-stacked">
-                                        <li ng-repeat="currency in allCurrencies"
-                                            ng-class="selectedCurrency == currency ? 'active' : ''"
-                                            ng-click="setSelectedCurrency(currency)">
-                                            <a href ng-click="setSelectedCurrency(currency)">{{currency}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="col-xs-10">
-                                    <ul class="lead list-unstyled text-left">
-
-                                        <li ng-repeat="balance in balances">
-                                            <span>{{balance.member}}</span>
-                                    <span ng-class="balance.amount>0 ? 'label label-success' : 'label label-danger'">
-                                        {{balance.amount | number:2}} {{selectedCurrency}}
-                                    </span>
-                                            <i ng-click="deleteMember(balance.member)"
-                                               ng-hide="existInTransactions(balance.member)"
-                                               class="fa fa-close fa-fw fa-lg text-danger"></i>
-
-                                        </li>
-                                    </ul>
-                                    <form role="form" ng-submit="addMember()">
-                                        <input class="hidden" autofocus />
-                                        <input id="newMemberTextBox" class="form-control" placeholder="John doe"
-                                               type="text"
-                                               ng-model="newMember"><br>
-                                        <button type="submit" class="btn btn-lg btn-default">
-                                            <i class="fa fa-user-plus fa-fw fa-lg"></i>
-                                            <span class="hidden-xs">
-                                                Add a new member
-                                            </span>
-                                        </button>
-
-                                        <a href="#/project/{{projectId}}/0/transaction" class="btn btn-lg btn-primary">
-                                            <i class="fa fa-exchange fa-fw fa-lg"></i>
-                                            <span class="hidden-xs">
-                                                Add a new transaction
-                                            </span>
-                                        </a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+        <!--Overview section-->
+        <div class="row">
+            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-pills">
+                            <li ng-repeat="currency in allCurrencies"
+                                ng-class="selectedCurrency == currency ? 'active' : ''"
+                                ng-click="setSelectedCurrency(currency)">
+                                <a ng-click="setSelectedCurrency(currency)">{{currency}}</a>
+                            </li>
+                        </ul>
                     </div>
+                    <div class="panel-body">
+                        <table class="table table-striped members">
+                            <tbody>
+                                <tr ng-repeat="balance in balances">
+                                    <td>
+                                        <span>{{balance.member}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="nowrap label label-lg" ng-class="balance.amount > 0 ? 'label-success' : balance.amount < 0 ? 'label-danger' : 'label-default'">
+                                            {{balance.amount | number:2}} {{selectedCurrency}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-default" ng-click="deleteMember(balance.member)" ng-hide="existInTransactions(balance.member)">
+                                            <i class="fa fa-close fa-fw text-danger"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
+                <div class="pull-right">
+                    <button class="btn btn-primary" ng-click="addMember()">
+                        Add <span class="hidden-xs">a Member</span>
+                        <i class='fa fa-user-plus fa-fw fa-lg' />
+                    </button>
+
+                    <a class="btn btn-default" href="#/project/{{projectId}}/0/transaction">
+                        Create <span class="hidden-xs">a Transaction</span>
+                        <i class='fa fa-money fa-fw fa-lg' />
+                    </a>
                 </div>
             </div>
         </div>
