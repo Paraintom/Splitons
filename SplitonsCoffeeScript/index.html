@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--<html ng-app="splitonsApp">-->
 <html ng-app="splitonsApp" manifest="main.appcache">
 
@@ -8,9 +8,11 @@
     <script type="text/javascript" src="external/jquery.min.js"></script>
     <script type="text/javascript" src="external/bootstrap.min.js"></script>
     <script type="text/javascript" src="external/bootbox.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/angular-notify.css" rel="stylesheet" type="text/css">
-    <link href="css/basic.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
+    <link href="css/splitons.css" rel="stylesheet" type="text/css">
 
     <script src="linq/linq.js"></script>
     <script src="angular.js"></script>
@@ -45,7 +47,7 @@
     <script>
         function setVersion()
         {
-            $.get("main.appcache", function(data) {
+            $.get("main.appcache", function (data) {
                 var lines = data.split("\n");
                 var version = lines[1].substring(1);
                 if(document.getElementById("version")) {
@@ -61,6 +63,7 @@
 </head>
 
 <body>
-<div ng-view></div>
+<div ng-view>
+</div>
 </body>
 </html>
