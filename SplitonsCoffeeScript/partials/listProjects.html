@@ -14,7 +14,7 @@
         <hr class="hidden-xs" />
         <div class="row">
             <h3>Your Groups</h3>
-            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
+            <div class="col-md-8 col-sm-10 col-md-push-2 col-sm-push-1">
                 <table class="table table-striped table-hover projects">
                     <tbody>
                         <tr ng-repeat="project in projects">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
+            <div class="col-md-8 col-sm-10 col-md-push-2 col-sm-push-1">
                 <div class="pull-right">
                     <button class="btn btn-primary" ng-click="receiveProject()">
                         Join <span class="hidden-xs">a Group</span>
@@ -50,37 +50,6 @@
                         <i class='fa fa-plus fa-fw fa-lg' />
                     </button>
                 </div>
-            </div>
-        </div>
-
-        <div class="row" style="display:none">
-            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
-                <form role="form">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="Enter group name..." type="text" ng-model="newProjectName" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" >
-                                    <i class='fa fa-plus fa-fw fa-lg' />
-                                    <span class="hidden-xs">Start a Group!</span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input class="form-control" placeholder="Enter group passphrase..." type="text" ng-model="passphrase" />
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" >
-                                    <i class='fa fa-angle-double-down fa-fw fa-lg' />
-                                    <span class="hidden-xs">
-                                        Join a Group
-                                    </span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

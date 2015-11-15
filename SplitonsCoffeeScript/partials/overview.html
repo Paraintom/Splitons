@@ -5,19 +5,40 @@
 
         <!--Overview section-->
         <div class="row">
-            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
+            <div class="col-md-8 col-sm-10 col-md-push-2 col-sm-push-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <ul class="nav nav-pills">
-                            <li ng-repeat="currency in allCurrencies"
-                                ng-class="selectedCurrency == currency ? 'active' : ''"
-                                ng-click="setSelectedCurrency(currency)">
-                                <a ng-click="setSelectedCurrency(currency)">{{currency}}</a>
-                            </li>
-                        </ul>
+                        <div class="pull-left">
+                            <ul class="nav nav-pills">
+                                <li ng-repeat="currency in allCurrencies"
+                                    ng-class="selectedCurrency == currency ? 'active' : ''"
+                                    ng-click="setSelectedCurrency(currency)">
+                                    <a ng-click="setSelectedCurrency(currency)">{{currency}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-default" ng-click="addMember()">
+                                Add <span class="hidden-xs">a Member</span>
+                                <i class='fa fa-user-plus fa-fw fa-lg' />
+                            </button>
+
+                            <a class="btn btn-default" href="#/project/{{projectId}}/0/transaction">
+                                Create <span class="hidden-xs">a Transaction</span>
+                                <i class='fa fa-money fa-fw fa-lg' />
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
+
                     <div class="panel-body">
                         <table class="table table-striped members">
+                            <thead>
+                                <tr>
+                                    <th>Who</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr ng-repeat="balance in balances">
                                     <td>
@@ -37,21 +58,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-8 col-md-push-3 col-sm-push-2">
-                <div class="pull-right">
-                    <button class="btn btn-primary" ng-click="addMember()">
-                        Add <span class="hidden-xs">a Member</span>
-                        <i class='fa fa-user-plus fa-fw fa-lg' />
-                    </button>
-
-                    <a class="btn btn-default" href="#/project/{{projectId}}/0/transaction">
-                        Create <span class="hidden-xs">a Transaction</span>
-                        <i class='fa fa-money fa-fw fa-lg' />
-                    </a>
                 </div>
             </div>
         </div>

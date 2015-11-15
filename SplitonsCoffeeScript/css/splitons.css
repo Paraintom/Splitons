@@ -75,11 +75,15 @@ h1 {
     font-family: 'Sonsie One';
 }
 
+table.projects td:first-child,
 table.members td:first-child, 
-table.projects td:first-child {
-    font-size: 1.4em;
+table.transactions td:first-child {
     text-align: left;
     width: 100%;
+}
+
+table.projects td:first-child {
+    font-size: 1.4em;
 }
 
 .version {
