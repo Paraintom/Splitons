@@ -1,4 +1,4 @@
-///<reference path="../linq/linq.d.ts"/>
+﻿///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
@@ -35,7 +35,6 @@ angular.module('splitonsApp').controller('TransactionController', [
             if (index == -1) {
                 return;
             }
-            $scope.currencies.splice(index, 1);
             currenciesFactory.delete(currency);
         };
 

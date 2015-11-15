@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Created by Tom on 04/04/2015.
 */
 ///<reference path="../linq/linq.d.ts"/>

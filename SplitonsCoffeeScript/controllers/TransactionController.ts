@@ -30,12 +30,11 @@ angular.module('splitonsApp').controller(
                 $scope.selectedCurrency = currency;
             }
 
-            $scope.deleteCurrency = function(currency) {
+            $scope.deleteCurrency = function (currency) {
                 var index = $scope.currencies.indexOf(currency);
                 if(index == -1) {
                     return;
                 }
-                $scope.currencies.splice(index, 1);
                 currenciesFactory.delete(currency);
             }
             //END Currencies
