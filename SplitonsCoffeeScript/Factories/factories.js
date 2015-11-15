@@ -1,34 +1,37 @@
 /**
- * Created by Tom on 22/03/2015.
- */
+* Created by Tom on 22/03/2015.
+*/
 ///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Guid.ts"/>
 var projectsFactory = angular.module('projectsFactory', ['ngResource']);
+
 projectsFactory.factory('projectsFactory', function () {
     var allProjects = [];
     init();
+
     function init() {
         for (var i = 0; i < localStorage.length; i++) {
             var projectId = localStorage.key(i);
-            try {
+            try  {
                 if (isProjectId(projectId)) {
                     var projectString = localStorage.getItem(projectId);
                     var json = JSON.parse(projectString);
                     var data = new Project().deserialize(json);
                     allProjects.push(data);
                 }
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("LocalStorageService::readObject: can't convert string from local storage to object using JSON.parse(). Error: " + error);
             }
         }
     }
+
     function isProjectId(key) {
         return key.match("[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}");
     }
+
     return {
         saveProject: function (project) {
             localStorage.setItem(project.id, JSON.stringify(project));
@@ -37,17 +40,20 @@ projectsFactory.factory('projectsFactory', function () {
             localStorage.removeItem(id);
         },
         getProject: function (id, projectName) {
-            if (projectName === void 0) { projectName = id; }
+            if (typeof projectName === "undefined") { projectName = id; }
             if (Guid.isGuid(id)) {
-                var result = Enumerable.from(allProjects).where(function (o) { return o.id == id; }).firstOrDefault();
+                var result = Enumerable.from(allProjects).where(function (o) {
+                    return o.id == id;
+                }).firstOrDefault();
                 if (result == null) {
                     // This is used for synchronisation
                     result = this.getNewProject(projectName, id);
                 }
                 return result;
-            }
-            else {
-                var result = Enumerable.from(allProjects).where(function (o) { return o.name == id; }).firstOrDefault();
+            } else {
+                var result = Enumerable.from(allProjects).where(function (o) {
+                    return o.name == id;
+                }).firstOrDefault();
                 if (result == null) {
                     throw new Error("Can't find project : " + id);
                 }
@@ -55,19 +61,21 @@ projectsFactory.factory('projectsFactory', function () {
             }
         },
         getNewProject: function (name, id) {
-            if (id === void 0) { id = name; }
-            var result = Enumerable.from(allProjects).where(function (o) { return o.id == id; }).firstOrDefault();
+            if (typeof id === "undefined") { id = name; }
+            var result = Enumerable.from(allProjects).where(function (o) {
+                return o.id == id;
+            }).firstOrDefault();
             if (result == null) {
                 result = new Project();
                 if (Guid.isGuid(id)) {
                     result.id = id;
                 }
                 result.name = name;
+
                 //result = getFakeProject(name);
                 allProjects.push(result);
                 localStorage.setItem(result.id, JSON.stringify(result));
-            }
-            else {
+            } else {
                 throw new Error("Can't create this project, it already exist!");
             }
             return result;

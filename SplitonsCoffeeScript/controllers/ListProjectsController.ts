@@ -13,16 +13,23 @@ angular.module('splitonsApp').controller(
             $scope.projects = projectsFactory.getAllProject();
 
             $scope.createProject = function () {
-                if ($scope.newProjectName) {
-                    var newProject = projectsFactory.getNewProject($scope.newProjectName);
-                    $location.path('/project/' + newProject.id + "/overview").replace();
-                }
+                bootbox.prompt({
+                    title: 'Create a Group',
+                    placeholder: 'Enter group name...',
+                    callback: function (result) {
+                        if (result !== null) {
+                            var newProject = projectsFactory.getNewProject(result);
+                            $location.path('/project/' + newProject.id + "/overview").replace();
+                        }
+                    }
+                });
             };
 
             $scope.deleteProject = function (projectName, projectId) {
                 bootbox.confirm({
                     size: 'small',
-                    message: "Are you sure you want to delete the project "+projectName+"?",
+                    title: 'Delete Group?',
+                    message: "Are you sure you want to delete the group: <b>" + projectName + " </b>?",
                     callback: function(result){
                         if(result){
                             for (var index in $scope.projects) {
@@ -44,8 +51,8 @@ angular.module('splitonsApp').controller(
                 sharer.onError().subscribe((err) => console.log("Sharer error : "+err));
                 sharer.share(projectId, projectName, passphrase);
                 bootbox.alert({
-                    title: "Sending project ...",
-                    message : "Share wih your friend the following passphrase : "+ passphrase,
+                    title: "Share Group",
+                    message : "Share the following code with your friends : <b>"+ passphrase + "</b>",
                     size: 'small'
                 });
             }
@@ -60,16 +67,24 @@ angular.module('splitonsApp').controller(
             }
 
             $scope.receiveProject = function () {
-                console.info('Receiving project with passphrase : '+$scope.passphrase);
-                var sharer = synchFactory.getSharer();
-                sharer.onProjectReceived().subscribe(
-                    (a)=>{
-                        console.debug('received '+a.projectName);
-                        $scope.$apply(function () {
-                            $location.path('project/' + a.projectId + '/overview/' + a.projectName).replace();
-                        });
+                bootbox.prompt({
+                    title: 'Join a Group',
+                    placeholder: 'Enter group code...',
+                    callback: function (result) {
+                        if (result !== null) {
+                            var sharer = synchFactory.getSharer();
+                            sharer.onProjectReceived().subscribe(
+                                (a) => {
+                                    console.debug('received ' + a.projectName);
+                                    $scope.$apply(function () {
+                                        $location.path('project/' + a.projectId + '/overview/' + a.projectName).replace();
+                                    });
+                                }
+                            );
+                            sharer.receive(result);
+                            console.info('Receiving project with passphrase : ' + result);
+                        }
                     }
-                );
-                sharer.receive($scope.passphrase);
+                });
             }
         }]);

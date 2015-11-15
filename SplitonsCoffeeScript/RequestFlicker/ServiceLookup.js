@@ -12,9 +12,11 @@ var ServiceLookup = (function () {
     ServiceLookup.prototype.onError = function () {
         return this.onErrorEvent;
     };
+
     ServiceLookup.prototype.onResult = function () {
         return this.onResultEvent;
     };
+
     ServiceLookup.prototype.getService = function (serviceName) {
         var _this = this;
         if (this.lookupUrl.substring(0, 7) === "http://") {
@@ -28,12 +30,10 @@ var ServiceLookup = (function () {
                 console.log('request failed' + textStatus + errorThrown);
                 _this.onErrorEvent.raise(textStatus);
             });
-        }
-        else {
+        } else {
             if (this.lookupUrl.substring(0, 5) === "ws://") {
                 this.onResultEvent.raise(this.lookupUrl.substring(5, this.lookupUrl.length));
-            }
-            else {
+            } else {
                 this.onErrorEvent.raise("Invalid configuration : " + this.lookupUrl);
             }
         }

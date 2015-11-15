@@ -6,9 +6,11 @@
 ///<reference path="../RequestFlicker/SynchronizerViaRequestFlicker.ts"/>
 ///<reference path="../FastFlicker/ShareViaFastFlicker.ts"/>
 var synchFactory = angular.module('synchFactory', ['ngResource']);
+
 synchFactory.factory('synchFactory', function () {
     var synchronizer = new SynchronizerViaRequestFlicker();
     var sharer = new ShareViaFastFlicker();
+
     return {
         get: function () {
             return synchronizer;

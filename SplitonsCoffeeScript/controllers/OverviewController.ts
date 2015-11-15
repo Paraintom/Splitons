@@ -37,13 +37,20 @@ angular.module('splitonsApp').controller(
                 $scope.balances = calculateBalances(currency);
             }
 
-            $scope.addMember = function(){
-                if(p.members.indexOf($scope.newMember) == -1)
-                {
-                    p.members.push($scope.newMember);
-                    projectsFactory.saveProject(p);
-                }
-                $route.reload();
+            $scope.addMember = function () {
+                bootbox.prompt({
+                    title: 'Add a Member',
+                    placeholder: 'Enter member name...',
+                    callback: function (result) {
+                        if (result !== null && $.trim(result) !== '') {
+                            if (p.members.indexOf(result) == -1) {
+                                p.members.push(result);
+                                projectsFactory.saveProject(p);
+                            }
+                            $route.reload();
+                        }
+                    }
+                });
             }
 
             $scope.deleteMember = function(name) {

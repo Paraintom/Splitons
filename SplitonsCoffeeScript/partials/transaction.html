@@ -1,31 +1,48 @@
 <div class="section">
     <div class="container">
-        <div class="row text-left">
+        <div class="row heading text-center">
             <div class="col-md-12">
-                <h1>Transaction</h1>
+                <p class="welcome">Splitons</p>
+                <div ng-hide="editProjectNameMode">
+                    <h1>
+                        {{projectName}}
+                    </h1>
+                    <p ng-show="members.length > 1">
+                        <em>{{members.length}} members</em>
+                    </p>
+                </div>
+            </div>
+        </div>
 
+        <div class="row text-left" style="margin-top:10px;">
+            <div class="col-md-8 col-sm-10 col-md-push-2 col-sm-push-1">
                 <form role="form" ng-init="IncorrectAmount=false" ng-submit="IncorrectAmount = addTransaction()">
                     <div class="form-group">
                         <label class="control-label">Who paid :</label>
-                        <select class="btn-group" ng-model="selectedCreditor"
+                        <select class="form-control" ng-model="selectedCreditor"
                                 ng-options="opt for opt in members"></select>
                     </div>
                     <div class="form-group">
                         <label class="control-label">For what?</label>
-                        <input class="form-control" placeholder="Train tickets" ng-model="comment"
-                               type="text" required>
+                        <input class="form-control" placeholder="Train tickets" ng-model="comment" type="text" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">How much?</label>
-                        <input ng-model="amount" class="form-control" placeholder="100.05" type="text"
-                               min="0" step="0.01" required>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">{{selectedCurrency}}</span>
+                            <input ng-model="amount" class="form-control" placeholder="100.05" type="number" min="0" step="0.01" required>
+                        </div>
+
                     </div>
                     <div class="form-group">
-                        <label class="control-label">For whom?</label>
-                        <ul>
+                        <label class="control-label">Who For?</label>
+                        <ul class="list-unstyled">
                             <li ng-repeat="name in members">
-                                <input type='checkbox' checklist-model="selectedDebtors" checklist-value="name">
-                                {{name}}
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" checklist-model="selectedDebtors" checklist-value="name"> {{name}}
+                                    </label>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -36,14 +53,15 @@
                         </button>
                         <div class="btn-group" role="group">
                             <select class="form-control" ng-model="selectedCurrency"
-                                    ng-options="opt for opt in currencies"/>
+                                    ng-options="opt for opt in currencies" />
                         </div>
                     </div>
-                    <br>
-                    <br>
-
-                    <button type="submit" class="btn btn-lg btn-primary">Confirm</button>
-                    <div class="btn btn-lg btn-default" ng-click="back()">Cancel</div>
+                    
+                    <div class="button-bar">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <a class="btn btn-default" ng-click="back()">Cancel</a>
+                    </div>
+                    
 
                     <div class="alert alert-danger" role="alert" ng-show="IncorrectAmount">
                         <span class="sr-only">Error:</span>
@@ -60,24 +78,33 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                     <h4 class="modal-title" id="myModalLabel">Manage currencies</h4>
                                 </div>
                                 <div class="modal-body">
                                     <ul class="text-left lead">
                                         <li ng-repeat="currency in currencies track by $index">
-                                            {{currency}} <i ng-click="deleteCurrency(currency)"
-                                                        class="fa fa-close fa-fw fa-lg text-danger"></i>
+                                            {{currency}}
+                                                                                  
+                                            <a class="btn btn-default btn-sm" ng-click="deleteCurrency(currency)">
+                                                <i class="fa fa-close fa-fw fa-lg text-danger"></i>
+                                            </a>
                                         </li>
                                     </ul>
-                                    <hr>
-
-                                    <input type="text" name="userName" ng-model="newCurrency" required>
+                                    <hr/>
+                                    <div role="form">
+                                        <div class="form-group">
+                                            <label class="control-label">New Currency:</label>
+                                            <input type="text" class="form-control" placeholder="e.g. $, bucks, coffees, conkers..." ng-model="newCurrency" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                                        Close
                                     </button>
-                                    <input  type="submit" class="btn btn-primary" value="Add currency"/>
+                                    <input type="submit" class="btn btn-primary" value="Add currency" />
                                 </div>
                             </div>
                         </form>
@@ -86,5 +113,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>

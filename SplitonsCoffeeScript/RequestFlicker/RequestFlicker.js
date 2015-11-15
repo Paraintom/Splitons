@@ -1,9 +1,9 @@
 /// <reference path="../LiteEvent.ts" />
-// Interface : 
-// 1 - Create the chat object ---> 
+// Interface :
+// 1 - Create the chat object --->
 //  url = "ws://"+ip+":"+port+"/";
 //	chat = new RequestFlickerClient(url);
-// 2- Listen to events ---> 
+// 2- Listen to events --->
 // onNewMessage mainly :
 //this.chat.onAnswer.subscribe(function (a) {
 //    return _this.span.innerHTML += "Answer received:" + a + " \n";
@@ -33,18 +33,22 @@ var RequestFlickerClient = (function () {
     RequestFlickerClient.prototype.onConnected = function () {
         return this.onConnectedEvent;
     };
+
     RequestFlickerClient.prototype.onDisconnected = function () {
         return this.onDisconnectedEvent;
     };
+
     RequestFlickerClient.prototype.onError = function () {
         return this.onErrorEvent;
     };
+
     RequestFlickerClient.prototype.onAnswer = function () {
         return this.onAnswerEvent;
     };
+
     RequestFlickerClient.prototype.request = function (serviceName, request) {
         var _this = this;
-        try {
+        try  {
             if (this.websocket != null) {
                 //closing the existing connection
                 this.websocket.onopen = null;
@@ -66,47 +70,51 @@ var RequestFlickerClient = (function () {
             this.websocket.onerror = function (evt) {
                 _this.onErrorReceived(evt);
             };
-        }
-        catch (error) {
+        } catch (error) {
             this.onErrorReceived(error);
         }
     };
+
     RequestFlickerClient.prototype.isConnected = function () {
         return this.websocket != null && this.websocket.readyState == WebSocket.OPEN;
     };
+
     RequestFlickerClient.prototype.doSend = function (message) {
         if (this.websocket != null) {
             this.websocket.send(message);
         }
     };
+
     RequestFlickerClient.prototype.onOpen = function (evt, serviceName, request) {
         this.onConnectedEvent.raise();
+
         //We send the request
         var serviceAndRequest = { "service": serviceName, "request": request };
         var msg = JSON.stringify(serviceAndRequest);
         this.doSend(msg);
     };
+
     RequestFlickerClient.prototype.onClose = function (evt) {
         this.onDisconnectedEvent.raise();
     };
+
     RequestFlickerClient.prototype.onMessageReceived = function (evt) {
-        try {
+        try  {
             var jsonString = evt.data;
             var jsonObj = JSON.parse(jsonString);
             if (jsonObj.hasOwnProperty('error')) {
                 evt.message = jsonObj.error;
                 this.onErrorReceived(evt);
-            }
-            else {
+            } else {
                 this.onAnswerEvent.raise(jsonString);
             }
             this.websocket.close();
-        }
-        catch (error) {
+        } catch (error) {
             evt.message = error;
             this.onErrorReceived(evt);
         }
     };
+
     RequestFlickerClient.prototype.onErrorReceived = function (evt) {
         if (evt.hasOwnProperty('target') && evt.target.hasOwnProperty('readyState') && evt.target.readyState == 3) {
             evt.message = "The connection is closed or couldn't be opened.";

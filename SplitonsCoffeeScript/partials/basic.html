@@ -3,44 +3,64 @@
         <div class="container">
             <div class="row" ng-include="'partials/sections.html'"></div>
 
-            <!--transaction level-->
+            <!--Transactions section-->
             <div class="row" ng-show="activeTab == 2">
-                <div class="col-md-12">
+                <div class="col-md-8 col-sm-10 col-md-push-2 col-sm-push-1">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h1 ng-show="notDeletedTransactions.length > 0">{{notDeletedTransactions.length}} Transactions</h1>
-
-                            <a href="#/project/{{projectId}}/0/transaction" class="btn btn-lg btn-primary">Add a new
-                                transaction
-                            </a>
+                            <div class="pull-left">
+                                <h4 ng-show="notDeletedTransactions.length > 0">{{notDeletedTransactions.length}} Transactions</h4>
+                            </div>
+                            <div class="pull-right">
+                                <a class="btn btn-default" href="#/project/{{projectId}}/0/transaction">
+                                    Create <span class="hidden-xs">a Transaction</span>
+                                    <i class='fa fa-money fa-fw fa-lg' />
+                                </a>
+                            </div>
+                            <div class="clearfix"></div>
                         </div>
-                        <div class="panel-body">
-                            <h3 ng-show="notDeletedTransactions.length == 0">No transaction recorded</h3>
-                            <table class="table table-striped" ng-show="notDeletedTransactions.length > 0">
+                        <div class="panel-body table-responsive">
+                            <h3 ng-hide="notDeletedTransactions.length > 0">No transactions...</h3>
+                            <table class="table table-striped transactions" ng-show="notDeletedTransactions.length > 0">
                                 <thead>
-                                <tr>
-                                    <th>Comment</th>
-                                    <th>Amount</th>
-                                    <th class="hidden-xs">From</th>
-                                    <th class="hidden-xs hidden-sm">To</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
+                                    <tr>
+                                        <th>Comment</th>
+                                        <th>Amount</th>
+                                        <th class="hidden-xs">From</th>
+                                        <th>When</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="transaction in notDeletedTransactions track by $index">
-                                    <!--{{transaction.lastUpdated| date:"MM/dd/yyyy 'at' h:mma"}} :-->
-                                        <td>{{transaction.comment}}</td>
-                                        <td>{{transaction.amount}} {{transaction.currency}}</td>
-                                        <td class="hidden-xs">{{transaction.from}}</td>
-                                        <td class="hidden-xs hidden-sm">{{(transaction.to).join(',')}}</td>
+                                    <tr ng-repeat="transaction in notDeletedTransactions track by $index">
                                         <td>
-                                            <a href="#/project/{{projectId}}/{{transaction.id}}/transaction"><i
-                                                    class="fa fa-fw fa-lg fa-pencil"></i></a>
+                                            <span>{{transaction.comment}}</span>
                                         </td>
                                         <td>
-                                            <a ng-click="deleteTransaction(transaction.id)"><i
-                                                    class="fa fa-close fa-fw fa-lg text-danger"></i></a>
+                                            <span>{{transaction.amount}} {{transaction.currency}}</span>
+                                        </td>
+                                        <td class="hidden-xs">
+                                            <span>{{transaction.from}}</span>
+                                        </td>
+                                        <td class="nowrap">
+                                            <span>{{transaction.lastUpdated| date:"d MMM yyyy"}}</span>
+                                            <span class="hidden-xs hidden-sm">{{transaction.lastUpdated| date:"'at' h:mma"}}</span>
+                                        </td>
+                                        <td class="nowrap" style="min-width:80px">
+                                            <div class="btn-group">
+                                                <a class="btn btn-default btn-sm" href="#/project/{{projectId}}/{{transaction.id}}/transaction">
+                                                    <i class="fa fa-lg fa-pencil"></i>
+                                                </a>
+                                                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="caret"></span>
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <li>
+                                                        <a ng-click="deleteTransaction(transaction.id)">Delete</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>

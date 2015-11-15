@@ -1,8 +1,8 @@
 ///<reference path="../Guid.ts"/>
 ///<reference path="Serializable.ts"/>
 /**
- * Created by Tom on 09/03/2015.
- */
+* Created by Tom on 09/03/2015.
+*/
 var Transaction = (function () {
     function Transaction() {
         this.lastUpdated = 1;
@@ -12,20 +12,21 @@ var Transaction = (function () {
     Transaction.prototype.GetLastUpdated = function () {
         return new Date(this.lastUpdated);
     };
+
     Transaction.prototype.HasBeenUpdated = function () {
         this.lastUpdated = new Date().getTime();
     };
+
     Transaction.prototype.deserialize = function (input) {
         this.id = input.id;
+
         //backward compatible mode ...
         if (input.lastUpdated instanceof Date) {
             this.lastUpdated = input.lastUpdated.getTime();
-        }
-        else {
+        } else {
             if (input.lastUpdated === undefined) {
                 this.lastUpdated = 1;
-            }
-            else {
+            } else {
                 this.lastUpdated = new Date(input.lastUpdated).getTime();
             }
         }
