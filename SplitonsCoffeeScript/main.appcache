@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v57
+#v73
 CACHE:
 img/icon.png
 img/favicon.ico
@@ -34,6 +34,7 @@ dataObjects/Transaction.js
 css/font-awesome.min.css
 css/bootstrap.min.css
 css/splitons.css
+css/SonsieOne.css
 css/angular-notify.css
 app.js
 app.js.map
@@ -65,7 +66,7 @@ checklist-model.js
 jquery.d.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
-https://fonts.googleapis.com/css?family=Sonsie+One
+fonts/SonsieOne.woff
 SettlementEntry.js.map
 angular.d.ts
 angular-notify.d.ts
