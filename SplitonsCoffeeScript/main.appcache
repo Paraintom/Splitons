@@ -1,6 +1,8 @@
 CACHE MANIFEST
 #v57
---CACHE:
+CACHE:
+img/icon.png
+img/favicon.ico
 partials/listProjects.html
 partials/transaction.html
 partials/basic.html
