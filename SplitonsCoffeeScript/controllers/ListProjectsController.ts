@@ -18,8 +18,10 @@ angular.module('splitonsApp').controller(
                     placeholder: 'Enter group name...',
                     callback: function (result) {
                         if (result !== null) {
-                            var newProject = projectsFactory.getNewProject(result);
-                            $location.path('/project/' + newProject.id + "/overview").replace();
+                            $scope.$apply(function() {
+                                var newProject = projectsFactory.getNewProject(result);
+                                $location.path('/project/' + newProject.id + "/overview").replace();
+                            });
                         }
                     }
                 });
