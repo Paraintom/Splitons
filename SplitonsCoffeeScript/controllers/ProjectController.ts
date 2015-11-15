@@ -72,8 +72,9 @@ angular.module('splitonsApp').controller(
                     if (currentTransaction.id == id) {
                         toDelete = currentTransaction;
                         bootbox.confirm({
+                            title: 'Delete Transaction?',
                             size: 'small',
-                            message: "Are you sure you want to delete the transaction "+toDelete.comment+"?",
+                            message: "Are you sure you want to delete the transaction: <b>" + toDelete.comment + "</b>?",
                             callback: function(result){
                                 if(result){
                                     //$scope.transactions.splice(index, 1);

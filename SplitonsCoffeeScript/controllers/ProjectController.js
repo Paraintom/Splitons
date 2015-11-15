@@ -1,4 +1,4 @@
-///<reference path="../linq/linq.d.ts"/>
+﻿///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
@@ -73,8 +73,9 @@ angular.module('splitonsApp').controller('ProjectController', [
                 if (currentTransaction.id == id) {
                     toDelete = currentTransaction;
                     bootbox.confirm({
+                        title: 'Delete Transaction?',
                         size: 'small',
-                        message: "Are you sure you want to delete the transaction " + toDelete.comment + "?",
+                        message: "Are you sure you want to delete the transaction: <b>" + toDelete.comment + "</b>?",
                         callback: function (result) {
                             if (result) {
                                 //$scope.transactions.splice(index, 1);
