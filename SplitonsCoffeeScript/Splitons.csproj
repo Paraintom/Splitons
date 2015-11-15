@@ -96,6 +96,8 @@
     <Content Include="external\bootbox.min.js" />
     <Content Include="external\bootstrap.min.js" />
     <Content Include="external\jquery.min.js" />
+    <Content Include="img\favicon.ico" />
+    <Content Include="img\icon.png" />
     <Content Include="index.html" />
     <Content Include="linq\linq.js" />
     <Content Include="partials\basic.html" />
@@ -119,5 +121,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
 </Project>
