@@ -23,46 +23,42 @@
                             <h3 ng-hide="notDeletedTransactions.length > 0">No transactions...</h3>
                             <table class="table table-striped transactions" ng-show="notDeletedTransactions.length > 0">
                                 <thead>
-                                    <tr>
-                                        <th>Comment</th>
-                                        <th>Amount</th>
-                                        <th class="hidden-xs">From</th>
-                                        <th>When</th>
-                                        <th></th>
-                                    </tr>
+                                <tr>
+                                    <th>Comment</th>
+                                    <th>Amount</th>
+                                    <th class="hidden-xs">From</th>
+                                    <th class="hidden-xs">When</th>
+                                    <th></th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="transaction in notDeletedTransactions track by $index">
-                                        <td>
-                                            <span>{{transaction.comment}}</span>
-                                        </td>
-                                        <td>
-                                            <span>{{transaction.amount}} {{transaction.currency}}</span>
-                                        </td>
-                                        <td class="hidden-xs">
-                                            <span>{{transaction.from}}</span>
-                                        </td>
-                                        <td class="nowrap">
-                                            <span>{{transaction.lastUpdated| date:"d MMM yyyy"}}</span>
-                                            <span class="hidden-xs hidden-sm">{{transaction.lastUpdated| date:"'at' h:mma"}}</span>
-                                        </td>
-                                        <td class="nowrap" style="min-width:80px">
-                                            <div class="btn-group">
-                                                <a class="btn btn-default btn-sm" href="#/project/{{projectId}}/{{transaction.id}}/transaction">
-                                                    <i class="fa fa-lg fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li>
-                                                        <a ng-click="deleteTransaction(transaction.id)">Delete</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tr ng-repeat="transaction in notDeletedTransactions track by $index">
+                                    <td>
+                                        <span>{{transaction.comment}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{transaction.amount}} {{transaction.currency}}</span>
+                                    </td>
+                                    <td class="hidden-xs">
+                                        <span>{{transaction.from}}</span>
+                                    </td>
+                                    <td class="nowrap hidden-xs">
+                                        <span class="hidden-xs">{{transaction.lastUpdated| date:"d MMM yyyy"}}</span>
+                                        <span class="hidden-xs hidden-sm">{{transaction.lastUpdated| date:"'at' h:mma"}}</span>
+                                    </td>
+                                    <td class="nowrap" style="min-width:88px">
+                                        <div class="btn-group" role="group" >
+                                            <a class="btn btn-default btn-sm" href="#/project/{{projectId}}/{{transaction.id}}/transaction">
+                                                <i class="fa fa-lg fa-pencil"></i>
+                                            </a>
+
+                                            <a class="btn btn-default btn-sm" ng-click="deleteTransaction(transaction.id)">
+                                                <i class="fa fa-lg fa-times"></i>
+                                            </a>
+                                        </div>
+
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
