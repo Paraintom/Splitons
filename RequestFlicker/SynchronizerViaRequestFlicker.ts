@@ -59,11 +59,15 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
         requestFlicker.onConnected().subscribe(() => console.log("Connected"));
         requestFlicker.onDisconnected().subscribe(() => console.log("Disconnected"));
         requestFlicker.onError().subscribe((a) => this.handleError(a));
-        var toUpdate = this.getToUpdate(project);
-        console.log('request last update'+project.lastUpdated+'total sent :'+toUpdate.length);
+
+        var maxLastUpdated = Enumerable.from<Transaction>(project.transactions).max(function (y) {
+            return y.lastUpdated;
+        });
+        var toUpdate = this.getToUpdate(project,maxLastUpdated);
+        console.log('request last update'+maxLastUpdated+'total sent :'+toUpdate.length);
         var request = {
             "projectId": project.id,
-            "lastUpdated": project.lastUpdated,
+            "lastUpdated": maxLastUpdated,
             "toUpdate": toUpdate
         };
         requestFlicker.request("SplitonSync", request);
@@ -130,16 +134,17 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
         this.raiseResult(false,errorString);
     }
 
-    private getToUpdate(p:Project) {
+    private getToUpdate(p:Project, maxLastUpdated) {
         var newResults = Enumerable.from<Transaction>(p.transactions).where(function (y) {
-            var result = y.lastUpdated > p.lastUpdated;
+            var result = y.lastUpdated > maxLastUpdated;
             return result;
         }).toArray();
         if(newResults.length == 0){
-            newResults = Enumerable.from<Transaction>(p.transactions).where(function (y) {
-                var result = y.lastUpdated == p.lastUpdated;
+            var lastUpdated = Enumerable.from<Transaction>(p.transactions).where(function (y) {
+                var result = y.lastUpdated == maxLastUpdated;
                 return result;
-            }).toArray().splice(0);
+            }).toArray();
+            newResults = lastUpdated.slice(0,1);
         }
         return newResults;
     }
