@@ -21,6 +21,10 @@ class Project implements Serializable<Project>{
         return new Date(this.lastUpdated);
     }
 
+    HasBeenUpdated() {
+        this.lastUpdated = new Date().getTime();
+    }
+
     deserialize(input) {
         this.id = input.id;
         this.members = input.members;
