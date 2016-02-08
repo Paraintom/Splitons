@@ -37,9 +37,9 @@
                 <button class="btn btn-default btn-sm" ng-disabled="editProjectNameMode" ng-click="$parent.newProjectName = projectName; editProjectNameMode = true">
                     <i class="fa fa-pencil fa-fw" />
                 </button>
-                <button class="btn btn-default btn-sm" ng-click="synchronize()" >
-                    <i ng-class="synchronizing ? 'fa fa-refresh fa-fw fa-spin ' : 'fa fa-refresh fa-fw'" />
-                </button>
+                    <button class="btn btn-default btn-sm" ng-class="needSynch ? 'glowing' : ''" ng-click="synchronize()" >
+                        <i ng-class="synchronizing ? 'fa fa-refresh fa-fw fa-spin ' : 'fa fa-refresh fa-fw'" />
+                    </button>
             </form>
         </div>
     </div>

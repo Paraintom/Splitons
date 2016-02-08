@@ -131,16 +131,21 @@ class SynchronizerViaRequestFlicker implements ISynchronizer {
     }
 
     private getToUpdate(p:Project) {
-        var newResults = Enumerable.from<Transaction>(p.transactions).where(function (y) {
-            var result = y.lastUpdated > p.lastUpdated;
-            return result;
-        }).toArray();
+        var newResults = this.getLocalChanges(p);
         if(newResults.length == 0){
             newResults = Enumerable.from<Transaction>(p.transactions).where(function (y) {
                 var result = y.lastUpdated == p.lastUpdated;
                 return result;
             }).toArray().splice(0);
         }
+        return newResults;
+    }
+
+    getLocalChanges(p) {
+        var newResults = Enumerable.from<Transaction>(p.transactions).where(function (y) {
+            var result = y.lastUpdated > p.lastUpdated;
+            return result;
+        }).toArray();
         return newResults;
     }
 }

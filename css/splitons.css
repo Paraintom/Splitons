@@ -95,3 +95,35 @@ table.projects td:first-child {
     margin-top: 10px;
 }
 
+
+@-webkit-keyframes glowing {
+    0% {-webkit-box-shadow: 0 0 3px #67447a; }
+    50% {-webkit-box-shadow: 0 0 15px #999; }
+    100% {-webkit-box-shadow: 0 0 3px #67447a; }
+}
+
+@-moz-keyframes glowing {
+    0% {-moz-box-shadow: 0 0 3px #67447a; }
+    50% {-moz-box-shadow: 0 0 15px #999; }
+    100% {-moz-box-shadow: 0 0 3px #67447a; }
+}
+
+@-o-keyframes glowing {
+    0% {box-shadow: 0 0 3px #67447a; }
+    50% {box-shadow: 0 0 15px #999; }
+    100% {box-shadow: 0 0 3px #67447a; }
+}
+
+@keyframes glowing {
+    0% {box-shadow: 0 0 3px #67447a; }
+    50% {box-shadow: 0 0 15px #999; }
+    100% {box-shadow: 0 0 3px #67447a; }
+}
+
+.glowing {
+    border : 1px solid #67447a;
+    -webkit-animation: glowing 1000ms infinite;
+    -moz-animation: glowing 1000ms infinite;
+    -o-animation: glowing 1000ms infinite;
+    animation: glowing 1400ms infinite;
+}

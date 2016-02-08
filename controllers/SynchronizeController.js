@@ -15,6 +15,7 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
     $scope.synchronizing = false;
     var synchronizer = synchFactory.get();
     synchronizer.onSynchronized().subscribe(handleResult);
+    $scope.needSynch = synchronizer.getLocalChanges($project).length != 0;
     //Now it is automatic on controller load.
     $scope.synchronize = function () {
         if ($scope.synchronizing) {
@@ -49,6 +50,7 @@ angular.module('splitonsApp').controller('SynchronizeController', ['$scope', '$r
         if (result.success) {
             projectsFactory.saveProject($project);
         }
+        $scope.needSynch = synchronizer.getLocalChanges($project).length != 0;
         (!$scope.$$phase);
         $scope.$apply();
     }
