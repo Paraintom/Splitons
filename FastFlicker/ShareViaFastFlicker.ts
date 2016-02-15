@@ -82,19 +82,11 @@ class ShareViaFastFlicker implements IShareMechanism {
 
     private whenReadySharing(fastFlicker : IChannel, projectId:string, projectName:string, ipAndPort:string, passphrase:string, numberTry:number) {
         var toSend = new ShareResultEvent(projectId,projectName);
+        console.log("Sending project via fastflicker...");
         fastFlicker.send(JSON.stringify(toSend));
         fastFlicker.close();
-
-        if (numberTry != 3) {
-            numberTry++;
-            console.log("Trying again, numberOfTry " + numberTry);
-            setTimeout(()=> {
-                var whenReadyMethod :onReady;
-                whenReadyMethod = (ff) => this.whenReadySharing(ff, projectId, projectName, ipAndPort,passphrase, numberTry);
-                this.onLookupSuccess(ipAndPort, passphrase,whenReadyMethod);
-            }, 5000);
-        }
     }
+    
     private raiseError(error : string) {
         this.onErrorEvent.raise(error);
         console.log(error);

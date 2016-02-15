@@ -51,11 +51,27 @@ angular.module('splitonsApp').controller(
                 passphrase =  projectId.substring(0,4);
                 var sharer = synchFactory.getSharer();
                 sharer.onError().subscribe((err) => console.log("Sharer error : "+err));
-                sharer.share(projectId, projectName, passphrase);
-                bootbox.alert({
-                    title: "Share Group",
-                    message : "Share the following code with your friends : <b>"+ passphrase + "</b>",
-                    size: 'small'
+
+                bootbox.dialog({
+                    message:"Share the following code with your friends : <b>"+ passphrase + "</b><br>" +
+                    "When he is listening, click on Button <b>Share</b>.",
+                    title: 'Share a Group',
+                    buttons: {
+                        cancel: {
+                            label: "Exit",
+                            callback: function() {
+                                //Close the modal.
+                            }
+                        },
+                        main: {
+                            label: "Share",
+                            className: "btn-primary",
+                            callback: function (result) {
+                                sharer.share(projectId, projectName, passphrase);
+                                return false;
+                            }
+                        }
+                    }
                 });
             }
 
@@ -75,7 +91,6 @@ angular.module('splitonsApp').controller(
                     '<input class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" placeholder="Enter group code...">' +
                     '</div>',
                     title: 'Join a Group',
-                    placeholder: 'Enter group code...',
                     buttons: {
                         cancel: {
                             label: "Cancel",
