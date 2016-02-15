@@ -1,1 +1,0 @@
-{"version":3,"file":"ISynchronizer.js","sourceRoot":"","sources":["ISynchronizer.ts"],"names":["SyncResultEvent","SyncResultEvent.constructor"],"mappings":"AAAA,wCAAwC;AACxC,kDAAkD;;AAOlD;IACIA,yBAAYA,OAAsBA,EAAEA,OAAqBA;QAA7CC,YAAcA,GAAPA,OAAOA;AAAQA,QAAEA,YAAcA,GAAPA,OAAOA;AAAOA,IAAEA,CAACA;IAChED,uBAACA;AAADA,CAACA,IAAA"}
