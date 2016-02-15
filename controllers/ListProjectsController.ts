@@ -61,32 +61,73 @@ angular.module('splitonsApp').controller(
 
             $scope.sendFeedback = function () {
                 var link = "mailto:" + "thomas.barles+SplitonsFeedback@gmail.com"
-                    + "?subject=New%20email" + encodeURIComponent("Splitons feedback")
-                    /*+ "&body=" + encodeURIComponent("Find here a link to the project : " + $location.absUrl())*/;
+                        + "?subject=New%20email" + encodeURIComponent("Splitons feedback")
+                /*+ "&body=" + encodeURIComponent("Find here a link to the project : " + $location.absUrl())*/;
 
                 console.log(link);
                 $window.open(link, '_blank');
             }
 
             $scope.receiveProject = function () {
-                bootbox.prompt({
+                bootbox.dialog({
+                    message:
+                    '<div id="joinGroupCode">' +
+                    '<input class="bootbox-input bootbox-input-text form-control" autocomplete="off" type="text" placeholder="Enter group code...">' +
+                    '</div>',
                     title: 'Join a Group',
                     placeholder: 'Enter group code...',
-                    callback: function (result) {
-                        if (result !== null) {
-                            var sharer = synchFactory.getSharer();
-                            sharer.onProjectReceived().subscribe(
-                                (a) => {
-                                    console.debug('received ' + a.projectName);
-                                    $scope.$apply(function () {
-                                        $location.path('project/' + a.projectId + '/overview/' + a.projectName).replace();
-                                    });
+                    buttons: {
+                        cancel: {
+                            label: "Cancel",
+                            callback: function() {
+                                //do something
+                            }
+                        },
+                        main: {
+                            label: "<span id='joinGroupMainLabel'>Start Listening</span>",
+                            className: "btn-primary",
+                            callback: function (result) {
+                                var code = $('#joinGroupCode input').val();
+                                //console.debug('code= '+code);
+                                if (code.length == 4) {
+                                    //
+                                    setInterval (addDot, 600);
+                                    var sharer = synchFactory.getSharer();
+                                    sharer.onProjectReceived().subscribe(
+                                        (a) => {
+                                            console.debug('received ' + a.projectName);
+                                            $scope.$apply(function () {
+                                                //sweet!
+                                                bootbox.hideAll();
+                                                $location.path('project/' + a.projectId + '/overview/' + a.projectName).replace();
+                                            });
+                                        }
+                                    );
+                                    sharer.receive(code);
+                                    $('#joinGroupCode').html('Waiting for an answer for '+code+' <span id="dots"></span>');
+                                    $('#joinGroupMainLabel').html('Listening');
+                                    console.info('Receiving project with passphrase : ' + code);
+                                    return false;
                                 }
-                            );
-                            sharer.receive(result);
-                            console.info('Receiving project with passphrase : ' + result);
+                            }
                         }
                     }
                 });
             }
         }]);
+
+// Here it is just Loadingdotdotdot!
+var dots = 0;
+function addDot()
+{
+    if(dots < 3)
+    {
+        $('#dots').append('.');
+        dots++;
+    }
+    else
+    {
+        $('#dots').html('');
+        dots = 0;
+    }
+}
