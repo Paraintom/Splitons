@@ -1,1 +1,12 @@
 .idea/
+*.map
+app.js
+SettlementEntry.js
+Guid.js
+LiteEvent.js
+Balance.js
+controllers/*.js
+dataObjects/*.js
+Factories/*.js
+FastFlicker/*.js
+RequestFlicker/*.js
