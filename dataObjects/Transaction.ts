@@ -15,13 +15,10 @@ class Transaction implements Serializable<Transaction>{
     currency:string;
 
     constructor() {
-        this.lastUpdated = 1;
+        //It is a new Transaction, we WANT it to be synch!!
+        this.lastUpdated = new Date().getTime() * 2;
         this.deleted = false;
         this.id = Guid.newGuid();
-    }
-
-    GetLastUpdated() {
-        return new Date(this.lastUpdated);
     }
 
     HasBeenUpdated() {

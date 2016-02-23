@@ -41,10 +41,24 @@ angular.module('splitonsApp').controller(
                 bootbox.prompt({
                     title: 'Add a Member',
                     placeholder: 'Enter member name...',
-                    callback: function (result) {
-                        if (result !== null && $.trim(result) !== '') {
-                            if (p.members.indexOf(result) == -1) {
-                                p.members.push(result);
+                    callback: function (newMemberName) {
+                        var getTransactionEmptyForNewMember = function () {
+                            var emptyTransacForMemberSynch = new Transaction();
+                            emptyTransacForMemberSynch.amount = 0;
+                            emptyTransacForMemberSynch.comment = "New member " + newMemberName;
+                            emptyTransacForMemberSynch.deleted = true;
+                            emptyTransacForMemberSynch.currency = '';
+                            emptyTransacForMemberSynch.from = newMemberName;
+                            emptyTransacForMemberSynch.to = [];
+                            emptyTransacForMemberSynch.to.push(newMemberName);
+                            return emptyTransacForMemberSynch;
+                        };
+                        if (newMemberName !== null && $.trim(newMemberName) !== '') {
+                            if (p.members.indexOf(newMemberName) == -1) {
+                                p.members.push(newMemberName);
+                                var emptyTransacForMemberSynch = getTransactionEmptyForNewMember();
+                                //console.debug("adding empty transaction for new member (synch members feature)")
+                                p.transactions.push(emptyTransacForMemberSynch);
                                 projectsFactory.saveProject(p);
                             }
                             $route.reload();

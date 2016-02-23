@@ -17,14 +17,11 @@ class Project implements Serializable<Project>{
         this.lastUpdated = 0;
     }
 
-    GetLastUpdated() {
-        return new Date(this.lastUpdated);
-    }
-
     HasBeenUpdated() {
         this.lastUpdated = new Date().getTime();
     }
 
+    //Used to convert local storage data to project.
     deserialize(input) {
         this.id = input.id;
         this.members = input.members;

@@ -47,9 +47,11 @@ angular.module('splitonsApp').controller(
                 transac.comment = $scope.comment;
                 transac.currency = $scope.selectedCurrency;
                 transac.amount = parseFloat($scope.amount);
-                transac.HasBeenUpdated();
                 if($routeParams.transactionId == 0/*mean a new transaction*/) {
                     project.transactions.push(transac);
+                }
+                else{
+                    transac.HasBeenUpdated();
                 }
                 projectsFactory.saveProject(project);
                 $scope.back();
