@@ -6,6 +6,40 @@
 ///<reference path="../Balance.ts"/>
 ///<reference path="../SettlementEntry.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
+var addWaveEffect = function () {
+    $(".rippleBtn").click(function (e) {
+        // Remove any old one
+        $(".ripple").remove();
+
+        // Setup
+        var posX = $(this).offset().left,
+            posY = $(this).offset().top,
+            buttonWidth = $(this).width(),
+            buttonHeight = $(this).height();
+
+        // Add the element
+        $(this).prepend("<span class='ripple'></span>");
+
+
+        // Make it round!
+        if (buttonWidth >= buttonHeight) {
+            buttonHeight = buttonWidth;
+        } else {
+            buttonWidth = buttonHeight;
+        }
+
+        // Get the center of the element
+        var x = e.pageX - posX - buttonWidth / 2;
+        var y = e.pageY - posY - buttonHeight / 2;
+
+
+        // Add the ripples CSS and start the animation
+        $(".ripple").css({
+            width: buttonWidth,
+            height: buttonHeight,
+        }).addClass("rippleEffect");
+    });
+};
 angular.module('splitonsApp').controller(
     'ListProjectsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window',
         function ($scope, projectsFactory, synchFactory, $location, $route, $window) {
@@ -54,7 +88,8 @@ angular.module('splitonsApp').controller(
 
                 bootbox.dialog({
                     message:"Share the following code with your friends : <b>"+ passphrase + "</b><br>" +
-                    "When he is listening, click on Button <b>Share</b>.",
+                    "When he is listening, click on Button <b>Share</b>." +
+                    "<script>addWaveEffect()</script>",
                     title: 'Share a Group',
                     buttons: {
                         cancel: {
@@ -65,7 +100,7 @@ angular.module('splitonsApp').controller(
                         },
                         main: {
                             label: "Share",
-                            className: "btn-primary",
+                            className: "btn-primary rippleBtn",
                             callback: function (result) {
                                 sharer.share(projectId, projectName, passphrase);
                                 return false;

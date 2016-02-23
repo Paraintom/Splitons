@@ -127,3 +127,25 @@ table.projects td:first-child {
     -o-animation: glowing 1000ms infinite;
     animation: glowing 1400ms infinite;
 }
+
+
+/*  Ripple for wave during the share click event*/
+.ripple {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(127, 59, 124, 0.5);
+    transform: scale(0);
+    position: absolute;
+    opacity: 1;
+}
+.rippleEffect {
+    animation: rippleDrop .6s linear;
+}
+
+@keyframes rippleDrop {
+    100% {
+        transform: scale(5);
+        opacity: 0;
+    }
+}
