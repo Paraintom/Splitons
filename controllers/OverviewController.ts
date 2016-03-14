@@ -37,6 +37,74 @@ angular.module('splitonsApp').controller(
                 $scope.balances = calculateBalances(currency);
             }
 
+            $scope.settleBalances = function () {
+                var results = calculateSettlement($scope.selectedCurrency);
+                var message ="<ul class=\"lead list-unstyled\">";
+                for(var index in results){
+                    var settlement = results[index];
+                    message += "<li>";
+                    message += "<span>"+settlement.from+" should pay "+settlement.to+
+                        " <b>"+settlement.amount+"<\/b>"+settlement.currency+"<\/span>";
+                    message += "<\/li>";
+                }
+                message += "<\/ul>";
+                bootbox.alert({
+                    size: 'large',
+                    title: "How to settle balances",
+                    message: message,
+                    callback: function(){ }
+                });
+                //Settlement feature:
+                function calculateSettlement(currency) {
+                    var result:SettlementEntry[];
+                    result = [];
+                    var currentBalance = calculateBalances(currency);
+                    //Initialisation
+
+                    while (notFinished(currentBalance)) {
+                        if(bug(currentBalance)){
+                            throw new Error("Bug in calculateSettlement, the balance was not balanced!" + currentBalance);
+                            //return [];
+                        }
+                        var orderedResults = Enumerable.from(currentBalance)
+                            .select(function (x) {
+                                return x.value
+                            })
+                            .where(function (x) {
+                                return x.amount != 0
+                            })
+                            .orderBy(function (x) {
+                                return x.amount
+                            });
+                        var biggestDebtor = orderedResults.first();
+                        var biggestCreditor = orderedResults.last();
+
+                        var to = biggestCreditor.member;
+                        var from = biggestDebtor.member;
+                        var amount = Math.min(Math.abs(biggestCreditor.amount), Math.abs(biggestDebtor.amount));
+                        biggestCreditor.amount -= amount;
+                        biggestDebtor.amount += amount;
+                        result.push(new SettlementEntry(from, to, Number(amount.toFixed(2)), currency));
+                    }
+                    //result.forEach(o=>console.debug("from:"+o.from+" to:"+o.to+" amount:"+o.amount));
+                    return result;
+                }
+                function notFinished(currentBalance) {
+                    return Enumerable.from(currentBalance).count(function (x) {
+                            return x.value.amount != 0
+                        }) > 1;
+                }
+                function bug(currentBalance) {
+                    var allPositive =  Enumerable.from(currentBalance).all(function (x) {
+                        return x.value.amount >= 0
+                    });
+                    var allNegative =  Enumerable.from(currentBalance).all(function (x) {
+                        return x.value.amount <= 0
+                    });
+                    return allPositive || allNegative;
+                }
+            }
+
             $scope.addMember = function () {
                 bootbox.prompt({
                     title: 'Add a Member',
