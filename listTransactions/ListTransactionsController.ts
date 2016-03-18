@@ -21,7 +21,6 @@ angular.module('splitonsApp').controller(
 
             $scope.setSelectedCurrency = function(currency) {
                 $scope.selectedCurrency = currency;
-                $scope.balances = calculateBalances(currency);
                 $scope.averagePerPerson = calculateAveragePerPerson();
             }
             $scope.setSelectedCurrency($scope.allCurrencies[0]);
@@ -56,13 +55,6 @@ angular.module('splitonsApp').controller(
                     return x.to.indexOf(name) >-1;
                 });
                 return inFrom || inTo;
-            }
-            $scope.getBalance = function(name) {
-                var allBalances = Enumerable.from($scope.balances).select(function (x) {return x.value;});
-                var ba = Enumerable.from<Balance>(allBalances).firstOrDefault(function (x) {
-                    return x.member == name;
-                });
-                return ba.amount;
             }
 
             var toDelete;
@@ -131,24 +123,6 @@ angular.module('splitonsApp').controller(
                 if (result.length == 0) {
                     result.push("");
                 }
-                return result;
-            }
-
-            function calculateBalances(forCurrency) {
-                var result:{ [id: string] : Balance; } = {};
-                //Initialisation
-                p.members.forEach(m=>result[m] = new Balance(m, 0));
-                //Computation
-                $scope.notDeletedTransactions.forEach(t=> {
-                    if(t.currency != forCurrency)
-                        return;
-                    result[t.from].amount += t.amount;
-                    var numberOfDebiter = t.to.length;
-
-                    t.to.forEach(debitor=> {
-                        result[debitor].amount -= (Math.round((t.amount / numberOfDebiter)* 100) / 100);
-                    });
-                });
                 return result;
             }
         }]);
