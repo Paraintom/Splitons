@@ -10,7 +10,6 @@ transactionUpdateOrCreate/transaction.html
 partials/sections.html
 index.html
 Guid.js.map
-angular-route.js
 Factories/factories.js
 Factories/factories.ts
 Factories/factories.js.map
@@ -21,7 +20,6 @@ Factories/synchFactory.js
 Factories/synchFactory.ts
 Factories/synchFactory.js.map
 Balance.ts
-angular-resource.js
 SettlementEntry.ts
 Balance.js.map
 SettlementEntry.js
@@ -57,7 +55,6 @@ controllers/SynchronizeController.ts
 controllers/ProjectNameController.js
 controllers/ProjectNameController.js.map
 controllers/ProjectNameController.ts
-angular.js
 Guid.js
 Balance.js
 linq/linq.js
@@ -68,9 +65,12 @@ fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 fonts/SonsieOne.woff
 SettlementEntry.js.map
-angular.d.ts
-angular-notify.d.ts
-angular-notify.js
+external/angular.d.ts
+external/angular.js
+external/angular-notify.d.ts
+external/angular-notify.js
+external/angular-resource.js
+external/angular-route.js
 Guid.ts
 LiteEvent.ts
 LiteEvent.js

@@ -1,4 +1,4 @@
-///<reference path="../angular.d.ts"/>
+///<reference path="../external/angular.d.ts"/>
 
 angular.module('splitonsApp').controller(
     'ProjectNameController', ['$scope', '$project', 'projectsFactory', function ($scope, $project, projectsFactory) {

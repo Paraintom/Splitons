@@ -1,5 +1,5 @@
 ///<reference path="linq/linq.d.ts"/>
-///<reference path="angular.d.ts"/>
+///<reference path="external/angular.d.ts"/>
 
 var splitonsApp = angular.module('splitonsApp', ['ngRoute',
     'projectsFactory','currenciesFactory','synchFactory',

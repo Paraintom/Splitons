@@ -1,6 +1,6 @@
 ///<reference path="../linq/linq.d.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
-///<reference path="../angular.d.ts"/>
+///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="../Balance.ts"/>
