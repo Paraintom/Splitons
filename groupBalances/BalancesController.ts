@@ -3,7 +3,7 @@
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
 ///<reference path="Balance.ts"/>
-///<reference path="../SettlementEntry.ts"/>
+///<reference path="SettlementEntry.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
 
 angular.module('splitonsApp').controller(

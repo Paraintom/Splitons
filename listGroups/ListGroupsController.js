@@ -1,11 +1,8 @@
-///<reference path="../linq/linq.d.ts"/>
+///<reference path="../external/linq.d.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
-///<reference path="../groupBalances/Balance.ts"/>
-///<reference path="../SettlementEntry.ts"/>
-///<reference path="../external/bootbox.d.ts"/>
 var addWaveEffect = function () {
     $(".rippleBtn").click(function (e) {
         // Remove any old one

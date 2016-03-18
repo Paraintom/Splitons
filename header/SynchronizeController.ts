@@ -1,10 +1,7 @@
 ///<reference path="../external/linq.d.ts"/>
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
-///<reference path="../dataObjects/Transaction.ts"/>
-///<reference path="../groupBalances/Balance.ts"/>
-///<reference path="../SettlementEntry.ts"/>
-///<reference path="../LiteEvent.ts"/>
+///<reference path="../dataObjects/LiteEvent.ts"/>
 ///<reference path="../RequestFlicker/ServiceLookup.ts"/>
 ///<reference path="../RequestFlicker/RequestFlicker.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>

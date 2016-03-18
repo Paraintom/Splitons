@@ -1,9 +1,6 @@
 .idea/
 *.map
 app.js
-SettlementEntry.js
-Guid.js
-LiteEvent.js
 header/*.js
 dataObjects/*.js
 Factories/*.js

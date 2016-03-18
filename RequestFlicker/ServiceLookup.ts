@@ -1,4 +1,4 @@
-/// <reference path="../LiteEvent.ts" />
+/// <reference path="../dataObjects/LiteEvent.ts" />
 /// <reference path="../external/jquery.d.ts" />
 class ServiceLookup {
     private lookupUrl: string;

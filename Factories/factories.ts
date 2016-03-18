@@ -6,7 +6,7 @@
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
-///<reference path="../Guid.ts"/>
+///<reference path="../dataObjects/Guid.ts"/>
 
 
 var projectsFactory = angular.module('projectsFactory', ['ngResource']);

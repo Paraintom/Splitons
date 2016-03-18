@@ -1,4 +1,4 @@
-/// <reference path="../LiteEvent.ts" />
+/// <reference path="../dataObjects/LiteEvent.ts" />
 /// <reference path="../external/linq.d.ts"/>
 /// <reference path="../RequestFlicker/ServiceLookup.ts" />
 /// <reference path="../RequestFlicker/RequestFlicker.ts" />

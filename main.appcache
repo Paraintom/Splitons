@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#v6.1
+#v6.2
 CACHE:
 img/icon.png
 img/favicon.ico
@@ -8,7 +8,6 @@ listTransactions/listTransactions.html
 transactionUpdateOrCreate/transaction.html
 header/sections.html
 index.html
-Guid.js.map
 Factories/factories.js
 Factories/factories.ts
 Factories/factories.js.map
@@ -18,8 +17,12 @@ Factories/currenciesFactory.js.map
 Factories/synchFactory.js
 Factories/synchFactory.ts
 Factories/synchFactory.js.map
-SettlementEntry.ts
-SettlementEntry.js
+dataObjects/Guid.js
+dataObjects/Guid.ts
+dataObjects/Guid.js.map
+dataObjects/LiteEvent.ts
+dataObjects/LiteEvent.js
+dataObjects/LiteEvent.js.map
 dataObjects/Project.ts
 dataObjects/Project.js
 dataObjects/Project.js.map
@@ -34,13 +37,16 @@ css/angular-notify.css
 app.js
 app.js.map
 app.ts
+groupBalances/balances.html
 groupBalances/BalancesController.js
 groupBalances/BalancesController.js.map
 groupBalances/BalancesController.ts
 groupBalances/Balance.js
 groupBalances/Balance.js.map
 groupBalances/Balance.ts
-groupBalances/balances.html
+groupBalances/SettlementEntry.js.map
+groupBalances/SettlementEntry.ts
+groupBalances/SettlementEntry.js
 listTransactions/ListTransactionsController.js
 listTransactions/ListTransactionsController.js.map
 listTransactions/ListTransactionsController.ts
@@ -56,7 +62,6 @@ header/SynchronizeController.ts
 header/ProjectNameController.js
 header/ProjectNameController.js.map
 header/ProjectNameController.ts
-Guid.js
 external/linq.js
 external/linq.d.ts
 external/checklist-model.js
@@ -64,17 +69,12 @@ external/jquery.d.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 fonts/SonsieOne.woff
-SettlementEntry.js.map
 external/angular.d.ts
 external/angular.js
 external/angular-notify.d.ts
 external/angular-notify.js
 external/angular-resource.js
 external/angular-route.js
-Guid.ts
-LiteEvent.ts
-LiteEvent.js
-LiteEvent.js.map
 external/jquery.min.js
 external/bootstrap.min.js
 external/bootbox.min.js

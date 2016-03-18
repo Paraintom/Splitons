@@ -1,7 +1,7 @@
 /**
  * Created by Tom on 24/06/2015.
  */
-/// <reference path="../LiteEvent.ts" />
+/// <reference path="../dataObjects/LiteEvent.ts" />
 interface IChannel {
     open();
     close();

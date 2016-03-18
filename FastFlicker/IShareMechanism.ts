@@ -1,4 +1,4 @@
-/// <reference path="../LiteEvent.ts" />
+/// <reference path="../dataObjects/LiteEvent.ts" />
 /// <reference path="../dataObjects/Project.ts" />
 interface IShareMechanism {
     share(projectId:string, projectName:string, passphrase:string);

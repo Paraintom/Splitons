@@ -1,4 +1,4 @@
-///<reference path="../Guid.ts"/>
+///<reference path="Guid.ts"/>
 ///<reference path="Serializable.ts"/>
 ///<reference path="Transaction.ts"/>
 /**
