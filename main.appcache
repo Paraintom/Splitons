@@ -59,7 +59,7 @@ Guid.js
 Balance.js
 linq/linq.js
 linq/linq.d.ts
-checklist-model.js
+external/checklist-model.js
 jquery.d.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
