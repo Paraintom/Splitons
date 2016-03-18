@@ -13,3 +13,4 @@ RequestFlicker/*.js
 listGroups/*.js
 groupBalances/*.js
 listTransactions/*.js
+transactionUpdateOrCreate/*.js

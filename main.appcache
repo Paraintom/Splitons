@@ -6,7 +6,7 @@ img/favicon.ico
 listGroups/listGroups.html
 groupBalances/balances.html
 listTransactions/listTransactions.html
-partials/transaction.html
+transactionUpdateOrCreate/transaction.html
 partials/sections.html
 index.html
 Guid.js.map
@@ -48,9 +48,9 @@ listTransactions/ListTransactionsController.ts
 listGroups/ListGroupsController.js
 listGroups/ListGroupsController.js.map
 listGroups/ListGroupsController.ts
-controllers/TransactionController.js
-controllers/TransactionController.js.map
-controllers/TransactionController.ts
+transactionUpdateOrCreate/TransactionController.js
+transactionUpdateOrCreate/TransactionController.js.map
+transactionUpdateOrCreate/TransactionController.ts
 controllers/SynchronizeController.js
 controllers/SynchronizeController.js.map
 controllers/SynchronizeController.ts

@@ -21,7 +21,7 @@ splitonsApp.config(['$routeProvider',
                 controller: 'ListTransactionsController'
             }).
             when('/project/:projectId/:transactionId/transaction', {
-                templateUrl: 'partials/transaction.html',
+                templateUrl: 'transactionUpdateOrCreate/transaction.html',
                 controller: 'TransactionController'
             }).
             otherwise({
