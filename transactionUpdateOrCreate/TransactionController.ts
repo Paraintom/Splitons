@@ -2,8 +2,6 @@
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>
-///<reference path="../Balance.ts"/>
-///<reference path="../SettlementEntry.ts"/>
 angular.module('splitonsApp').controller(
     'TransactionController', ['$scope', '$routeParams', '$location', 'projectsFactory','currenciesFactory',
         function ($scope, $routeParams, $location, projectsFactory, currenciesFactory) {

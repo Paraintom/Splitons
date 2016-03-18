@@ -4,7 +4,6 @@ CACHE:
 img/icon.png
 img/favicon.ico
 listGroups/listGroups.html
-groupBalances/balances.html
 listTransactions/listTransactions.html
 transactionUpdateOrCreate/transaction.html
 partials/sections.html
@@ -19,9 +18,7 @@ Factories/currenciesFactory.js.map
 Factories/synchFactory.js
 Factories/synchFactory.ts
 Factories/synchFactory.js.map
-Balance.ts
 SettlementEntry.ts
-Balance.js.map
 SettlementEntry.js
 dataObjects/Project.ts
 dataObjects/Project.js
@@ -40,6 +37,10 @@ app.ts
 groupBalances/BalancesController.js
 groupBalances/BalancesController.js.map
 groupBalances/BalancesController.ts
+groupBalances/Balance.js
+groupBalances/Balance.js.map
+groupBalances/Balance.ts
+groupBalances/balances.html
 listTransactions/ListTransactionsController.js
 listTransactions/ListTransactionsController.js.map
 listTransactions/ListTransactionsController.ts
@@ -56,7 +57,6 @@ controllers/ProjectNameController.js
 controllers/ProjectNameController.js.map
 controllers/ProjectNameController.ts
 Guid.js
-Balance.js
 linq/linq.js
 linq/linq.d.ts
 external/checklist-model.js
