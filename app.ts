@@ -13,8 +13,8 @@ splitonsApp.config(['$routeProvider',
                 controller: 'ListGroupsController'
             }).
             when('/project/:projectId/overview/:projectName?', {
-                templateUrl: 'partials/overview.html',
-                controller: 'OverviewController'
+                templateUrl: 'groupBalances/balances.html',
+                controller: 'BalancesController'
             }).
             when('/project/:projectId/:activeTab', {
                 templateUrl: 'partials/basic.html',

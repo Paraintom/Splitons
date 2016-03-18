@@ -11,3 +11,4 @@ Factories/*.js
 FastFlicker/*.js
 RequestFlicker/*.js
 listGroups/*.js
+groupBalances/*.js

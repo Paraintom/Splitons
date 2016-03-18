@@ -7,7 +7,7 @@
 ///<reference path="../external/bootbox.d.ts"/>
 
 angular.module('splitonsApp').controller(
-    'OverviewController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
+    'BalancesController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
         function ($scope, $routeParams, projectsFactory, $route, $filter, $controller) {
             var p = projectsFactory.getProject($routeParams.projectId,$routeParams.projectName);
             //We inherit from the parent (Refactoring)
