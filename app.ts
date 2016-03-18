@@ -17,8 +17,8 @@ splitonsApp.config(['$routeProvider',
                 controller: 'BalancesController'
             }).
             when('/project/:projectId/:activeTab', {
-                templateUrl: 'partials/basic.html',
-                controller: 'ProjectController'
+                templateUrl: 'listTransactions/listTransactions.html',
+                controller: 'ListTransactionsController'
             }).
             when('/project/:projectId/:transactionId/transaction', {
                 templateUrl: 'partials/transaction.html',

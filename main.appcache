@@ -5,8 +5,8 @@ img/icon.png
 img/favicon.ico
 listGroups/listGroups.html
 groupBalances/balances.html
+listTransactions/listTransactions.html
 partials/transaction.html
-partials/basic.html
 partials/sections.html
 index.html
 Guid.js.map
@@ -42,9 +42,9 @@ app.ts
 groupBalances/BalancesController.js
 groupBalances/BalancesController.js.map
 groupBalances/BalancesController.ts
-controllers/ProjectController.js
-controllers/ProjectController.js.map
-controllers/ProjectController.ts
+listTransactions/ListTransactionsController.js
+listTransactions/ListTransactionsController.js.map
+listTransactions/ListTransactionsController.ts
 listGroups/ListGroupsController.js
 listGroups/ListGroupsController.js.map
 listGroups/ListGroupsController.ts

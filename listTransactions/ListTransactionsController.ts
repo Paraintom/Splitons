@@ -7,7 +7,7 @@
 ///<reference path="../external/bootbox.d.ts"/>
 
 angular.module('splitonsApp').controller(
-    'ProjectController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
+    'ListTransactionsController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
         function ($scope, $routeParams, projectsFactory, $route, $filter, $controller) {
             $scope.activeTab =$routeParams.activeTab;
             var p = projectsFactory.getProject($routeParams.projectId);
