@@ -10,3 +10,4 @@ dataObjects/*.js
 Factories/*.js
 FastFlicker/*.js
 RequestFlicker/*.js
+listGroups/*.js
