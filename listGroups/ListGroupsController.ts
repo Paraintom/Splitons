@@ -41,7 +41,7 @@ var addWaveEffect = function () {
     });
 };
 angular.module('splitonsApp').controller(
-    'ListProjectsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window',
+    'ListGroupsController', ['$scope', 'projectsFactory', 'synchFactory', '$location', '$route', '$window',
         function ($scope, projectsFactory, synchFactory, $location, $route, $window) {
 
             $scope.projects = projectsFactory.getAllProject();

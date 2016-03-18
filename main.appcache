@@ -1,9 +1,9 @@
 CACHE MANIFEST
-#v4.1
+#v6.1
 CACHE:
 img/icon.png
 img/favicon.ico
-partials/listProjects.html
+listGroups/listGroups.html
 partials/transaction.html
 partials/basic.html
 partials/sections.html
@@ -45,9 +45,9 @@ controllers/OverviewController.ts
 controllers/ProjectController.js
 controllers/ProjectController.js.map
 controllers/ProjectController.ts
-controllers/ListProjectsController.js
-controllers/ListProjectsController.js.map
-controllers/ListProjectsController.ts
+listGroups/ListGroupsController.js
+listGroups/ListGroupsController.js.map
+listGroups/ListGroupsController.ts
 controllers/TransactionController.js
 controllers/TransactionController.js.map
 controllers/TransactionController.ts

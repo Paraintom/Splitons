@@ -9,8 +9,8 @@ splitonsApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider.
             when('/', {
-                templateUrl: 'partials/listProjects.html',
-                controller: 'ListProjectsController'
+                templateUrl: 'listGroups/listGroups.html',
+                controller: 'ListGroupsController'
             }).
             when('/project/:projectId/overview/:projectName?', {
                 templateUrl: 'partials/overview.html',
