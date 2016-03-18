@@ -1,5 +1,5 @@
 /// <reference path="../LiteEvent.ts" />
-/// <reference path="../jquery.d.ts" />
+/// <reference path="../external/jquery.d.ts" />
 class ServiceLookup {
     private lookupUrl: string;
     private onErrorEvent = new LiteEvent<string>();

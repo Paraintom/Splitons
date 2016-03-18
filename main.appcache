@@ -60,7 +60,7 @@ Guid.js
 linq/linq.js
 linq/linq.d.ts
 external/checklist-model.js
-jquery.d.ts
+external/jquery.d.ts
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 fonts/SonsieOne.woff
