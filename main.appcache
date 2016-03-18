@@ -6,7 +6,7 @@ img/favicon.ico
 listGroups/listGroups.html
 listTransactions/listTransactions.html
 transactionUpdateOrCreate/transaction.html
-partials/sections.html
+header/sections.html
 index.html
 Guid.js.map
 Factories/factories.js
@@ -50,12 +50,12 @@ listGroups/ListGroupsController.ts
 transactionUpdateOrCreate/TransactionController.js
 transactionUpdateOrCreate/TransactionController.js.map
 transactionUpdateOrCreate/TransactionController.ts
-controllers/SynchronizeController.js
-controllers/SynchronizeController.js.map
-controllers/SynchronizeController.ts
-controllers/ProjectNameController.js
-controllers/ProjectNameController.js.map
-controllers/ProjectNameController.ts
+header/SynchronizeController.js
+header/SynchronizeController.js.map
+header/SynchronizeController.ts
+header/ProjectNameController.js
+header/ProjectNameController.js.map
+header/ProjectNameController.ts
 Guid.js
 linq/linq.js
 linq/linq.d.ts

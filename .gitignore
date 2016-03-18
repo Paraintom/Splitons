@@ -5,7 +5,7 @@ SettlementEntry.js
 Guid.js
 LiteEvent.js
 Balance.js
-controllers/*.js
+header/*.js
 dataObjects/*.js
 Factories/*.js
 FastFlicker/*.js
