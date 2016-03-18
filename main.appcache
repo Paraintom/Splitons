@@ -57,8 +57,8 @@ header/ProjectNameController.js
 header/ProjectNameController.js.map
 header/ProjectNameController.ts
 Guid.js
-linq/linq.js
-linq/linq.d.ts
+external/linq.js
+external/linq.d.ts
 external/checklist-model.js
 external/jquery.d.ts
 fonts/fontawesome-webfont.ttf

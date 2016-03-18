@@ -1,4 +1,4 @@
-///<reference path="linq/linq.d.ts"/>
+///<reference path="external/linq.d.ts"/>
 ///<reference path="external/angular.d.ts"/>
 
 var splitonsApp = angular.module('splitonsApp', ['ngRoute',

@@ -1,4 +1,4 @@
-///<reference path="../linq/linq.d.ts"/>
+///<reference path="../external/linq.d.ts"/>
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>

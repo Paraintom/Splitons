@@ -1,5 +1,5 @@
 /// <reference path="../LiteEvent.ts" />
-/// <reference path="../linq/linq.d.ts"/>
+/// <reference path="../external/linq.d.ts"/>
 /// <reference path="ServiceLookup.ts" />
 /// <reference path="RequestFlicker.ts" />
 /// <reference path="ISynchronizer.ts" />

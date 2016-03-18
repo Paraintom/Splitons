@@ -2,7 +2,7 @@
  * Created by Tom on 22/03/2015.
  */
 
-///<reference path="../linq/linq.d.ts"/>
+///<reference path="../external/linq.d.ts"/>
 ///<reference path="../external/angular.d.ts"/>
 ///<reference path="../dataObjects/Project.ts"/>
 ///<reference path="../dataObjects/Transaction.ts"/>

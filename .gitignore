@@ -4,7 +4,6 @@ app.js
 SettlementEntry.js
 Guid.js
 LiteEvent.js
-Balance.js
 header/*.js
 dataObjects/*.js
 Factories/*.js
