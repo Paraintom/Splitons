@@ -5,8 +5,9 @@ var splitonsApp = angular.module('splitonsApp', ['ngRoute',
     'projectsFactory','currenciesFactory','synchFactory',
     'checklist-model', 'cgNotify']);
 
-splitonsApp.config(['$routeProvider',
-    function ($routeProvider) {
+splitonsApp.config(['$routeProvider', '$compileProvider',
+    function ($routeProvider,$compileProvider) {
+        $compileProvider.debugInfoEnabled(false);
         $routeProvider.
             when('/', {
                 templateUrl: 'listGroups/listGroups.html',
