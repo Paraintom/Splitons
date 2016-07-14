@@ -19,7 +19,6 @@ angular.module('splitonsApp').controller(
 
             $scope.setSelectedCurrency = function(currency) {
                 $scope.selectedCurrency = currency;
-                $scope.averagePerPerson = calculateAveragePerPerson();
             }
             $scope.setSelectedCurrency($scope.allCurrencies[0]);
 
@@ -78,7 +77,7 @@ angular.module('splitonsApp').controller(
                     }
                 }
             }
-            
+
             function calculateAllCurrencies() {
                 var result = [];
                 $scope.notDeletedTransactions.forEach(t=> {
