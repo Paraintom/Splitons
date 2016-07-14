@@ -61,22 +61,4 @@ angular.module('splitonsApp').controller(
                 (!$scope.$$phase)
                     $scope.$apply()
             }
-
-            $scope.sendViaEmail = function () {
-                bootbox.prompt({
-                    title: "Enter here the mail of your friend",
-                    value: "yourFriendMail@domain.com",
-                    size: 'small',
-                    callback: function (result) {
-                        if (result) {
-                            var link = "mailto:" + result
-                                + "?subject=New%20email" + encodeURIComponent("Splitons : Project " + $scope.projectName)
-                                + "&body=" + encodeURIComponent("Find here a link to the project : " + $location.absUrl());
-
-                            console.log(link);
-                            $window.open(link, '_blank');
-                        }
-                    }
-                });
-            }
         }]);
