@@ -34,7 +34,7 @@ projectsFactory.factory('projectsFactory', function () {
     }
 
     function isProjectId(key) {
-        Guid.isGuid(key);
+        return Guid.isGuid(key);
     }
 
 
