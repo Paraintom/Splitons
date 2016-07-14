@@ -78,37 +78,7 @@ angular.module('splitonsApp').controller(
                     }
                 }
             }
-
-            $scope.settleDebts = function(debtor, creditor, amount, currency) {
-                var t = new Transaction();
-                t.from = debtor;
-                t.to = [creditor];
-                t.comment = "settlement transaction";
-                t.amount = amount;
-                t.currency = currency;
-                t.HasBeenUpdated();
-                $scope.transactions.push(t);
-                projectsFactory.saveProject(p);
-                $route.reload();
-            }
-
-            function calculateAveragePerPerson() {
-                var result = 0;
-                Enumerable.from<Transaction>($scope.notDeletedTransactions)
-                    .where(function (y) {
-                        return y.currency == $scope.selectedCurrency;
-                    })
-                    .forEach(t=> {
-                        result += t.amount;
-                    }
-                );
-                var numberMembers = $scope.members.length;
-                if(numberMembers != 0){
-                    result = (result / numberMembers);
-                }
-                return result;
-            }
-
+            
             function calculateAllCurrencies() {
                 var result = [];
                 $scope.notDeletedTransactions.forEach(t=> {
