@@ -154,7 +154,7 @@ angular.module('splitonsApp').controller(
                 setTimeout(function(){
                     // Create the chart
                     createGraph(user);
-                }, 2000);
+                }, 200);
             }
 
             $scope.settleBalances = function () {
