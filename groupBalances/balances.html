@@ -57,11 +57,18 @@
                                 </tr>
                             </tbody>
                         </table>
-
-                        <button class="btn btn-block btn-primary" ng-click="settleBalances()">
-                            <span class="hidden-xs">Settle balances</span>
-                            <i class='fa fa-align-left fa-fw fa-lg' />
-                        </button>
+                        <div class="text-center">
+                            <div class="btn-group">
+                                <button class="btn  btn-primary" ng-click="showGraph()">
+                                    <span class="hidden-xs">Show evolution</span>
+                                    <i class='fa fa-line-chart fa-fw fa-lg' />
+                                </button>
+                                <button class="btn btn-primary" ng-click="settleBalances()">
+                                    <span class="hidden-xs">Settle balances</span>
+                                    <i class='fa fa-align-left fa-fw fa-lg' />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

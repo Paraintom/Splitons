@@ -66,6 +66,7 @@ external/linq.js
 external/linq.d.ts
 external/checklist-model.js
 external/jquery.d.ts
+external/highstock.js
 fonts/fontawesome-webfont.ttf
 fonts/fontawesome-webfont.woff
 fonts/SonsieOne.woff

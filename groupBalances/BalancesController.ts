@@ -5,6 +5,7 @@
 ///<reference path="Balance.ts"/>
 ///<reference path="SettlementEntry.ts"/>
 ///<reference path="../external/bootbox.d.ts"/>
+///<reference path="../external/highcharts.d.ts"/>
 
 angular.module('splitonsApp').controller(
     'BalancesController', ['$scope', '$routeParams', 'projectsFactory', '$route','$filter','$controller',
@@ -37,6 +38,125 @@ angular.module('splitonsApp').controller(
                 $scope.balances = calculateBalances(currency);
             }
 
+            $scope.showGraph = function () {
+
+                var user = $scope.members[0];
+                var message = "<div id='container'><\/div>";
+                bootbox.alert({
+                    size: 'large',
+                    title: "Balance evolution for "+user,
+                    message: message,
+                    callback: function(){ }
+                });
+
+                var getSplitonsTransactions = function(){
+                    return $scope.transactions;
+                };
+
+                var globalLabels = [];
+                var getDataFrom = function(from){
+                    globalLabels = [];
+                    var transactions = getSplitonsTransactions();
+                    var result = [];
+                    var initialPointTimestamp = transactions[0].lastUpdated/2 -200;
+                    result.push([initialPointTimestamp,0]);
+                    globalLabels[initialPointTimestamp] =
+                    { text : 'initialPoint', diff:0};
+                    var currentBalance = 0;
+                    for (var i = 0; i < transactions.length; ++i) {
+                        var isInvolved = false;
+                        var diff = 0;
+                        var currentTransaction = transactions[i];
+                        if(currentTransaction.deleted || currentTransaction.currency !== $scope.selectedCurrency)
+                            continue;
+
+                        if(currentTransaction.to.indexOf(from) != -1){
+                            isInvolved = true;
+                            var numberOfSplit = currentTransaction.to.length;
+                            var splitPerPerson = ((numberOfSplit - 1) * currentTransaction.amount) / numberOfSplit;
+                            if(currentTransaction.from === from){
+                                diff = splitPerPerson;
+                            }
+                            else{
+                                diff = -1 * splitPerPerson;
+                            }
+                        }
+                        else{
+                            if(currentTransaction.from === from){
+                                isInvolved = true;
+                                diff = currentTransaction.amount;
+                            }
+                        }
+                        currentBalance += diff;
+
+                        if(isInvolved){
+                            result.push([currentTransaction.lastUpdated/2, currentBalance]);
+                            globalLabels[currentTransaction.lastUpdated/2] =
+                            { text : currentTransaction.comment, diff:diff};
+                        }
+                    }
+                    return result;
+                };
+
+                var createGraph = function(forUser : string){
+                    (<any>$('#container')).highcharts('StockChart', {rangeSelector:{
+                        enabled:false
+                    },
+                        exporting: { enabled: false },
+                        scrollbar : {
+                            enabled : false
+                        },
+                        navigator : {
+                            enabled : false
+                        },
+                        colors:['#67447A'],
+                        credits: {
+                            enabled: false
+                        },
+                        yAxis: [{
+                            gridLineWidth: 0,
+                            minorGridLineWidth: 0,
+                            plotLines: [{
+                                color: 'black',
+                                width: 1,
+                                value: 0
+                            }]
+                        }],
+                        series : [{
+                            name : 'balance',
+                            data : getDataFrom(forUser),
+                            tooltip: {
+                                valueDecimals: 0,
+                                xDateFormat: '%Y %a %e of %B'
+                            },
+                            marker: {
+                                enabled: true,
+                                radius:4
+                            }
+                        }],
+                        tooltip: {
+                            formatter: function () {
+                                var stringDateFormat = new Date(this.x).getFullYear() === new Date().getFullYear() ? '%A, %b %e' : '%A, %b %e, %Y';
+                                var s = '<b>' + Highcharts.dateFormat(stringDateFormat, this.x) + '</b>';
+
+                                $.each(this.points, function () {
+                                    var diff = globalLabels[this.x].diff;
+                                    var color = globalLabels[this.x].diff <0 ? 'red' : 'green';
+                                    var addPlus = globalLabels[this.x].diff <0 ? '' : '+';
+                                    s += '<br/>'+globalLabels[this.x].text+'<br/>' + this.y +$scope.selectedCurrency+ ' (<span style="color:'+color+'">'+addPlus+diff+'</span>)';
+                                });
+
+                                return s;
+                            }
+                        }
+                    });
+                }
+                setTimeout(function(){
+                    // Create the chart
+                    createGraph(user);
+                }, 2000);
+            }
+
             $scope.settleBalances = function () {
                 var results = calculateSettlement($scope.selectedCurrency);
                 var message ="<ul class=\"lead list-unstyled\">";
@@ -44,7 +164,7 @@ angular.module('splitonsApp').controller(
                     var settlement = results[index];
                     message += "<li>";
                     message += "<span>"+settlement.from+" should pay "+settlement.to+
-                        " <b>"+settlement.amount+"<\/b>"+settlement.currency+"<\/span>";
+                    " <b>"+settlement.amount+"<\/b>"+settlement.currency+"<\/span>";
                     message += "<\/li>";
                 }
                 message += "<\/ul>";
@@ -103,6 +223,7 @@ angular.module('splitonsApp').controller(
                     });
                     return allPositive || allNegative;
                 }
+
             }
 
             $scope.addMember = function () {
