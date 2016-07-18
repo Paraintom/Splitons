@@ -16,6 +16,7 @@ angular.module('splitonsApp').controller(
             $scope.activeTab =1;
 
             $scope.members = p.members;
+            $scope.selectedMember;
             $scope.notDeletedTransactions = [];
 
             function setNotDeletedTransaction() {
@@ -23,7 +24,7 @@ angular.module('splitonsApp').controller(
                 var result = allTransactions.where(function (x) {
                     return !x.deleted;
                 });
-                $scope.notDeletedTransactions =result;
+                $scope.notDeletedTransactions =result.toArray();
             }
 
             $scope.transactions =  p.transactions;
@@ -38,9 +39,8 @@ angular.module('splitonsApp').controller(
                 $scope.balances = calculateBalances(currency);
             }
 
-            $scope.showGraph = function () {
+            $scope.showGraph = function (user) {
 
-                var user = $scope.members[0];
                 var message = "<div id='container'><\/div>";
                 bootbox.alert({
                     size: 'large',
@@ -61,7 +61,7 @@ angular.module('splitonsApp').controller(
                     var initialPointTimestamp = transactions[0].lastUpdated/2 -200;
                     result.push([initialPointTimestamp,0]);
                     globalLabels[initialPointTimestamp] =
-                    { text : 'initialPoint', diff:0};
+                    { text : 'Initial point', diff:0};
                     var currentBalance = 0;
                     for (var i = 0; i < transactions.length; ++i) {
                         var isInvolved = false;
@@ -70,12 +70,16 @@ angular.module('splitonsApp').controller(
                         if(currentTransaction.deleted || currentTransaction.currency !== $scope.selectedCurrency)
                             continue;
 
+                        var numberOfSplit = currentTransaction.to.length;
+                        var splitPerPerson = currentTransaction.amount / numberOfSplit;
+
+                        //if he is involved...
                         if(currentTransaction.to.indexOf(from) != -1){
                             isInvolved = true;
                             var numberOfSplit = currentTransaction.to.length;
-                            var splitPerPerson = ((numberOfSplit - 1) * currentTransaction.amount) / numberOfSplit;
+                            var splitPerPerson = currentTransaction.amount / numberOfSplit;
                             if(currentTransaction.from === from){
-                                diff = splitPerPerson;
+                                diff = currentTransaction.amount - splitPerPerson;
                             }
                             else{
                                 diff = -1 * splitPerPerson;
@@ -143,7 +147,11 @@ angular.module('splitonsApp').controller(
                                     var diff = globalLabels[this.x].diff;
                                     var color = globalLabels[this.x].diff <0 ? 'red' : 'green';
                                     var addPlus = globalLabels[this.x].diff <0 ? '' : '+';
-                                    s += '<br/>'+globalLabels[this.x].text+'<br/>' + this.y +$scope.selectedCurrency+ ' (<span style="color:'+color+'">'+addPlus+diff+'</span>)';
+                                    s += '<br/>'+globalLabels[this.x].text;
+                                    if(diff !== 0) {
+                                        //It is not the initial point!
+                                        s += '<br/><b>New balance</b> ' + this.y + $scope.selectedCurrency + ' (<span style="color:' + color + '">' + addPlus + diff + '</span>)';
+                                    }
                                 });
 
                                 return s;

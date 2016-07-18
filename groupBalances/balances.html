@@ -45,7 +45,7 @@
                                         <span>{{balance.member}}</span>
                                     </td>
                                     <td>
-                                        <span class="nowrap label label-lg" ng-class="balance.amount > 0 ? 'label-success' : balance.amount < 0 ? 'label-danger' : 'label-default'">
+                                        <span ng-click="showGraph(balance.member)" class="nowrap label label-lg" ng-class="balance.amount > 0 ? 'label-success' : balance.amount < 0 ? 'label-danger' : 'label-default'">
                                             {{balance.amount | number:2}} {{selectedCurrency}}
                                         </span>
                                     </td>
@@ -57,18 +57,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="text-center">
-                            <div class="btn-group">
-                                <button class="btn  btn-primary" ng-click="showGraph()">
-                                    <span class="hidden-xs">Show evolution</span>
-                                    <i class='fa fa-line-chart fa-fw fa-lg' />
-                                </button>
-                                <button class="btn btn-primary" ng-click="settleBalances()">
-                                    <span class="hidden-xs">Settle balances</span>
-                                    <i class='fa fa-align-left fa-fw fa-lg' />
-                                </button>
-                            </div>
-                        </div>
+                        <button class="btn btn-block btn-primary" ng-click="settleBalances()">
+                            <span class="hidden-xs">Settle balances</span>
+                            <i class='fa fa-align-left fa-fw fa-lg' />
+                        </button>
                     </div>
                 </div>
             </div>
