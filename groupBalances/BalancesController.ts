@@ -58,7 +58,7 @@ angular.module('splitonsApp').controller(
                     globalLabels = [];
                     var transactions = getSplitonsTransactions();
                     var result = [];
-                    var initialPointTimestamp = transactions[0].lastUpdated/2 -200;
+                    var initialPointTimestamp = transactions[0].lastUpdated;
                     result.push([initialPointTimestamp,0]);
                     globalLabels[initialPointTimestamp] =
                     { text : 'Initial point', diff:0};
@@ -94,8 +94,8 @@ angular.module('splitonsApp').controller(
                         currentBalance += diff;
 
                         if(isInvolved){
-                            result.push([currentTransaction.lastUpdated/2, currentBalance]);
-                            globalLabels[currentTransaction.lastUpdated/2] =
+                            result.push([currentTransaction.lastUpdated, currentBalance]);
+                            globalLabels[currentTransaction.lastUpdated] =
                             { text : currentTransaction.comment, diff:diff};
                         }
                     }
