@@ -99,7 +99,9 @@ angular.module('splitonsApp').controller(
                             { text : currentTransaction.comment, diff:diff};
                         }
                     }
-                    return result;
+                    return result.sort(function(a, b) {
+                        return a[0] - b[0];
+                    });
                 };
 
                 var createGraph = function(forUser : string){
