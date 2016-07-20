@@ -33,7 +33,7 @@ var addWaveEffect = function () {
         // Add the ripples CSS and start the animation
         $(".ripple").css({
             width: buttonWidth,
-            height: buttonHeight,
+            height: buttonHeight
         }).addClass("rippleEffect");
     });
 };
@@ -78,6 +78,10 @@ angular.module('splitonsApp').controller(
             }
 
             $scope.sendViaFastFlicker = function (projectName,projectId) {
+                if(!navigator.onLine) {
+                    showOfflineModal();
+                    return;
+                }
                 var passphrase :string;
                 passphrase =  projectId.substring(0,4);
                 var sharer = synchFactory.getSharer();
@@ -115,8 +119,20 @@ angular.module('splitonsApp').controller(
                 console.log(link);
                 $window.open(link, '_blank');
             }
-
+            var showOfflineModal = function(){
+                bootbox.alert({
+                    size: 'large',
+                    title: "No internet connection",
+                    message: "Please retry when you are online. ",
+                    callback: function(){ }
+                });
+            };
             $scope.receiveProject = function () {
+
+                if(!navigator.onLine) {
+                    showOfflineModal();
+                    return;
+                }
                 bootbox.dialog({
                     message:
                     '<div id="joinGroupCode">' +
