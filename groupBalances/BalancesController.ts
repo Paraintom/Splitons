@@ -59,7 +59,7 @@ angular.module('splitonsApp').controller(
                     var transactions = getSplitonsTransactions().sort(function(a, b) {
                         return a.lastUpdated - b.lastUpdated;
                     });
-                    
+
                     var result = [];
                     var initialPointTimestamp = transactions[0].lastUpdated;
                     result.push([initialPointTimestamp,0]);
@@ -97,8 +97,14 @@ angular.module('splitonsApp').controller(
                         currentBalance += diff;
 
                         if(isInvolved){
-                            result.push([currentTransaction.lastUpdated, (Math.round(currentBalance *100)/100)]);
-                            globalLabels[currentTransaction.lastUpdated] =
+                            var x = currentTransaction.lastUpdated;
+                            var previousX = result[result.length - 1][0];
+                            if(x <= previousX){
+                                //This is to avoid several point on the same vertical line
+                                x = previousX+60;
+                            }
+                            result.push([x, (Math.round(currentBalance *100)/100)]);
+                            globalLabels[x] =
                             { text : currentTransaction.comment, diff:diff};
                         }
                     }
