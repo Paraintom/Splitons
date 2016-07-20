@@ -56,7 +56,10 @@ angular.module('splitonsApp').controller(
                 var globalLabels = [];
                 var getDataFrom = function(from){
                     globalLabels = [];
-                    var transactions = getSplitonsTransactions();
+                    var transactions = getSplitonsTransactions().sort(function(a, b) {
+                        return a.lastUpdated - b.lastUpdated;
+                    });
+                    
                     var result = [];
                     var initialPointTimestamp = transactions[0].lastUpdated;
                     result.push([initialPointTimestamp,0]);
@@ -94,14 +97,12 @@ angular.module('splitonsApp').controller(
                         currentBalance += diff;
 
                         if(isInvolved){
-                            result.push([currentTransaction.lastUpdated, currentBalance]);
+                            result.push([currentTransaction.lastUpdated, (Math.round(currentBalance *100)/100)]);
                             globalLabels[currentTransaction.lastUpdated] =
                             { text : currentTransaction.comment, diff:diff};
                         }
                     }
-                    return result.sort(function(a, b) {
-                        return a[0] - b[0];
-                    });
+                    return result;
                 };
 
                 var createGraph = function(forUser : string){
