@@ -333,9 +333,10 @@ angular.module('splitonsApp').controller(
 
                     t.to.forEach(debitor=> {
                         //console.debug('removing to '+debitor + ' : '+t.amount);
-                        result[debitor].amount -= (Math.round((t.amount / numberOfDebiter) * 100) / 100);
+                        result[debitor].amount -= t.amount / numberOfDebiter;
                     });
                 });
+
                 return result;
             }
         }]);
