@@ -7,6 +7,7 @@
 class Transaction implements Serializable<Transaction>{
     id:string;
     deleted:boolean;
+    createdDate:number;
     lastUpdated:number;
     from:string;
     to:string[];
@@ -16,7 +17,8 @@ class Transaction implements Serializable<Transaction>{
 
     constructor() {
         //It is a new Transaction, we WANT it to be synch!!
-        this.lastUpdated = new Date().getTime() * 2;
+        this.createdDate = new Date().getTime();
+        this.lastUpdated = this.createdDate * 2;
         this.deleted = false;
         this.id = Guid.newGuid();
     }
@@ -39,6 +41,23 @@ class Transaction implements Serializable<Transaction>{
                 this.lastUpdated = new Date(input.lastUpdated).getTime();
             }
         }
+
+        if(input.createdDate  === undefined) {
+            //So much effort for something that should have been here since the start!
+            //Our only hint on the creation date is the last updated date.
+            // 1 - case unsync changes
+            if(this.lastUpdated > new Date("2025").getTime()){
+                this.createdDate = this.lastUpdated / 2;
+            }
+            else{
+                this.createdDate = this.lastUpdated;
+            }
+            this.HasBeenUpdated();
+        }
+        else {
+            this.createdDate = new Date(input.createdDate).getTime();
+        }
+
         this.deleted = input.deleted == true;
         this.from = input.from;
         this.to = input.to;

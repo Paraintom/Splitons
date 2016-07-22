@@ -57,11 +57,11 @@ angular.module('splitonsApp').controller(
                 var getDataFrom = function(from){
                     globalLabels = [];
                     var transactions = getSplitonsTransactions().sort(function(a, b) {
-                        return a.lastUpdated - b.lastUpdated;
+                        return a.createdDate - b.createdDate;
                     });
 
                     var result = [];
-                    var initialPointTimestamp = transactions[0].lastUpdated;
+                    var initialPointTimestamp = transactions[0].createdDate;
                     result.push([initialPointTimestamp,0]);
                     globalLabels[initialPointTimestamp] =
                     { text : 'Initial point', diff:0};
@@ -97,7 +97,7 @@ angular.module('splitonsApp').controller(
                         currentBalance += diff;
 
                         if(isInvolved){
-                            var x = currentTransaction.lastUpdated;
+                            var x = currentTransaction.createdDate;
                             var previousX = result[result.length - 1][0];
                             if(x <= previousX){
                                 //This is to avoid several point on the same vertical line
