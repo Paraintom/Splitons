@@ -56,15 +56,18 @@ angular.module('splitonsApp').controller(
                 var globalLabels = [];
                 var getDataFrom = function(from){
                     globalLabels = [];
+                    var result = [];
+                    var addPointToGraph = function(date,balance,text, diff) {
+                        var roundedBalance = Math.round(balance *100)/100;
+                        result.push([date,roundedBalance]);
+                        globalLabels[date] = { text : text, diff:diff};
+                    }
                     var transactions = getSplitonsTransactions().sort(function(a, b) {
                         return a.createdDate - b.createdDate;
                     });
 
-                    var result = [];
                     var initialPointTimestamp = transactions[0].createdDate;
-                    result.push([initialPointTimestamp,0]);
-                    globalLabels[initialPointTimestamp] =
-                    { text : 'Initial point', diff:0};
+                    addPointToGraph(initialPointTimestamp,0,'Initial point', 0);
                     var currentBalance = 0;
                     for (var i = 0; i < transactions.length; ++i) {
                         var isInvolved = false;
@@ -103,11 +106,13 @@ angular.module('splitonsApp').controller(
                                 //This is to avoid several point on the same vertical line
                                 x = previousX+60;
                             }
-                            result.push([x, (Math.round(currentBalance *100)/100)]);
-                            globalLabels[x] =
-                            { text : currentTransaction.comment, diff:diff};
+
+                            addPointToGraph(x,currentBalance,currentTransaction.comment, diff);
                         }
                     }
+                    var now = new Date().getTime();
+                    var lastLabel ="Current balance";
+                    addPointToGraph(now,currentBalance,lastLabel, 0);
                     return result;
                 };
 
